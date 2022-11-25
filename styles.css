@@ -1,0 +1,64 @@
+:root {
+    --color_cgv_ok: #209f20;
+    --color_cgv_warning: #d8ad41;
+    --color_cgv_critical: #ba2559;
+
+    --color_cgv_sights: #ffffff;
+
+    --color_shadow_dark: #8b0000;
+    --color_shadow_light: #ffffff;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+.cgv {
+    -webkit-app-region: drag;
+    pointer-events: none;
+    user-select: none;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 65% auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+    color: var(--color_cgv_sights);
+}
+
+.cgv_last {
+    grid-row-start: 1;
+    grid-row-end: span 2;
+    position: relative;
+    top: -3px;
+
+    font-size: 3em;
+    font-weight: 800;
+}
+
+.cgv_last--ok {
+    color: var(--color_cgv_ok);
+    text-shadow: 1px 1px 0px var(--color_shadow_light);
+}
+
+.cgv_last--warning {
+    color: var(--color_cgv_warning);
+    text-shadow: 1px 1px 0px var(--color_shadow_dark);
+}
+
+.cgv_last--critical {
+    color: var(--color_cgv_critical);
+    text-shadow: 1px 1px 0px var(--color_shadow_light);
+}

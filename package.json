@@ -1,0 +1,23 @@
+{
+  "name": "nightscout-widget-electron",
+  "version": "0.1",
+  "description": "An Electron widget application to show on a desktop cgv value is getting from Nightscout API",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/kashamalasha/nightscout-widget-electron",
+  "keywords": [
+    "diabetes",
+    "continuous glucose management",
+    "cgm in the cloud",
+    "cgm",
+    "dexcom",
+    "nightscout"
+  ],
+  "author": "kashamalasha",
+  "license": "AGPL-3.0",
+  "devDependencies": {
+    "electron": "^21.2.3"
+  }
+}

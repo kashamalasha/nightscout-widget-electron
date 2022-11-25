@@ -1,0 +1,18 @@
+{
+    "NIGHTSCOUT" : {
+        "URL" : "https://diburn-cgm.fly.dev/api/v3/entries",
+        "TOKEN" : "electron-e77c89215127119d",
+        "GET_INTERVAL_MS" : 30000
+    },
+    "BG" : {
+        "HIGH" : 10,
+        "LOW" : 3.3,
+        "TARGET" : {
+            "TOP" : 8.5,
+            "BOTTOM" : 4.5
+        } 
+    },
+    "WIDGET" : {
+        "OPACITY" : 0.3
+    }
+}
