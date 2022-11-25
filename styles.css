@@ -32,7 +32,7 @@ html, body {
     justify-items: center;
     align-content: center;
     justify-content: center;
-    
+
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1em;
     color: var(--color_cgv_sights);
@@ -42,7 +42,7 @@ html, body {
     grid-row-start: 1;
     grid-row-end: span 2;
     position: relative;
-    top: -3px;
+    top: -2px;
 
     font-size: 3em;
     font-weight: 800;

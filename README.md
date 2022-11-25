@@ -4,6 +4,8 @@
 
 This is a minimal Electron application-widget based on the [Nightscout](https://nightscout.github.io/) API. It aims to provide lightweight interface for your T1D measurements visualize. It inspired by [M5Stack's](https://m5stack.com/) similar solutions. It stays always on top of your screen, so you don't need to keep your Nightscout site in browser opened to see your/your relatives or kids measurements in real time anymore.
 
+<img src="asset/Screenshot.png" alt="Screenshot" width="200"/>
+
 A current application needs these files:
 
 - `package.json` - Points to the app's main file and lists its details and dependencies.
