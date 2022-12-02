@@ -4,13 +4,27 @@ import CONFIG from "./config.json" assert { type: "json" };
 import { getData } from "./backend.js";
 import { prepareData } from "./util.js";
 
-const render = (data) => {
+const Fields = {
+  last: document.querySelector(`.cgv__last`),
+  delta: document.querySelector(`.cgv__delta`),
+  trend: document.querySelector(`.cgv__trend`),
+};
 
-  const Fields = {
-    last: document.querySelector(`.cgv__last`),
-    delta: document.querySelector(`.cgv__delta`),
-    trend: document.querySelector(`.cgv__trend`),
-  };
+const Buttons = {
+  close: document.querySelector(`#button-close`),
+  settings: document.querySelector(`#button-settings`),
+};
+
+Buttons.close.addEventListener(`click`, () => {
+  window.electronAPI.closeWindow();
+});
+
+Buttons.settings.addEventListener(`click`, () => {
+  console.log(`Settings button was pressed`);
+  window.electronAPI.showSettings();
+});
+
+const render = (data) => {
 
   Fields.last.textContent = data.last;
   Fields.delta.textContent = data.delta;
@@ -20,8 +34,8 @@ const render = (data) => {
 
   const lastResult = parseFloat(data.last);
 
-  if ((lastResult > CONFIG.BG.TARGET.TOP & lastResult < CONFIG.BG.HIGH) |
-      (lastResult > CONFIG.BG.LOW & lastResult < CONFIG.BG.TARGET.BOTTOM)) {
+  if ((lastResult > CONFIG.BG.TARGET.TOP & lastResult <= CONFIG.BG.HIGH) |
+      (lastResult >= CONFIG.BG.LOW & lastResult < CONFIG.BG.TARGET.BOTTOM)) {
     Fields.last.className = Fields.last.className.replace(/cgv__last--.+/, `cgv__last--warning`);
   } else if (lastResult > CONFIG.BG.HIGH | lastResult < CONFIG.BG.LOW) {
     Fields.last.className = Fields.last.className.replace(/cgv__last--.+/, `cgv__last--critical`);
@@ -35,7 +49,7 @@ const onSuccess = (result) => {
 };
 
 const onError = (errorMessage) => {
-  console.log(errorMessage);
+  console.log(`Error qty: ${errorCount}`, errorMessage);
 };
 
 getData(onSuccess, onError);
