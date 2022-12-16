@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link href="./styles.css" rel="stylesheet">
+    <title>Nightscout Widget Settings</title>
+  </head>
+<body>
+  <main class="settings">
+    <h1 class="settings__title">Nightscout Widget Settings</h1>
+    <form>
+      <div class="settings-fields">
+        <section class="settings-field settings-fields__nightscout">
+          <h2 class="settings-field__title">Nightscout API settings</h2>
+          <div class="settings-input">
+            <input class="settings-input__field" type="text" name="nightscout-url" id="nightscout-url">
+            <label class="settings-input__label" for="nightscout-url">Nightscout URL</label>
+          </div>
+          <div class="settings-input">
+            <input class="settings-input__field" type="text" name="nightscout-token" id="nightscout-token">
+            <label class="settings-input__label" for="nightscout-token">Nightscout token</label>
+          </div>
+          <div class="settings-input">
+            <input class="settings-input__field settings-input__field--number" type="number" name="nightscout-interval" id="nightscout-interval">
+            <label class="settings-input__label" for="nightscout-interval">Nightscout request interval (sec.)</label>
+          </div>
+        </section>
+        <section class="settings-field settings-fields__widget">
+          <h2 class="settings-field__title">Widget preferences</h2>
+          <div class="settings-input">
+            <input class="settings-input__field settings-input__field--number" type="number" step="0.1" min="0.1" max= "1.0" name="widget-opacity" id="widget-opacity">
+            <label class="settings-input__label" for="widget-opacity">Widget opacity</label>
+          </div>
+        </section>
+        <section class="settings-field settings-fields__bg">
+          <h2 class="settings-field__title">Blood sugar levels preferences</h2>
+          <div class="settings-input">
+            <input class="settings-input__field settings-input__field--number" type="number" step="0.1" name="bg-high" id="bg-high">
+            <label class="settings-input__label" for="bg-high">High level threshold</label>
+          </div>
+          <div class="settings-input">
+            <input class="settings-input__field settings-input__field--number" type="number" step="0.1" name="bg-target-top" id="bg-target-top">
+            <label class="settings-input__label" for="bg-target-top">Target top level</label>
+          </div>
+          <div class="settings-input">
+            <input class="settings-input__field settings-input__field--number" type="number" step="0.1" name="bg-target-bottom" id="bg-target-bottom">
+            <label class="settings-input__label" for="bg-target-bottom">Target bottom level</label>
+          </div>
+          <div class="settings-input">
+            <input class="settings-input__field settings-input__field--number" type="number" step="0.1" name="bg-low" id="bg-low">
+            <label class="settings-input__label" for="bg-low">Low level threshold</label>
+          </div>
+        </section>
+      </div>
+      <button class="settings-button" type="submit" id="button-submit">Save</button>
+      <button class="settings-button" type="button" id="button-test">Test</button>
+    </form>
+  </main>
+  <script type="module" src="./js/settings.js"></script>
+</body>
+</html>

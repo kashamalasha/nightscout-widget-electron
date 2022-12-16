@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link href="./styles.css" rel="stylesheet">
+    <title>Nightscout Widget</title>
+  </head>
+  <body>
+    <main>
+      <section class="widget-control">
+        <button class="widget-button" id="button-close">
+          <img src="asset/icons8-close.png" alt="close" width="12px" height="12px">
+        </button>
+        <button class="widget-button" id="button-settings">
+          <img src="asset/icons8-settings.png" alt="setup" width="12px" height="12px">
+        </button>
+      </section>
+      <section class="cgv">
+        <div class="cgv__last">?.?</div>
+        <div class="cgv__delta">?.?</div>
+        <div class="cgv__trend">?</div>
+      </section>
+    </main>
+    <script type="module" src="./js/renderer.js"></script>
+  </body>
+</html>

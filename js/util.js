@@ -17,6 +17,19 @@ const dir2Char = {
   "RATE OUT OF RANGE": `⇕`
 };
 
+const customAssign = (targetObject, patchObject) => {
+  for (const key of Object.keys(patchObject)) {
+    if (key in targetObject) {
+      if (typeof patchObject[key] != 'object') {
+        targetObject[key].value = patchObject[key];
+      } else {
+        customAssign(targetObject[key], patchObject[key]);
+      }
+    }
+  }
+  return targetObject;
+}
+
 const mgdlToMMOL = (mgdl) => {
   return (Math.round((mgdl / MMOL_TO_MGDL) * 10) / 10).toFixed(1);
 };
@@ -49,4 +62,4 @@ const prepareData = (obj) => {
   return result;
 };
 
-export { prepareData };
+export { prepareData, customAssign };
