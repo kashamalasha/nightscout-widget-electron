@@ -118,8 +118,8 @@ body {
   background-color: var(--color_settings_dark);
 }
   .settings__title {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     margin-left: 90px;
   }
 
