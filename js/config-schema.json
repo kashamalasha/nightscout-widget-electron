@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "NIGHTSCOUT": {
+      "type": "object",
+      "properties": {
+        "URL": {
+          "type": "string",
+          "minLength": 10,
+          "pattern": "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&\\/\\/=]*)"
+        },
+        "TOKEN": {
+          "type": "string",
+          "minLength": 10
+        },
+        "INTERVAL": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "URL",
+        "TOKEN",
+        "INTERVAL"
+      ]
+    },
+    "BG": {
+      "type": "object",
+      "properties": {
+        "HIGH": {
+          "type": "number",
+          "minimum": 1
+        },
+        "LOW": {
+          "type": "number",
+          "minimum": 1
+        },
+        "TARGET": {
+          "type": "object",
+          "properties": {
+            "TOP": {
+              "type": "number",
+              "minimum": 1
+            },
+            "BOTTOM": {
+              "type": "number",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "TOP",
+            "BOTTOM"
+          ]
+        }
+      },
+      "required": [
+        "HIGH",
+        "LOW",
+        "TARGET"
+      ]
+    },
+    "WIDGET": {
+      "type": "object",
+      "properties": {
+        "OPACITY": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 1
+        },
+        "POSITION": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "integer"
+            },
+            "y": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ]
+        }
+      },
+      "required": [
+        "OPACITY",
+        "POSITION"
+      ]
+    }
+  },
+  "required": [
+    "NIGHTSCOUT",
+    "BG",
+    "WIDGET"
+  ],
+  "additionalProperties": false
+}
