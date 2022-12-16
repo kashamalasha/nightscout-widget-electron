@@ -2,3 +2,5 @@ node_modules/
 .vscode/
 .editorconfig
 .eslintrc.js
+package-lock.json
+*.code-workspace
