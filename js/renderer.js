@@ -1,8 +1,9 @@
 "use strict";
 
-import CONFIG from "./config.json" assert { type: "json" };
 import { getData } from "./backend.js";
 import { prepareData } from "./util.js";
+
+const CONFIG = await window.electronAPI.getSettings();
 
 const Fields = {
   last: document.querySelector(`.cgv__last`),
@@ -20,7 +21,6 @@ Buttons.close.addEventListener(`click`, () => {
 });
 
 Buttons.settings.addEventListener(`click`, () => {
-  console.log(`Settings button was pressed`);
   window.electronAPI.showSettings();
 });
 
@@ -56,4 +56,4 @@ getData(onSuccess, onError);
 
 setInterval(() => {
   getData(onSuccess, onError);
-}, CONFIG.NIGHTSCOUT.GET_INTERVAL_MS);
+}, CONFIG.NIGHTSCOUT.INTERVAL);

@@ -1,12 +1,17 @@
 "use strict";
 
-import CONFIG from "./config.json" assert { type: "json" }
+const CONFIG = await window.electronAPI.getSettings();
 
 const REQUEST_TIMEOUT = 10000;
 
 const StatusCode = {
   OK: 200
 };
+
+const Endpoints = {
+  DATA: `/api/v3/entries`,
+  TEST: `/api/v3/status`,
+}
 
 const GetParams = {
   SORT_BY: `date`,
@@ -44,7 +49,7 @@ const createRequest = (method, url, onLoad, onError) => {
 };
 
 const getData = (onSuccess, onError) => {
-  let url = new URL(CONFIG.NIGHTSCOUT.URL);
+  let url = new URL(CONFIG.NIGHTSCOUT.URL + Endpoints.DATA);
 
   url.searchParams.set(`token`, CONFIG.NIGHTSCOUT.TOKEN);
   url.searchParams.set(`sort$desc`, GetParams.SORT_BY);
@@ -56,4 +61,13 @@ const getData = (onSuccess, onError) => {
   xhr.send();
 };
 
-export { getData };
+const getStatus = (testParams, onSuccess, onError) => {
+  let url = new URL(testParams.url + Endpoints.TEST);
+
+  url.searchParams.set(`token`, testParams.token);
+
+  const xhr = createRequest(`GET`, url, onSuccess, onError);
+  xhr.send();
+}
+
+export { getData, getStatus };
