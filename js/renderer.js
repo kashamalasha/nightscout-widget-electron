@@ -56,4 +56,4 @@ getData(onSuccess, onError);
 
 setInterval(() => {
   getData(onSuccess, onError);
-}, CONFIG.NIGHTSCOUT.INTERVAL);
+}, CONFIG.NIGHTSCOUT.INTERVAL * 1000);

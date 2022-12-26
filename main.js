@@ -5,7 +5,7 @@ const Store = require('electron-store');
 const Ajv = require('ajv');
 const log = require('./logger');
 
-const SCHEMA = JSON.parse(readFileSync(`./js/config-schema.json`));
+const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.json`)));
 const config = new Store();
 const ajv = new Ajv();
 
@@ -106,6 +106,9 @@ const createWindow = () => {
 
 };
 
+const singleInstance = app.requestSingleInstanceLock();
+if (!singleInstance) app.quit();
+
 app.whenReady().then(() => {
   const { session } = require(`electron`);
 
@@ -192,15 +195,21 @@ powerMonitor.on(`lock-screen`, () => {
   }
 });
 
-powerMonitor.on(`unlock-screen`, () => {
-  if (app.isHidden()) app.show();
-  log.info(`App is shown after unlock-screen event`)
+powerMonitor.on(`unlock-screen`, (event) => {
+  if (app.isHidden()) {
+    app.show();
+    log.info(`App is shown after unlock-screen event`)
+  } else if (!app.isHidden()) {
+    log.silly(`Duplicated powerMonitor event handler called by 'unlock-screen' event`);
+  }
 });
 
-powerMonitor.on(`resume`, () => {
+powerMonitor.on(`resume`, (event) => {
   if (app.isHidden()) {
     app.show();
     log.info(`App is shown after resume event`)
+  } else if (!app.isHidden()) {
+    log.silly(`Duplicated powerMonitor event handler called by 'resume' event`);
   } else {
     app.relaunch();
     app.exit();
@@ -212,6 +221,8 @@ nativeTheme.on('updated', () => {
   if (app.isHidden()) {
     app.show();
     log.info(`App is shown after theme change event`)
+  } else if (!app.isHidden()) {
+    log.silly(`Duplicated nativeTheme event handler called by 'updated' event`);
   } else {
     app.relaunch();
     app.exit();
