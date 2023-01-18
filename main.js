@@ -130,7 +130,7 @@ app.whenReady().then(() => {
     });
   });
 
-  const widget = createWindow()
+  const widget = createWindow();
   log.info(`App was started successfully`);
 
   app.on(`activate`, () => {
@@ -193,15 +193,6 @@ app.whenReady().then(() => {
   ipcMain.on(`set-widget-opacity`, (event, opacity) => {
     widget.mainWindow.setBackgroundColor(`rgba(96, 96, 96, ${opacity / 100})`);
   });
-});
-
-powerMonitor.on(`lock-screen`, () => {
-  try {
-    app.hide();
-    log.info(`App was hidden due to lock-screen event`);
-  } catch (err) {
-    log.error(err);
-  }
 });
 
 powerMonitor.on(`unlock-screen`, (event) => {

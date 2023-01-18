@@ -5,6 +5,8 @@ import { prepareData } from "./util.js";
 
 const CONFIG = await window.electronAPI.getSettings();
 
+const log = window.electronAPI.logger;
+
 const Fields = {
   last: document.querySelector(`.cgv__last`),
   delta: document.querySelector(`.cgv__delta`),
@@ -49,11 +51,18 @@ const onSuccess = (result) => {
 };
 
 const onError = (errorMessage) => {
-  console.log(`Error qty: ${errorCount}`, errorMessage);
+  log.error(`Error qty: ${errorCount}`, errorMessage);
 };
 
-getData(onSuccess, onError);
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === `visible`) {
+    getData(onSuccess, onError);
+    log.info(`Get data due to visibility change`);
+  }
+});
 
 setInterval(() => {
   getData(onSuccess, onError);
 }, CONFIG.NIGHTSCOUT.INTERVAL * 1000);
+
+getData(onSuccess, onError);
