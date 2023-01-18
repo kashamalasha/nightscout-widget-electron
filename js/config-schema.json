@@ -64,8 +64,9 @@
       "properties": {
         "OPACITY": {
           "type": "number",
-          "minimum": 0.1,
-          "maximum": 1
+          "minimum": 10,
+          "maximum": 100,
+          "multipleOf": 10
         },
         "POSITION": {
           "type": "object",

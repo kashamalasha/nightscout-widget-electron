@@ -5,20 +5,37 @@ const Store = require('electron-store');
 const Ajv = require('ajv');
 const log = require('./logger');
 
-const SCHEMA = JSON.parse(readFileSync(`./js/config-schema.json`));
+const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.json`)));
 const config = new Store();
 const ajv = new Ajv();
 
 const validate = ajv.compile(SCHEMA);
 const configValid = validate(config.get());
 
+if (!configValid) {
+  const key = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
+  const value = config.get(key);
+  const error = `Value ${value} of ${key} ${validate.errors[0].message}`;
+
+  log.error(error);
+  log.error(`Schema reference: `, validate.errors[0]);
+}
+
 const createWindow = () => {
+
+  const defaultWidgetValues = {
+    position: {
+      x: 1000,
+      y: 100
+    },
+    opacity: 30,
+  }
 
   const widgetBounds = {
     width: 180,
     height: 80,
-    x: configValid ? config.get(`WIDGET.POSITION.x`) : 1000,
-    y: configValid ? config.get(`WIDGET.POSITION.y`) : 100,
+    x: configValid ? config.get(`WIDGET.POSITION.x`) : defaultWidgetValues.position.x,
+    y: configValid ? config.get(`WIDGET.POSITION.y`) : defaultWidgetValues.position.y,
   };
 
   const mainWindow = new BrowserWindow({
@@ -36,7 +53,7 @@ const createWindow = () => {
     alwaysOnTop: true,
     frame: false,
     transparent: true,
-    backgroundColor: `rgba(96, 96, 96, ${configValid ? config.get(`WIDGET.OPACITY`) : 0.3})`,
+    backgroundColor: `rgba(96, 96, 96, ${(configValid ? config.get(`WIDGET.OPACITY`) : defaultWidgetValues.opacity) / 100})`,
   });
 
   const settingsBounds = {
@@ -46,8 +63,8 @@ const createWindow = () => {
 
   const getPosition = () => {
     const widgetLastPosition = {
-      x: configValid ? config.get(`WIDGET.POSITION.x`) : 1000,
-      y: configValid ? config.get(`WIDGET.POSITION.y`) : 100,
+      x: configValid ? config.get(`WIDGET.POSITION.x`) : defaultWidgetValues.position.x,
+      y: configValid ? config.get(`WIDGET.POSITION.y`) : defaultWidgetValues.position.y,
     };
 
     x = widgetLastPosition.x - (settingsBounds.width - widgetBounds.width);
@@ -94,17 +111,12 @@ const createWindow = () => {
     settingsWindow.hide();
   });
 
-  if (!configValid) {
-    const key = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
-    const value = config.get(key);
-    const error = `${value} of ${key} ${validate.errors[0].message}`;
-
-    log.error(error, validate.errors[0]);
-  }
-
   return { mainWindow, settingsWindow };
 
 };
+
+const singleInstance = app.requestSingleInstanceLock();
+if (!singleInstance) app.quit();
 
 app.whenReady().then(() => {
   const { session } = require(`electron`);
@@ -118,8 +130,8 @@ app.whenReady().then(() => {
     });
   });
 
-  const widget = createWindow()
-  log.info(`App was started`);
+  const widget = createWindow();
+  log.info(`App was started successfully`);
 
   app.on(`activate`, () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -165,7 +177,7 @@ app.whenReady().then(() => {
       config.set(`NIGHTSCOUT.URL`, data[`nightscout-url`]);
       config.set(`NIGHTSCOUT.TOKEN`, data[`nightscout-token`]);
       config.set(`NIGHTSCOUT.INTERVAL`, parseInt(data[`nightscout-interval`], 10));
-      config.set(`WIDGET.OPACITY`, parseFloat(data[`widget-opacity`]));
+      config.set(`WIDGET.OPACITY`, parseInt(data[`widget-opacity`], 10));
       config.set(`BG.HIGH`, parseFloat(data[`bg-high`]));
       config.set(`BG.LOW`, parseFloat(data[`bg-low`]));
       config.set(`BG.TARGET.TOP`, parseFloat(data[`bg-target-top`]));
@@ -179,28 +191,25 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on(`set-widget-opacity`, (event, opacity) => {
-    widget.mainWindow.setBackgroundColor(`rgba(96, 96, 96, ${opacity})`);
+    widget.mainWindow.setBackgroundColor(`rgba(96, 96, 96, ${opacity / 100})`);
   });
 });
 
-powerMonitor.on(`lock-screen`, () => {
-  try {
-    app.hide();
-    log.info(`App was hidden due to lock-screen event`);
-  } catch (err) {
-    log.error(err);
+powerMonitor.on(`unlock-screen`, (event) => {
+  if (app.isHidden()) {
+    app.show();
+    log.info(`App is shown after unlock-screen event`)
+  } else if (!app.isHidden()) {
+    log.silly(`Duplicated powerMonitor event handler called by 'unlock-screen' event`);
   }
 });
 
-powerMonitor.on(`unlock-screen`, () => {
-  if (app.isHidden()) app.show();
-  log.info(`App is shown after unlock-screen event`)
-});
-
-powerMonitor.on(`resume`, () => {
+powerMonitor.on(`resume`, (event) => {
   if (app.isHidden()) {
     app.show();
     log.info(`App is shown after resume event`)
+  } else if (!app.isHidden()) {
+    log.silly(`Duplicated powerMonitor event handler called by 'resume' event`);
   } else {
     app.relaunch();
     app.exit();
@@ -212,6 +221,8 @@ nativeTheme.on('updated', () => {
   if (app.isHidden()) {
     app.show();
     log.info(`App is shown after theme change event`)
+  } else if (!app.isHidden()) {
+    log.silly(`Duplicated nativeTheme event handler called by 'updated' event`);
   } else {
     app.relaunch();
     app.exit();
