@@ -37,7 +37,7 @@ Fields.last.addEventListener(`mousedown`, (evt) => {
 });
 
 Fields.last.addEventListener(`mouseup`, (evt) => {
-  evt.target.classList.toggle(`cgv__last--active`);
+  evt.target.classList.toggle(`cgv__last--active`, false);
 })
 
 const render = (data) => {
