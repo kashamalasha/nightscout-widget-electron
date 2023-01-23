@@ -1,18 +1,26 @@
 # nightscout-widget-electron
 
-**Description**
+## Project Description
 
-This is a minimal Electron application-widget based on the [Nightscout](https://nightscout.github.io/) API. It aims to provide lightweight interface for your T1D measurements visualize. It inspired by [M5Stack's](https://m5stack.com/) similar solutions. It stays always on top of your screen, so you don't need to keep your Nightscout site in browser opened to see your/your relatives or kids measurements in real time anymore.
+This application, built with Electron, uses the [Nightscout API](https://nightscout.github.io/). The aim is to provide a lightweight interface for your T1D measurement visualization (blood sugar levels).
+The widget will stay on top of your screen, so you don't need to keep your Nightscout site in the browser opened to see your/your relative's or kid's measurements in real-time anymore.
+I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5_NightscoutMon) solution, built on [M5 Stack's](https://m5stack.com/) hardware platform.
 
-<img src="asset/Screenshot.png" alt="Screenshot" width="200"/>
+<img src="asset/screenshot-widget.png" alt="Screenshot-widget" width="200"/>
+
+## Content
 
 A current application needs these files:
 
 - `package.json` - Points to the app's main file and lists its details and dependencies.
 - `main.js` - Starts the app and creates a widget. This is the app's **main process**.
-- `index.html` - An HTML template to render. This is the app's **renderer process** starting point.
+- `logger.js` - Logger adapter for electron-log library.
+- `widget.html` - An HTML file for main window. This is the app's **renderer process** starting point.
+- `settings.html` - An HTML file for settings window. This is the app's settings.
 - `styles.css` - Styles for the renderer process
+- `js/preload.js` - The API interface for IPC messaging between **main process** and **renderer process**.
 - `js/backend.js` - The code to obtain data from Nightscout API using AJAX.
+- `js/settings.js` - The settings form **renderer process** code.
 - `js/util.js` - The code to adapt collected data to a necessary view.
 - `js/renderer.js` - The app's core **renderer process** code.
 - `js/config.json` - The app's variables.
@@ -31,6 +39,26 @@ npm install
 # Run the app
 npm start
 ```
+
+## First start
+
+1. Log in to the admin panel of your Nightscout site (e.g. https://some-cgm.site.com/admin/)
+2. Create a new role with the permission to read data using the pattern `*:*:read`
+3. Create a new subject for the application with the role created in step 2, or use an existing role with the pattern to read data `*:*:read`
+4. Copy the access token for this subject to your clipboard
+5. Launch the application.
+6. On the first launch, the app will prompt you to enter settings information (see below)
+7. Fill in the connection information and your personal preferences for blood sugar levels
+8. Press the TEST button to verify the Nightscout site is accessible with the added parameters
+9. If all is well, press the SAVE button to save settings and restart the application
+10. If you want to fast navigate to the Nightscout site, you can make Shift-Click on the CGV value.
+
+<figure>
+  <p>
+    <img src="asset/screenshot-settings.png" alt="Screenshot-widget"/>
+  </p>
+  <figcaption>First launch of nightscout-widget-electron</figcaption>
+</figure>
 
 ## Operating systems
 
