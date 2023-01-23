@@ -1,4 +1,4 @@
-const {app, BrowserWindow, powerMonitor, ipcMain, nativeTheme} = require(`electron`);
+const {app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell} = require(`electron`);
 const path = require(`path`);
 const { readFileSync } = require(`fs`);
 const Store = require('electron-store');
@@ -99,15 +99,29 @@ const createWindow = () => {
     config.set(`WIDGET.POSITION`, { x, y })
   });
 
-  ipcMain.on(`show-settings`, (event) => {
-    event.preventDefault();
+  ipcMain.on(`open-nightscout`, (evt) => {
+    evt.preventDefault();
+
+    const url = config.get(`NIGHTSCOUT.URL`);
+
+    try {
+      shell.openExternal(url);
+      log.info(`Open site ${url} was triggered`);
+    } catch (error) {
+      log.error(`Requested site didn't open due to ${error}`);
+    }
+
+  });
+
+  ipcMain.on(`show-settings`, (evt) => {
+    evt.preventDefault();
 
     settingsWindow.setBounds(getPosition());
     settingsWindow.show();
   });
 
-  settingsWindow.on(`close`, (event) => {
-    event.preventDefault();
+  settingsWindow.on(`close`, (evt) => {
+    evt.preventDefault();
     settingsWindow.hide();
   });
 
@@ -137,8 +151,8 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 
-  ipcMain.on(`log-message`, (event, msg, level) => {
-    event.preventDefault();
+  ipcMain.on(`log-message`, (evt, msg, level) => {
+    evt.preventDefault();
 
     const prefix = `%cRenderer:`;
     switch (level) {
@@ -154,8 +168,8 @@ app.whenReady().then(() => {
     }
   });
 
-  ipcMain.on(`close-window`, (event) => {
-    if (event.sender.getTitle() === `Nightscout Widget`) {
+  ipcMain.on(`close-window`, (evt) => {
+    if (evt.sender.getTitle() === `Nightscout Widget`) {
       app.exit();
       log.info(`App was closed due to close-window event`);
     } else {
@@ -170,8 +184,8 @@ app.whenReady().then(() => {
     return config.get();
   })
 
-  ipcMain.on(`set-settings`, (event, data) => {
-    event.preventDefault();
+  ipcMain.on(`set-settings`, (evt, data) => {
+    evt.preventDefault();
 
     try {
       config.set(`NIGHTSCOUT.URL`, data[`nightscout-url`]);
@@ -190,12 +204,12 @@ app.whenReady().then(() => {
 
   });
 
-  ipcMain.on(`set-widget-opacity`, (event, opacity) => {
+  ipcMain.on(`set-widget-opacity`, (evt, opacity) => {
     widget.mainWindow.setBackgroundColor(`rgba(96, 96, 96, ${opacity / 100})`);
   });
 });
 
-powerMonitor.on(`unlock-screen`, (event) => {
+powerMonitor.on(`unlock-screen`, (evt) => {
   if (app.isHidden()) {
     app.show();
     log.info(`App is shown after unlock-screen event`)
@@ -204,7 +218,7 @@ powerMonitor.on(`unlock-screen`, (event) => {
   }
 });
 
-powerMonitor.on(`resume`, (event) => {
+powerMonitor.on(`resume`, (evt) => {
   if (app.isHidden()) {
     app.show();
     log.info(`App is shown after resume event`)

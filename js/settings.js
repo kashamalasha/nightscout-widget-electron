@@ -28,8 +28,8 @@ const FormFields = {
 
 customAssign(FormFields, CONFIG);
 
-FormFields.WIDGET.OPACITY.addEventListener(`change`, (event) => {
-  const opacity = event.target.valueAsNumber;
+FormFields.WIDGET.OPACITY.addEventListener(`change`, (evt) => {
+  const opacity = evt.target.valueAsNumber;
   try {
     window.electronAPI.setWidgetOpacity(opacity);
   } catch(error) {
@@ -61,10 +61,10 @@ buttonTest.addEventListener(`click`, () => {
 
 const formSettings = document.querySelector(`form`);
 
-formSettings.addEventListener(`submit`, (event) => {
-  event.preventDefault();
+formSettings.addEventListener(`submit`, (evt) => {
+  evt.preventDefault();
 
-  const formData = new FormData(event.target);
+  const formData = new FormData(evt.target);
   const formDataObj = Object.fromEntries(formData.entries());
 
   try {
