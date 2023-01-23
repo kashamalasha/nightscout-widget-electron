@@ -1,6 +1,6 @@
 {
     "NIGHTSCOUT" : {
-        "URL" : "https://some-cgm.fly.dev/api/v3/entries",
+        "URL" : "https://some-cgm.fly.dev",
         "TOKEN" : "token-hash123string456789",
         "INTERVAL" : 30
     },
