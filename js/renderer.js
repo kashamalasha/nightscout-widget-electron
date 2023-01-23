@@ -26,6 +26,20 @@ Buttons.settings.addEventListener(`click`, () => {
   window.electronAPI.showSettings();
 });
 
+Fields.last.addEventListener(`mousedown`, (evt) => {
+  if (evt.shiftKey) {
+    evt.preventDefault();
+
+    evt.target.classList.toggle(`cgv__last--active`);
+    log.info(`Open nightscout site was triggered`);
+    window.electronAPI.openNightscout();
+  }
+});
+
+Fields.last.addEventListener(`mouseup`, (evt) => {
+  evt.target.classList.toggle(`cgv__last--active`);
+})
+
 const render = (data) => {
 
   Fields.last.textContent = data.last;

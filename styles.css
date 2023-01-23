@@ -5,6 +5,7 @@
   --color_cgv_warning_shadow: #8B0000;
   --color_cgv_critical: #D82C68;
   --color_cgv_critical_shadow: #D8C941;
+  --color_cgv_clicked: #0EB5ED;
   --color_cgv_gaugaes: #FFFFFF;
   --color_cgv_button-active: #808080;
 
@@ -36,39 +37,9 @@ body {
   font-size: 1em;
 }
 
-.widget-control {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 15%;
-
-  display: grid;
-  align-content: space-between;
-  justify-content: start;
-}
-
-.widget-button {
-  padding-top: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-
-  background-color: transparent;
-  opacity: 0.6;
-  border: none;
-  border-radius: 15%;
-}
-  .widget-button:hover {
-    opacity: 1;
-  }
-
-  .widget-button:active {
-    background-color: var(--color_cgv_button-active);
-  }
 
 .cgv {
   -webkit-app-region: drag;
-  pointer-events: none;
   user-select: none;
 
   position: absolute;
@@ -104,6 +75,40 @@ body {
   .cgv__last--critical {
     color: var(--color_cgv_critical);
     text-shadow: 1px 1px 0px var(--color_cgv_critical_shadow);
+  }
+  .cgv__last--active {
+    color: var(--color_cgv_clicked);
+  }
+
+.widget-control {
+  user-select: none;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 15%;
+
+  display: grid;
+  align-content: space-between;
+  justify-content: start;
+}
+
+.widget-button {
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  background-color: transparent;
+  opacity: 0.6;
+  border: none;
+  border-radius: 15%;
+}
+  .widget-button:hover {
+    opacity: 1;
+  }
+  .widget-button:active {
+    background-color: var(--color_cgv_button-active);
   }
 
 .settings {

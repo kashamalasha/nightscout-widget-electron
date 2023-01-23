@@ -1,4 +1,4 @@
-const {app, BrowserWindow, powerMonitor, ipcMain, nativeTheme} = require(`electron`);
+const {app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell} = require(`electron`);
 const path = require(`path`);
 const { readFileSync } = require(`fs`);
 const Store = require('electron-store');
@@ -97,6 +97,20 @@ const createWindow = () => {
   mainWindow.on(`moved`, () => {
     const { x, y } = mainWindow.getBounds();
     config.set(`WIDGET.POSITION`, { x, y })
+  });
+
+  ipcMain.on(`open-nightscout`, (evt) => {
+    evt.preventDefault();
+
+    const url = config.get(`NIGHTSCOUT.URL`);
+
+    try {
+      shell.openExternal(url);
+      log.info(`Open site ${url} was triggered`);
+    } catch (error) {
+      log.error(`Requested site didn't open due to ${error}`);
+    }
+
   });
 
   ipcMain.on(`show-settings`, (evt) => {
