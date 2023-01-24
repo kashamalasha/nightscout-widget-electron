@@ -23,7 +23,7 @@ A current application needs these files:
 - `js/settings.js` - The settings form **renderer process** code.
 - `js/util.js` - The code to adapt collected data to a necessary view.
 - `js/renderer.js` - The app's core **renderer process** code.
-- `js/config.json` - The app's variables.
+- `js/config-schema.json` - The app's config json schema validation file.
 
 ## To Use
 
