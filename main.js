@@ -133,6 +133,8 @@ const singleInstance = app.requestSingleInstanceLock();
 if (!singleInstance) app.quit();
 
 app.whenReady().then(() => {
+  app.dock.hide();
+
   const { session } = require(`electron`);
 
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
