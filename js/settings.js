@@ -64,16 +64,28 @@ const formSettings = document.querySelector(`form`);
 formSettings.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
 
+  const msg = `Settings were updated. Widget will be restarted.`;
+
   const formData = new FormData(evt.target);
   const formDataObj = Object.fromEntries(formData.entries());
 
   try {
     window.electronAPI.setSettings(formDataObj);
-    alert('Settings were saved. Widget will be restarted.');
-    log.warn(`Settings were updated, app will be restarted.`);
+    alert(msg);
+    log.warn(msg);
     window.electronAPI.closeWindow();
+    window.electronAPI.restart();
   } catch(error) {
     log.error(error);
     alert(error);
   }
 });
+
+const logLink = document.querySelector(`.settings__log-link`);
+
+logLink.addEventListener(`click`, (evt) => {
+  evt.preventDefault();
+
+  window.electronAPI.openLogFile();
+  window.electronAPI.closeWindow();
+})

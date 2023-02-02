@@ -120,6 +120,10 @@ const createWindow = () => {
     settingsWindow.show();
   });
 
+  ipcMain.on(`open-logfile`, () => {
+    shell.openPath(app.getPath(`logs`));
+  });
+
   settingsWindow.on(`close`, (evt) => {
     evt.preventDefault();
     settingsWindow.hide();
@@ -176,10 +180,13 @@ app.whenReady().then(() => {
       log.info(`App was closed due to close-window event`);
     } else {
       widget.settingsWindow.hide();
-      app.relaunch();
-      app.exit();
-      log.info(`App was restarted due to settings change event`);
     }
+  });
+
+  ipcMain.on(`restart`, () => {
+    app.relaunch();
+    app.exit();
+    log.info(`App was restarted due to renderer event`);
   });
 
   ipcMain.handle(`get-settings`, async () => {
