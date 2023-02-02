@@ -4,7 +4,7 @@
   "description": "An Electron widget application to show on a desktop cgv value is getting from Nightscout API",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "NODE_ENV=production electron ."
   },
   "repository": "https://github.com/kashamalasha/nightscout-widget-electron",
   "keywords": [
