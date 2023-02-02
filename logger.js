@@ -10,7 +10,7 @@ const isDev = process.env.NODE_ENV === 'development';
 // on Linux: ~/.config/<app name>/log.log
 // on OS X: ~/Library/Logs/<app name>/log.log
 // on Windows: %USERPROFILE%\AppData\Roaming\<app name>\log.log
-log.transports.file.level = isDev ? 'silly' : 'debug';
-log.transports.console.level = isDev ? 'debug' : 'info';
+log.transports.file.level = isDev ? 'silly' : 'warn';
+log.transports.console.level = isDev ? 'debug' : 'warn';
 
 module.exports = log;

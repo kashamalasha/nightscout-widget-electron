@@ -7,6 +7,8 @@ contextBridge.exposeInMainWorld(`electronAPI`, {
   setSettings: (data) => ipcRenderer.send(`set-settings`, data),
   setWidgetOpacity: (opacity) => ipcRenderer.send(`set-widget-opacity`, opacity),
   openNightscout: () => ipcRenderer.send(`open-nightscout`),
+  openLogFile: () => ipcRenderer.send(`open-logfile`),
+  restart: () => ipcRenderer.send(`restart`),
   logger : {
     info: (msg) => ipcRenderer.send(`log-message`, msg, `info`),
     warn: (msg) => ipcRenderer.send(`log-message`, msg, `warn`),

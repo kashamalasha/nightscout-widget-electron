@@ -128,6 +128,17 @@ body {
     margin-left: 90px;
   }
 
+  .settings__log-link {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: var(--color_settings_light);
+    text-transform: capitalize;
+  }
+    .settings__log-link:hover {
+      color: var(--color_settings_highlight);
+    }
+
 .settings-fields {
   display: grid;
   grid-template-columns: 40% auto;
