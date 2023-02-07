@@ -25,7 +25,11 @@ A current application needs these files:
 - `js/renderer.js` - The app's core **renderer process** code.
 - `js/config-schema.json` - The app's config json schema validation file.
 
-## To Use
+## How to install (for MacOS)
+
+- Download latest release from: https://github.com/kashamalasha/nightscout-widget-electron/releases
+
+## To build it from source code
 
 To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
