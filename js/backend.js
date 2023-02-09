@@ -30,7 +30,13 @@ const createRequest = (method, url, onLoad, onError) => {
       onLoad(xhr.response);
       break;
     default:
-      onError(`Request status: ${xhr.status} - ${xhr.statusText}`);
+      let xhrStatusText;
+      if (xhr.response) {
+        xhrStatusText = xhr.statusText === `` ? xhr.response.message : `${xhr.statusText}: ${xhr.response.message}`;
+      } else {
+        xhrStatusText = xhr.statusText;
+      }
+      onError(`Request status: ${xhr.status} - ${xhrStatusText}`);
     }
   });
 
