@@ -28,7 +28,7 @@ const createWindow = () => {
       x: 1000,
       y: 100
     },
-    opacity: 30,
+    opacity: 100,
   }
 
   const widgetBounds = {
