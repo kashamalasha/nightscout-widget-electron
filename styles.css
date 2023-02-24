@@ -163,12 +163,28 @@ body {
 
 
 .settings-input {
+  position: relative;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
   justify-content: space-between;
   padding: 2.5px;
 }
+  .settings-input__disabled-tooltip {
+    position: absolute;
+    z-index: 1;
+
+    visibility: hidden;
+    width: 120px;
+    background-color: var(--color_settings_lighten);
+    color: var(--color_settings_darken);
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 0;
+  }
+  .settings-input:hover .settings-input__disabled-tooltip {
+    visibility: visible;
+  }
   .settings-input__label {
     min-width: 40%;
 
@@ -193,6 +209,14 @@ body {
     line-height: 1.15;
     color: var(--color_settings_light);
   }
+    .settings-input__field:disabled {
+      color: var(--color_settings_dark);
+      font-style: italic;
+    }
+    .settings-input__field:disabled + .settings-input__label {
+      color: var(--color_settings_darken);
+      font-style: italic;
+    }
     .settings-input__field--number {
       width: 80px;
     }
