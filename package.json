@@ -19,7 +19,7 @@
   "license": "AGPL-3.0",
   "devDependencies": {
     "ajv": "^8.11.2",
-    "electron": "^21.2.3",
+    "electron": "^22.3.8",
     "electron-log": "^4.4.8",
     "electron-store": "^8.1.0"
   }
