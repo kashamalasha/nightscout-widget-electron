@@ -8,6 +8,7 @@ const CONFIG = await window.electronAPI.getSettings();
 const log = window.electronAPI.logger;
 
 const Fields = {
+  cgv: document.querySelector(`.cgv`),
   last: document.querySelector(`.cgv__last`),
   delta: document.querySelector(`.cgv__delta`),
   trend: document.querySelector(`.cgv__trend`),
@@ -30,34 +31,55 @@ Fields.last.addEventListener(`mousedown`, (evt) => {
   if (evt.shiftKey) {
     evt.preventDefault();
 
-    evt.target.classList.toggle(`cgv__last--active`);
+    evt.target.classList.toggle(`cgv__last--accented`);
     log.info(`Open nightscout site was triggered`);
     window.electronAPI.openNightscout();
   }
 });
 
 Fields.last.addEventListener(`mouseup`, (evt) => {
-  evt.target.classList.toggle(`cgv__last--active`, false);
+  evt.target.classList.toggle(`cgv__last--accented`, false);
 })
 
 const render = (data) => {
+
+  const modMap = {
+    critical: `cgv__last--critical`,
+    warning: `cgv__last--warning`,
+    ok: `cgv__last--ok`,
+    default: `cgv__last--`
+  }
+
+  const lastResult = parseFloat(data.last);
+
+  let classMod;
 
   Fields.last.textContent = data.last;
   Fields.delta.textContent = data.delta;
   Fields.trend.innerHTML = data.direction;
 
-  Fields.last.classList.add(`cgv__last--ok`);
-
-  const lastResult = parseFloat(data.last);
-
-  if ((lastResult > CONFIG.BG.TARGET.TOP & lastResult <= CONFIG.BG.HIGH) |
-      (lastResult >= CONFIG.BG.LOW & lastResult < CONFIG.BG.TARGET.BOTTOM)) {
-    Fields.last.className = Fields.last.className.replace(/cgv__last--.+/, `cgv__last--warning`);
-  } else if (lastResult > CONFIG.BG.HIGH | lastResult < CONFIG.BG.LOW) {
-    Fields.last.className = Fields.last.className.replace(/cgv__last--.+/, `cgv__last--critical`);
-  } else {
-    Fields.last.className = Fields.last.className.replace(/cgv__last--.+/, `cgv__last--ok`);
+  if (!Fields.last.className.includes(modMap.default)) {
+    Fields.last.classList.add(modMap.default);
   }
+
+  if (data.age > CONFIG.WIDGET.AGE_LIMIT) {
+    Fields.cgv.classList.add(`cgv--frozen`);
+    classMod = modMap.default;
+  } else { 
+    if (Fields.cgv.classList.contains(`cgv--frozen`)) {
+      Fields.cgv.classList.remove(`cgv--frozen`);
+    }
+
+    if (lastResult >= CONFIG.BG.HIGH || lastResult <= CONFIG.BG.LOW) {
+      classMod = modMap.critical;
+    } else if (lastResult >= CONFIG.BG.TARGET.TOP || lastResult <= CONFIG.BG.TARGET.BOTTOM) {
+      classMod = modMap.warning;
+    } else {  
+      classMod = modMap.ok;
+    }
+  }
+
+  Fields.last.className = Fields.last.className.replace(/cgv__last--.*/, classMod);
 };
 
 const onSuccess = (result) => {

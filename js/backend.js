@@ -16,7 +16,7 @@ const Endpoints = {
 const GetParams = {
   SORT_BY: `date`,
   LIMIT: 2,
-  FIELDS: `sgv,direction`,
+  FIELDS: `sgv,direction,srvCreated`,
   TYPE: `sgv`,
 };
 

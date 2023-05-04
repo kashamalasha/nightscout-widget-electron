@@ -53,7 +53,8 @@ const createWindow = () => {
     alwaysOnTop: true,
     frame: false,
     transparent: true,
-    backgroundColor: `rgba(96, 96, 96, ${(configValid ? config.get(`WIDGET.OPACITY`) : defaultWidgetValues.opacity) / 100})`,
+    backgroundColor: `rgba(96, 96, 96, ${defaultWidgetValues.opacity / 100})`,
+
   });
 
   const settingsBounds = {
@@ -200,7 +201,8 @@ app.whenReady().then(() => {
       config.set(`NIGHTSCOUT.URL`, data[`nightscout-url`]);
       config.set(`NIGHTSCOUT.TOKEN`, data[`nightscout-token`]);
       config.set(`NIGHTSCOUT.INTERVAL`, parseInt(data[`nightscout-interval`], 10));
-      config.set(`WIDGET.OPACITY`, parseInt(data[`widget-opacity`], 10));
+      config.set(`WIDGET.OPACITY`, 100);
+      config.set(`WIDGET.AGE_LIMIT`, parseInt(data[`age-limit`], 10));
       config.set(`BG.HIGH`, parseFloat(data[`bg-high`]));
       config.set(`BG.LOW`, parseFloat(data[`bg-low`]));
       config.set(`BG.TARGET.TOP`, parseFloat(data[`bg-target-top`]));

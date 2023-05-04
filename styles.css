@@ -5,8 +5,8 @@
   --color_cgv_warning_shadow: #8B0000;
   --color_cgv_critical: #D82C68;
   --color_cgv_critical_shadow: #D8C941;
-  --color_cgv_clicked: #0EB5ED;
-  --color_cgv_gaugaes: #FFFFFF;
+  --color_cgv_accent: #0EB5ED;
+  --color_cgv_gauges: #FFFFFF;
   --color_cgv_button-active: #808080;
 
   --color_settings_dark: #2C3333;
@@ -55,8 +55,11 @@ body {
   justify-items: center;
   justify-content: center;
 
-  color: var(--color_cgv_gaugaes);
+  color: var(--color_cgv_gauges);
 }
+  .cgv--frozen {
+    box-shadow: inset 0 0 50px var(--color_cgv_accent);
+  }
 
 .cgv__last {
   grid-row: span 2;
@@ -76,8 +79,8 @@ body {
     color: var(--color_cgv_critical);
     text-shadow: 1px 1px 0px var(--color_cgv_critical_shadow);
   }
-  .cgv__last--active {
-    color: var(--color_cgv_clicked);
+  .cgv__last--accented {
+    color: var(--color_cgv_accent);
   }
 
 .widget-control {

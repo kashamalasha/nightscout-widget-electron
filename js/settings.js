@@ -15,6 +15,7 @@ const FormFields = {
   },
   WIDGET: {
     OPACITY: document.querySelector(`#widget-opacity`),
+    AGE_LIMIT: document.querySelector(`#age-limit`),
   },
   BG: {
     HIGH: document.querySelector(`#bg-high`),

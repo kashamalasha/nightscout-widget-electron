@@ -49,6 +49,9 @@ const prepareData = (obj) => {
   result.prev = mgdlToMMOL(obj.result[1].sgv);
   result.direction = charToEntity(directionToChar(obj.result[0].direction));
 
+  let currentTime = new Date();
+  result.age = Math.floor((currentTime.getTime() - obj.result[0].srvCreated) / 1000 / 60);
+
   let delta = Math.round((result.last - result.prev) * 100) / 100;
 
   if (delta > 0) {
