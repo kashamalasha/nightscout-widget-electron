@@ -41,7 +41,17 @@ const createRequest = (method, url, onLoad, onError) => {
   });
 
   xhr.addEventListener(`error`, () => {
-    onError(`Connection error`);
+    let errorMessage = 'An unknown error occurred.';
+    if (!navigator.onLine) {
+      errorMessage = 'You are currently offline. Please check your network connection.';
+    } else if (xhr.status === 0) {
+      errorMessage = 'The server is not responding. Check your nightscout site address.';
+    } else if (xhr.status >= 400 && xhr.status < 500) {
+      errorMessage = 'The request could not be completed because the server returned an error.';
+    } else if (xhr.status >= 500 && xhr.status < 600) {
+      errorMessage = 'The server encountered an error and could not complete the request.';
+    }
+    onError(errorMessage);
   });
 
   xhr.addEventListener(`timeout`, () => {
