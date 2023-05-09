@@ -20,8 +20,12 @@ const dir2Char = {
 const customAssign = (targetObject, patchObject) => {
   for (const key of Object.keys(patchObject)) {
     if (key in targetObject) {
-      if (typeof patchObject[key] != 'object') {
-        targetObject[key].value = patchObject[key];
+      if (typeof patchObject[key] != `object`) {
+        if (targetObject[key].type === `checkbox`) {
+          targetObject[key].checked = patchObject[key];
+        } else {
+          targetObject[key].value = patchObject[key];
+        }
       } else {
         customAssign(targetObject[key], patchObject[key]);
       }

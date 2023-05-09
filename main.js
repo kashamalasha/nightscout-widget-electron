@@ -203,6 +203,7 @@ app.whenReady().then(() => {
       config.set(`NIGHTSCOUT.INTERVAL`, parseInt(data[`nightscout-interval`], 10));
       config.set(`WIDGET.OPACITY`, 100);
       config.set(`WIDGET.AGE_LIMIT`, parseInt(data[`age-limit`], 10));
+      config.set(`WIDGET.SHOW_AGE`, data[`show-age`]);
       config.set(`BG.HIGH`, parseFloat(data[`bg-high`]));
       config.set(`BG.LOW`, parseFloat(data[`bg-low`]));
       config.set(`BG.TARGET.TOP`, parseFloat(data[`bg-target-top`]));
@@ -215,12 +216,16 @@ app.whenReady().then(() => {
 
   });
 
-  ipcMain.on(`set-widget-opacity`, (evt, opacity) => {
+  ipcMain.on(`set-widget-opacity`, (_evt, opacity) => {
     widget.mainWindow.setBackgroundColor(`rgba(96, 96, 96, ${opacity / 100})`);
+  });
+
+  ipcMain.on(`test-age-visibility`, (_evt, show) => {
+    widget.mainWindow.webContents.send('set-age-visibility', show);
   });
 });
 
-powerMonitor.on(`unlock-screen`, (evt) => {
+powerMonitor.on(`unlock-screen`, () => {
   if (app.isHidden()) {
     app.show();
     log.info(`App is shown after unlock-screen event`)
@@ -229,7 +234,7 @@ powerMonitor.on(`unlock-screen`, (evt) => {
   }
 });
 
-powerMonitor.on(`resume`, (evt) => {
+powerMonitor.on(`resume`, () => {
   if (app.isHidden()) {
     app.show();
     log.info(`App is shown after resume event`)

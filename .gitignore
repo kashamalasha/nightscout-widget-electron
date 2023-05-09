@@ -5,3 +5,4 @@ node_modules/
 package-lock.json
 *.code-workspace
 out
+.DS_Store

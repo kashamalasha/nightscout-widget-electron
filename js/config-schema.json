@@ -62,6 +62,9 @@
     "WIDGET": {
       "type": "object",
       "properties": {
+        "SHOW_AGE" : {
+          "type": "boolean"
+        },
         "AGE_LIMIT": {
           "type": "integer",
           "minimum": 0

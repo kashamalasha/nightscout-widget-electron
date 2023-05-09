@@ -37,6 +37,10 @@ body {
   font-size: 1em;
 }
 
+input:focus,
+input:focus-visible {
+  outline: none;
+}
 
 .cgv {
   -webkit-app-region: drag;
@@ -82,6 +86,17 @@ body {
   .cgv__last--accented {
     color: var(--color_cgv_accent);
   }
+
+.cgv__age {
+  display: none;
+  position: absolute;
+  top: 33px;
+  right: 5px;
+  width: 50px;
+
+  font-size: 0.7em;
+  text-align: center;
+}
 
 .widget-control {
   user-select: none;
@@ -174,21 +189,24 @@ body {
   padding: 2.5px;
 }
   .settings-input__disabled-tooltip {
+    visibility: hidden;
+
     position: absolute;
     z-index: 1;
 
-    visibility: hidden;
-    width: 120px;
+    padding: 5px;
+
     background-color: var(--color_settings_lighten);
+    font-size: smaller;
     color: var(--color_settings_darken);
     text-align: center;
     border-radius: 5px;
-    padding: 5px 0;
   }
   .settings-input:hover .settings-input__disabled-tooltip {
     visibility: visible;
   }
   .settings-input__label {
+    user-select: none;
     min-width: 40%;
 
     padding-top: 5px;
@@ -216,15 +234,50 @@ body {
       color: var(--color_settings_dark);
       font-style: italic;
     }
-    .settings-input__field:disabled + .settings-input__label {
+    .settings-input__field:disabled + .settings-input__label,
+    .settings-input__check:disabled ~ * .settings-input__label {
       color: var(--color_settings_darken);
       font-style: italic;
+    }
+    .settings-input__check:checked:disabled ~ * .settings-input__field--checkbox {
+      background-image: url(./asset/icons8-check-disabled.png);
+      background-size: 100% 100%;
     }
     .settings-input__field--number {
       width: 80px;
     }
-    .settings-input__field:focus + .settings-input__label {
+    .settings-input__check-wrapper {
+      width: 100%;
+
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+    }
+    .settings-input__field:focus,
+    .settings-input__field:focus-visible,
+    .settings-input__check:focus + * .settings-input__field--checkbox {
+      box-shadow: 0 0 10px var(--color_settings_highlight);
+    }
+    .settings-input__field:focus + .settings-input__label,
+    .settings-input__check:focus ~ * .settings-input__label {
       color: var(--color_settings_highlight);
+    }
+    .settings-input__field--checkbox {
+      width: 30px;
+      height: 30px;
+
+      margin-right: 50px;
+    }
+    .settings-input__check {
+      appearance: none;
+      position: absolute;
+    }
+    .settings-input__check:checked + * .settings-input__field--checkbox {
+      background-image: url(./asset/icons8-check.png);
+      background-size: 100% 100%;
+    }
+    .settings-input__check:focus + .settings-input__field--checkbox {
+      box-shadow: 0 0 10px var(--color_settings_highlight);
     }
 
 .settings-button {
