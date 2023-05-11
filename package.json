@@ -1,6 +1,6 @@
 {
   "name": "nightscout-widget-electron",
-  "version": "0.1",
+  "version": "0.2.0-beta",
   "description": "An Electron widget application to show on a desktop cgv value is getting from Nightscout API",
   "main": "main.js",
   "scripts": {
