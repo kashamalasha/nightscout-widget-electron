@@ -5,8 +5,8 @@
   --color_cgv_warning_shadow: #8B0000;
   --color_cgv_critical: #D82C68;
   --color_cgv_critical_shadow: #D8C941;
-  --color_cgv_clicked: #0EB5ED;
-  --color_cgv_gaugaes: #FFFFFF;
+  --color_cgv_accent: #0EB5ED;
+  --color_cgv_gauges: #FFFFFF;
   --color_cgv_button-active: #808080;
 
   --color_settings_dark: #2C3333;
@@ -37,6 +37,10 @@ body {
   font-size: 1em;
 }
 
+input:focus,
+input:focus-visible {
+  outline: none;
+}
 
 .cgv {
   -webkit-app-region: drag;
@@ -55,8 +59,11 @@ body {
   justify-items: center;
   justify-content: center;
 
-  color: var(--color_cgv_gaugaes);
+  color: var(--color_cgv_gauges);
 }
+  .cgv--frozen {
+    box-shadow: inset 0 0 50px var(--color_cgv_accent);
+  }
 
 .cgv__last {
   grid-row: span 2;
@@ -76,9 +83,20 @@ body {
     color: var(--color_cgv_critical);
     text-shadow: 1px 1px 0px var(--color_cgv_critical_shadow);
   }
-  .cgv__last--active {
-    color: var(--color_cgv_clicked);
+  .cgv__last--accented {
+    color: var(--color_cgv_accent);
   }
+
+.cgv__age {
+  display: none;
+  position: absolute;
+  top: 33px;
+  right: 5px;
+  width: 50px;
+
+  font-size: 0.7em;
+  text-align: center;
+}
 
 .widget-control {
   user-select: none;
@@ -163,13 +181,32 @@ body {
 
 
 .settings-input {
+  position: relative;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
   justify-content: space-between;
   padding: 2.5px;
 }
+  .settings-input__disabled-tooltip {
+    visibility: hidden;
+
+    position: absolute;
+    z-index: 1;
+
+    padding: 5px;
+
+    background-color: var(--color_settings_lighten);
+    font-size: smaller;
+    color: var(--color_settings_darken);
+    text-align: center;
+    border-radius: 5px;
+  }
+  .settings-input:hover .settings-input__disabled-tooltip {
+    visibility: visible;
+  }
   .settings-input__label {
+    user-select: none;
     min-width: 40%;
 
     padding-top: 5px;
@@ -193,11 +230,54 @@ body {
     line-height: 1.15;
     color: var(--color_settings_light);
   }
+    .settings-input__field:disabled {
+      color: var(--color_settings_dark);
+      font-style: italic;
+    }
+    .settings-input__field:disabled + .settings-input__label,
+    .settings-input__check:disabled ~ * .settings-input__label {
+      color: var(--color_settings_darken);
+      font-style: italic;
+    }
+    .settings-input__check:checked:disabled ~ * .settings-input__field--checkbox {
+      background-image: url(./asset/icons8-check-disabled.png);
+      background-size: 100% 100%;
+    }
     .settings-input__field--number {
       width: 80px;
     }
-    .settings-input__field:focus + .settings-input__label {
+    .settings-input__check-wrapper {
+      width: 100%;
+
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+    }
+    .settings-input__field:focus,
+    .settings-input__field:focus-visible,
+    .settings-input__check:focus + * .settings-input__field--checkbox {
+      box-shadow: 0 0 10px var(--color_settings_highlight);
+    }
+    .settings-input__field:focus + .settings-input__label,
+    .settings-input__check:focus ~ * .settings-input__label {
       color: var(--color_settings_highlight);
+    }
+    .settings-input__field--checkbox {
+      width: 30px;
+      height: 30px;
+
+      margin-right: 50px;
+    }
+    .settings-input__check {
+      appearance: none;
+      position: absolute;
+    }
+    .settings-input__check:checked + * .settings-input__field--checkbox {
+      background-image: url(./asset/icons8-check.png);
+      background-size: 100% 100%;
+    }
+    .settings-input__check:focus + .settings-input__field--checkbox {
+      box-shadow: 0 0 10px var(--color_settings_highlight);
     }
 
 .settings-button {

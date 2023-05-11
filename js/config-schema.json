@@ -62,8 +62,15 @@
     "WIDGET": {
       "type": "object",
       "properties": {
+        "SHOW_AGE" : {
+          "type": "boolean"
+        },
+        "AGE_LIMIT": {
+          "type": "integer",
+          "minimum": 0
+        },
         "OPACITY": {
-          "type": "number",
+          "type": "integer",
           "minimum": 10,
           "maximum": 100,
           "multipleOf": 10
@@ -85,6 +92,7 @@
         }
       },
       "required": [
+        "AGE_LIMIT",
         "OPACITY",
         "POSITION"
       ]

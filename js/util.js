@@ -20,8 +20,12 @@ const dir2Char = {
 const customAssign = (targetObject, patchObject) => {
   for (const key of Object.keys(patchObject)) {
     if (key in targetObject) {
-      if (typeof patchObject[key] != 'object') {
-        targetObject[key].value = patchObject[key];
+      if (typeof patchObject[key] != `object`) {
+        if (targetObject[key].type === `checkbox`) {
+          targetObject[key].checked = patchObject[key];
+        } else {
+          targetObject[key].value = patchObject[key];
+        }
       } else {
         customAssign(targetObject[key], patchObject[key]);
       }
@@ -48,6 +52,9 @@ const prepareData = (obj) => {
   result.last = mgdlToMMOL(obj.result[0].sgv);
   result.prev = mgdlToMMOL(obj.result[1].sgv);
   result.direction = charToEntity(directionToChar(obj.result[0].direction));
+
+  let currentTime = new Date();
+  result.age = Math.floor((currentTime.getTime() - obj.result[0].srvCreated) / 1000 / 60);
 
   let delta = Math.round((result.last - result.prev) * 100) / 100;
 

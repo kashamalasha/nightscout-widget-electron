@@ -15,6 +15,8 @@ const FormFields = {
   },
   WIDGET: {
     OPACITY: document.querySelector(`#widget-opacity`),
+    AGE_LIMIT: document.querySelector(`#age-limit`),
+    SHOW_AGE: document.querySelector(`#show-age`),
   },
   BG: {
     HIGH: document.querySelector(`#bg-high`),
@@ -36,6 +38,15 @@ FormFields.WIDGET.OPACITY.addEventListener(`change`, (evt) => {
     log.error(error);
   }
 });
+
+FormFields.WIDGET.SHOW_AGE.addEventListener(`change`, (evt) => {
+  const show = evt.target.checked;
+  try {
+    window.electronAPI.testAgeVisisblity(show);
+  } catch(error) {
+    log.error(error);
+  }
+})
 
 const buttonTest = document.querySelector(`#button-test`);
 
@@ -68,6 +79,8 @@ formSettings.addEventListener(`submit`, (evt) => {
 
   const formData = new FormData(evt.target);
   const formDataObj = Object.fromEntries(formData.entries());
+
+  formDataObj[`show-age`] = (formDataObj[`show-age`]) ? true : false;
 
   try {
     window.electronAPI.setSettings(formDataObj);

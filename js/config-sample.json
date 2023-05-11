@@ -1,18 +1,24 @@
 {
-    "NIGHTSCOUT" : {
-        "URL" : "https://some-cgm.site.com",
-        "TOKEN" : "token-hash123string456789",
-        "INTERVAL" : 30
+    "NIGHTSCOUT": {
+        "URL": "https://some-cgm.site.com",
+        "TOKEN": "token-hash123string456789",
+        "INTERVAL": 30
     },
     "BG" : {
-        "HIGH" : 10,
-        "LOW" : 3.3,
-        "TARGET" : {
-            "TOP" : 8.5,
-            "BOTTOM" : 4.5
+        "HIGH": 10,
+        "LOW": 3.3,
+        "TARGET": {
+            "TOP": 8.5,
+            "BOTTOM": 4.5
         }
     },
     "WIDGET" : {
-        "OPACITY" : 30
+        "SHOW_AGE": true,
+        "AGE_LIMIT": 20,
+        "OPACITY": 100, 
+        "POSITION": {
+            "x": 100,
+            "y": 100
+        }
     }
 }

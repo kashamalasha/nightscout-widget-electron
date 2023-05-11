@@ -28,7 +28,7 @@ const createWindow = () => {
       x: 1000,
       y: 100
     },
-    opacity: 30,
+    opacity: 100,
   }
 
   const widgetBounds = {
@@ -53,7 +53,8 @@ const createWindow = () => {
     alwaysOnTop: true,
     frame: false,
     transparent: true,
-    backgroundColor: `rgba(96, 96, 96, ${(configValid ? config.get(`WIDGET.OPACITY`) : defaultWidgetValues.opacity) / 100})`,
+    backgroundColor: `rgba(96, 96, 96, ${defaultWidgetValues.opacity / 100})`,
+
   });
 
   const settingsBounds = {
@@ -200,7 +201,9 @@ app.whenReady().then(() => {
       config.set(`NIGHTSCOUT.URL`, data[`nightscout-url`]);
       config.set(`NIGHTSCOUT.TOKEN`, data[`nightscout-token`]);
       config.set(`NIGHTSCOUT.INTERVAL`, parseInt(data[`nightscout-interval`], 10));
-      config.set(`WIDGET.OPACITY`, parseInt(data[`widget-opacity`], 10));
+      config.set(`WIDGET.OPACITY`, 100);
+      config.set(`WIDGET.AGE_LIMIT`, parseInt(data[`age-limit`], 10));
+      config.set(`WIDGET.SHOW_AGE`, data[`show-age`]);
       config.set(`BG.HIGH`, parseFloat(data[`bg-high`]));
       config.set(`BG.LOW`, parseFloat(data[`bg-low`]));
       config.set(`BG.TARGET.TOP`, parseFloat(data[`bg-target-top`]));
@@ -213,12 +216,16 @@ app.whenReady().then(() => {
 
   });
 
-  ipcMain.on(`set-widget-opacity`, (evt, opacity) => {
+  ipcMain.on(`set-widget-opacity`, (_evt, opacity) => {
     widget.mainWindow.setBackgroundColor(`rgba(96, 96, 96, ${opacity / 100})`);
+  });
+
+  ipcMain.on(`test-age-visibility`, (_evt, show) => {
+    widget.mainWindow.webContents.send('set-age-visibility', show);
   });
 });
 
-powerMonitor.on(`unlock-screen`, (evt) => {
+powerMonitor.on(`unlock-screen`, () => {
   if (app.isHidden()) {
     app.show();
     log.info(`App is shown after unlock-screen event`)
@@ -227,7 +234,7 @@ powerMonitor.on(`unlock-screen`, (evt) => {
   }
 });
 
-powerMonitor.on(`resume`, (evt) => {
+powerMonitor.on(`resume`, () => {
   if (app.isHidden()) {
     app.show();
     log.info(`App is shown after resume event`)
