@@ -4,7 +4,29 @@
   "description": "An Electron widget application to show on a desktop cgv value is getting from Nightscout API",
   "main": "main.js",
   "scripts": {
-    "start": "NODE_ENV=production electron ."
+    "start": "NODE_ENV=production electron .",
+    "dist": "electron-builder",
+    "ship": "electron-builder -p always"
+  },
+  "build": {
+    "appId": "com.owlet.app",
+    "productName": "Owlet",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!README.md",
+      "asset/**/*",
+      "!asset/screenshot*"
+    ],
+    "extraFiles": [
+      "LICENSE"
+    ],
+    "mac": {
+      "category": "health",
+      "icon": "asset/Appicon.icns"
+    }
   },
   "repository": "https://github.com/kashamalasha/nightscout-widget-electron",
   "keywords": [
@@ -17,9 +39,14 @@
   ],
   "author": "kashamalasha",
   "license": "AGPL-3.0",
+  "dependencies": {
+    "electron-log": "^4.4.8",
+    "electron-store": "^8.1.0"
+  },
   "devDependencies": {
     "ajv": "^8.11.2",
     "electron": "^22.3.8",
+    "electron-builder": "^23.6.0",
     "electron-log": "^4.4.8",
     "electron-store": "^8.1.0"
   }

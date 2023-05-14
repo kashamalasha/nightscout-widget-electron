@@ -6,3 +6,4 @@ package-lock.json
 *.code-workspace
 out
 .DS_Store
+dist
