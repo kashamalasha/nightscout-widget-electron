@@ -3,7 +3,7 @@ const path = require(`path`);
 const { readFileSync } = require(`fs`);
 const Store = require('electron-store');
 const Ajv = require('ajv');
-const log = require('./logger');
+const log = require('./js/logger');
 
 const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.json`)));
 const config = new Store();
