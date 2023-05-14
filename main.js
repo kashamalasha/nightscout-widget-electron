@@ -1,9 +1,27 @@
-const {app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell} = require(`electron`);
+const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell, autoUpdater } = require(`electron`);
 const path = require(`path`);
 const { readFileSync } = require(`fs`);
 const Store = require('electron-store');
 const Ajv = require('ajv');
 const log = require('./js/logger');
+
+const isDev = process.env.NODE_ENV === 'development';
+
+const repoProps = {
+  owner: `kashamalasha`,
+  name: `nightscout-widget-electron`,
+}
+
+const server = 'https://update.electronjs.org';
+const feed = `${server}/${repoProps.owner}/${repoProps.name}/${process.platform}-${process.arch}/${app.getVersion()}`;
+
+autoUpdater.setFeedURL(feed);
+
+if (!isDev) {
+  setInterval(() => {
+    autoUpdater.checkForUpdates();
+  }, 10 * 60 * 1000);
+}
 
 const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.json`)));
 const config = new Store();
