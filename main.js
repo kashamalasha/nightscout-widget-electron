@@ -1,26 +1,18 @@
-const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell, autoUpdater } = require(`electron`);
+const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell } = require(`electron`);
+const { autoUpdater } = require(`electron-updater`);
 const path = require(`path`);
 const { readFileSync } = require(`fs`);
 const Store = require('electron-store');
 const Ajv = require('ajv');
 const log = require('./js/logger');
+autoUpdater.logger = log;
 
-const isDev = process.env.NODE_ENV === 'development';
+const CHECK_FOR_UPDATE_INTERVAL = 10 // in minutes
 
-const repoProps = {
-  owner: `kashamalasha`,
-  name: `nightscout-widget-electron`,
-}
-
-const server = 'https://update.electronjs.org';
-const feed = `${server}/${repoProps.owner}/${repoProps.name}/${process.platform}-${process.arch}/${app.getVersion()}`;
-
-autoUpdater.setFeedURL(feed);
-
-if (!isDev) {
+const requestToUpdate = (interval) => {
   setInterval(() => {
-    autoUpdater.checkForUpdates();
-  }, 10 * 60 * 1000);
+    autoUpdater.checkForUpdatesAndNotify();
+  }, interval * 60 * 1000);
 }
 
 const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.json`)));
@@ -116,6 +108,10 @@ const createWindow = () => {
   mainWindow.on(`moved`, () => {
     const { x, y } = mainWindow.getBounds();
     config.set(`WIDGET.POSITION`, { x, y })
+  });
+
+  mainWindow.webContents.on(`did-finish-load`, () => {
+    requestToUpdate(CHECK_FOR_UPDATE_INTERVAL);
   });
 
   ipcMain.on(`open-nightscout`, (evt) => {

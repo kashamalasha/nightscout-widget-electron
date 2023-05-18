@@ -1,7 +1,8 @@
 {
   "name": "nightscout-widget-electron",
-  "version": "0.2.0-beta",
+  "productName": "Owlet",
   "description": "An Electron widget application to show on a desktop cgv value is getting from Nightscout API",
+  "version": "0.2.0-beta",
   "main": "main.js",
   "scripts": {
     "start": "NODE_ENV=production electron .",
@@ -9,7 +10,7 @@
     "ship": "electron-builder -p always"
   },
   "build": {
-    "appId": "com.owlet.app",
+    "appId": "com.burny.owlet.app",
     "productName": "Owlet",
     "directories": {
       "output": "dist"
@@ -26,9 +27,22 @@
     "mac": {
       "category": "health",
       "icon": "asset/Appicon.icns"
-    }
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "kashamalasha",
+        "repo": "nightscout-widget-electron"
+      }
+    ]
   },
-  "repository": "https://github.com/kashamalasha/nightscout-widget-electron",
+  "repository": {
+    "type": "git",
+    "provider": "github",
+    "owner": "kashamalasha",
+    "repo": "nightscout-widget-electron",
+    "ulr": "https://github.com/kashamalasha/nightscout-widget-electron"
+  },
   "keywords": [
     "diabetes",
     "continuous glucose management",
@@ -40,6 +54,7 @@
   "author": "kashamalasha",
   "license": "AGPL-3.0",
   "dependencies": {
+    "electron-updater": "^5.3.0",
     "electron-log": "^4.4.8",
     "electron-store": "^8.1.0"
   },
