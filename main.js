@@ -5,6 +5,7 @@ const { readFileSync } = require(`fs`);
 const Store = require('electron-store');
 const Ajv = require('ajv');
 const log = require('./js/logger');
+
 autoUpdater.logger = log;
 
 const CHECK_FOR_UPDATE_INTERVAL = 10 // in minutes
