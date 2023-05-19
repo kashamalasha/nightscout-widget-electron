@@ -72,10 +72,17 @@
           </div>
         </section>
       </div>
-      <button class="settings-button" type="submit" id="button-submit">Save</button>
-      <button class="settings-button" type="button" id="button-test">Test</button>
+      <div class="settings-footer">
+        <div class="settings-footer__buttons">
+          <button class="settings-button" type="submit" id="button-submit">Save</button>
+          <button class="settings-button" type="button" id="button-test">Test</button>
+        </div>
+        <div class="settings-footer__meta">
+          <p class="settings__app-version">v<span id="app-version">0.0.0</span></p>
+          <a class="settings__log-link" href="#">Log ...</a>
+        </div>
+      </footer>
     </form>
-    <a class="settings__log-link" href="#">log ...</a>
   </main>
   <script type="module" src="./js/settings.js"></script>
 </body>

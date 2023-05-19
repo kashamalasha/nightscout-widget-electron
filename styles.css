@@ -146,10 +146,13 @@ input:focus-visible {
     margin-left: 90px;
   }
 
+  .settings__app-version {
+    padding-right: 10px;
+    text-align: right;
+    color: var(--color_settings_darken);
+  }
+
   .settings__log-link {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
     color: var(--color_settings_light);
     text-transform: capitalize;
   }
@@ -160,7 +163,6 @@ input:focus-visible {
 .settings-fields {
   display: grid;
   grid-template-columns: 40% auto;
-  margin-bottom: 5px;
 }
   .settings-fields__nightscout {
     grid-column: span 2;
@@ -178,7 +180,6 @@ input:focus-visible {
 
     font-weight: 500;
   }
-
 
 .settings-input {
   position: relative;
@@ -279,6 +280,21 @@ input:focus-visible {
     .settings-input__check:focus + .settings-input__field--checkbox {
       box-shadow: 0 0 10px var(--color_settings_highlight);
     }
+
+.settings-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.settings-footer__buttons {
+  display: flex;
+}
+.settings-footer__meta {
+  display: flex;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: 10px;
+}
 
 .settings-button {
   min-width: 100px;
