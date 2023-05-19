@@ -5,6 +5,7 @@ const { readFileSync } = require(`fs`);
 const Store = require('electron-store');
 const Ajv = require('ajv');
 const log = require('./js/logger');
+const isDev = process.env.NODE_ENV === 'development';
 
 autoUpdater.logger = log;
 
@@ -153,7 +154,9 @@ const singleInstance = app.requestSingleInstanceLock();
 if (!singleInstance) app.quit();
 
 app.whenReady().then(() => {
-  app.dock.hide();
+  if (!isDev) {
+    app.dock.hide();
+  }
 
   const { session } = require(`electron`);
 
