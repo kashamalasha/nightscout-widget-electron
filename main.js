@@ -210,7 +210,11 @@ app.whenReady().then(() => {
 
   ipcMain.handle(`get-settings`, async () => {
     return config.get();
-  })
+  });
+
+  ipcMain.handle(`get-version`, async () => {
+    return app.getVersion();
+  });
 
   ipcMain.on(`set-settings`, (evt, data) => {
     evt.preventDefault();

@@ -3,6 +3,7 @@ const { contextBridge, ipcRenderer } = require(`electron`);
 contextBridge.exposeInMainWorld(`electronAPI`, {
   closeWindow: () => ipcRenderer.send(`close-window`),
   showSettings: () => ipcRenderer.send(`show-settings`),
+  getVersion: () => ipcRenderer.invoke(`get-version`),
   getSettings: () => ipcRenderer.invoke(`get-settings`),
   setSettings: (data) => ipcRenderer.send(`set-settings`, data),
   setWidgetOpacity: (opacity) => ipcRenderer.send(`set-widget-opacity`, opacity),

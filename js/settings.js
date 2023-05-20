@@ -4,6 +4,7 @@ import { customAssign } from "./util.js";
 import { getStatus } from "./backend.js";
 
 const CONFIG = await window.electronAPI.getSettings();
+const VERSION = await window.electronAPI.getVersion();
 
 const log = window.electronAPI.logger;
 
@@ -29,6 +30,8 @@ const FormFields = {
 };
 
 customAssign(FormFields, CONFIG);
+
+document.querySelector(`#app-version`).textContent = VERSION;
 
 FormFields.WIDGET.OPACITY.addEventListener(`change`, (evt) => {
   const opacity = evt.target.valueAsNumber;
