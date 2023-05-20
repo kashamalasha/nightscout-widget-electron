@@ -7,6 +7,27 @@ const Ajv = require('ajv');
 const log = require('./js/logger');
 const isDev = process.env.NODE_ENV === 'development';
 
+// Only for v0.2.0-beta
+const { copyFileSync, existsSync, unlinkSync } = require(`fs`);
+
+const appPath = path.join(process.env.HOME, `Library`, `Application Support`);
+const configFileName = `config.json`;
+
+const oldConfig = path.join(appPath, `nightscout-widget-electron`, configFileName);
+const newConfig = path.join(appPath, `Owlet`, configFileName);
+
+try {
+  if (existsSync(oldConfig)) {
+    copyFileSync(oldConfig, newConfig);
+    log.warn(`Old settings were copied from ${oldConfig}`);
+    unlinkSync(oldConfig);
+    log.warn(`Old settings file were deleted`);
+  } 
+} catch(err) {
+  log.error(`Something went wrong while copying the old configuration from ${oldConfig}`);
+}
+// Only for v0.2.0-beta
+
 autoUpdater.logger = log;
 
 const CHECK_FOR_UPDATE_INTERVAL = 10 // in minutes
