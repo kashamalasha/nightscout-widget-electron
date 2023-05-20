@@ -5,6 +5,7 @@ const { readFileSync } = require(`fs`);
 const Store = require('electron-store');
 const Ajv = require('ajv');
 const log = require('./js/logger');
+
 const isDev = process.env.NODE_ENV === 'development';
 
 // Only for v0.2.0-beta
