@@ -6,6 +6,7 @@
   "main": "main.js",
   "scripts": {
     "start": "NODE_ENV=production electron .",
+    "pack": "build --dir",
     "dist": "electron-builder",
     "ship": "electron-builder -p always"
   },
@@ -25,8 +26,12 @@
       "LICENSE"
     ],
     "mac": {
-      "category": "health",
-      "icon": "asset/Appicon.icns"
+      "icon": "asset/Appicon.icns",
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "gatekeeperAssess": false,
+      "category": "public.app-category.developer-tools"
     },
     "publish": [
       {
