@@ -1,11 +1,11 @@
 const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell } = require(`electron`);
 const path = require(`path`);
 const { readFileSync } = require(`fs`);
-const Store = require('electron-store');
-const Ajv = require('ajv');
-const log = require('./js/logger');
-const requestToUpdate = require('./js/auto-update');
-const isDev = process.env.NODE_ENV === 'development';
+const Store = require(`electron-store`);
+const Ajv = require(`ajv`);
+const log = require(`./js/logger`);
+const requestToUpdate = require(`./js/auto-update`);
+const isDev = process.env.NODE_ENV === `development`;
 
 // Only for v0.2.0-beta
 const { copyFileSync, existsSync, unlinkSync } = require(`fs`);
