@@ -1,10 +1,10 @@
 const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell } = require(`electron`);
-const { autoUpdater } = require(`electron-updater`);
 const path = require(`path`);
 const { readFileSync } = require(`fs`);
 const Store = require('electron-store');
 const Ajv = require('ajv');
 const log = require('./js/logger');
+const requestToUpdate = require('./js/auto-update');
 const isDev = process.env.NODE_ENV === 'development';
 
 // Only for v0.2.0-beta
@@ -27,16 +27,6 @@ try {
   log.error(`Something went wrong while copying the old configuration from ${oldConfig}`);
 }
 // Only for v0.2.0-beta
-
-autoUpdater.logger = log;
-
-const CHECK_FOR_UPDATE_INTERVAL = 10 // in minutes
-
-const requestToUpdate = (interval) => {
-  setInterval(() => {
-    autoUpdater.checkForUpdatesAndNotify();
-  }, interval * 60 * 1000);
-}
 
 const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.json`)));
 const config = new Store();
@@ -134,7 +124,7 @@ const createWindow = () => {
   });
 
   mainWindow.webContents.on(`did-finish-load`, () => {
-    requestToUpdate(CHECK_FOR_UPDATE_INTERVAL);
+    requestToUpdate();
   });
 
   ipcMain.on(`open-nightscout`, (evt) => {
