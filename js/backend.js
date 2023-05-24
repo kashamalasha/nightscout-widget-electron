@@ -5,7 +5,8 @@ const CONFIG = await window.electronAPI.getSettings();
 const REQUEST_TIMEOUT = 10000;
 
 const StatusCode = {
-  OK: 200
+  OK: 200,
+  NOT_FOUND: 404,
 };
 
 const Endpoints = {
@@ -25,12 +26,17 @@ const createRequest = (method, url, onLoad, onError) => {
   xhr.responseType = `json`;
 
   xhr.addEventListener(`load`, () => {
+    let xhrStatusText;
+
     switch (xhr.status) {
     case StatusCode.OK:
       onLoad(xhr.response);
       break;
+    case StatusCode.NOT_FOUND:
+      xhrStatusText = `The requested resource was not found on the server`;
+      onError(`Request status: ${xhr.status} - ${xhrStatusText}`);
+      break;
     default:
-      let xhrStatusText;
       if (xhr.response) {
         xhrStatusText = xhr.statusText === `` ? xhr.response.message : `${xhr.statusText}: ${xhr.response.message}`;
       } else {

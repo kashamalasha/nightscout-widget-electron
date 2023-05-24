@@ -103,7 +103,7 @@ const onSuccess = (result) => {
 };
 
 const onError = (errorMessage) => {
-  const msg = `${errorMessage} was encountered over than ${retry++} times`;
+  const msg = `${errorMessage} - was encountered over than ${retry++} times`;
   log.error(msg);
   if (retry > CONNECTION_RETRY_LIMIT) {
     Fields.cgv.classList.add(`cgv--frozen`);
