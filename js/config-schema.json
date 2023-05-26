@@ -62,7 +62,7 @@
     "WIDGET": {
       "type": "object",
       "properties": {
-        "SHOW_AGE" : {
+        "SHOW_AGE": {
           "type": "boolean"
         },
         "AGE_LIMIT": {
@@ -97,7 +97,7 @@
         "POSITION"
       ]
     },
-    "LAST_UPDATE_REQUEST" : {
+    "LAST_UPDATE_REQUEST": {
       "type": "string"
     }
   },
