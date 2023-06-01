@@ -51,31 +51,63 @@ FormFields.WIDGET.SHOW_AGE.addEventListener(`change`, (evt) => {
   }
 })
 
+const testConnection = (evt) => {
+  return new Promise((resolve, reject) => {
+    const testParams = {
+      url: FormFields.NIGHTSCOUT.URL.value,
+      token: FormFields.NIGHTSCOUT.TOKEN.value,
+    };
+
+    const onSuccess = (result) => {
+      if (evt.target.id === `button-test`) {
+        alert(`It looks good!`);
+        log.info(`Test connection to ${testParams.url} was successfull.`);
+      }
+  
+      resolve(result);
+    };
+
+    const onError = (errorMessage) => {
+      log.error(errorMessage);
+      const msg = `Connection to ${testParams.url} wasn't successful because of ${errorMessage}.`;
+      
+      reject(new Error(msg));
+    };
+
+    getStatus(testParams, onSuccess, onError);
+  });
+};
+
 const buttonTest = document.querySelector(`#button-test`);
 
-buttonTest.addEventListener(`click`, () => {
+buttonTest.addEventListener('click', async (evt) => {
+  try {
+    await testConnection(evt);
+  } catch (error) {
+    alert(error);
+  }
+});
 
-  const testParams = {
-    url: FormFields.NIGHTSCOUT.URL.value,
-    token: FormFields.NIGHTSCOUT.TOKEN.value,
-  };
+const nightscoutTextInputs = [
+  FormFields.NIGHTSCOUT.URL,
+  FormFields.NIGHTSCOUT.TOKEN
+];
 
-  const onSuccess = (result) => {
-    alert(`It looks good!`);
-    log.info(`Connection test to ${testParams.url} was successfull.`);
-  };
+const trimInputs = (evt) => {
+  const inputValue = evt.target.value;
+  const trimmedValue = inputValue.trim();
 
-  const onError = (errorMessage) => {
-    alert(errorMessage);
-    log.error(`Connection test to ${testParams.url} wasn't successfull because of ${errorMessage}.`);
-  };
+  const modifiedValue = trimmedValue.replace(/[/\.]+$/, '');
+  evt.target.value = modifiedValue;
+};
 
-  getStatus(testParams, onSuccess, onError);
-})
+nightscoutTextInputs.forEach((input) => {
+  input.addEventListener(`blur`, trimInputs);
+});
 
 const formSettings = document.querySelector(`form`);
 
-formSettings.addEventListener(`submit`, (evt) => {
+formSettings.addEventListener(`submit`, async (evt) => {
   evt.preventDefault();
 
   const msg = `Settings were updated. Widget will be restarted.`;
@@ -86,6 +118,7 @@ formSettings.addEventListener(`submit`, (evt) => {
   formDataObj[`show-age`] = (formDataObj[`show-age`]) ? true : false;
 
   try {
+    await testConnection(evt);
     window.electronAPI.setSettings(formDataObj);
     alert(msg);
     log.warn(msg);
