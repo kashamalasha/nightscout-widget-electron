@@ -96,19 +96,23 @@ window.electronAPI.setAgeVisibility((_evt, show) => {
   }
 })
 
+let isAlertShown = false;
 let retry = 0;
+
 const onSuccess = (result) => {
   retry = 0;
+  isAlertShown = false;
   render(prepareData(result));
 };
 
 const onError = (errorMessage) => {
   const msg = `${errorMessage} - was encountered over than ${retry++} times`;
-  if (retry > CONNECTION_RETRY_LIMIT) {
+  if (retry > CONNECTION_RETRY_LIMIT && !isAlertShown) {
     log.error(msg);
     Fields.cgv.classList.add(`cgv--frozen`);
     Fields.last.className = Fields.last.className.replace(/cgv__last--.*/, ModMap.default);
     alert(msg);
+    isAlertShown = true;
   }
 };
 
