@@ -87,7 +87,7 @@ const createWindow = () => {
 
   const getPosition = () => {
     const widgetLastPosition = {
-      x: configValid ? config.get(`WIDGET.POSITION.x`) : defaultWidgetValues.position.x,
+      x: configValid ? config.get(`WIDGET.POSITION.x`) - widgetBounds.width : defaultWidgetValues.position.x,
       y: configValid ? config.get(`WIDGET.POSITION.y`) : defaultWidgetValues.position.y,
     };
 

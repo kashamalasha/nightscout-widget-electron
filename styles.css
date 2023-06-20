@@ -67,6 +67,7 @@ input:focus-visible {
 
 .cgv__last {
   grid-row: span 2;
+  margin-right: 5%;
 
   font-size: 3em;
   font-weight: 800;
@@ -143,7 +144,7 @@ input:focus-visible {
   .settings__title {
     margin-top: 15px;
     margin-bottom: 15px;
-    margin-left: 90px;
+    text-align: center;
   }
 
   .settings__app-version {
