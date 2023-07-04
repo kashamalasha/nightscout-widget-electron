@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
 :root {
   --color_cgv_ok: #209F20;
   --color_cgv_ok_shadow: #FFFFFF;
@@ -14,6 +16,11 @@
   --color_settings_lighten: #A5C9CA;
   --color_settings_light: #E7F6F2;
   --color_settings_highlight: #CAA7A5;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 *, html, body {
@@ -33,7 +40,7 @@ html {
 body {
   height: 100%;
 
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Lato', Tahoma, sans-serif;
   font-size: 1em;
 }
 
@@ -43,6 +50,8 @@ input:focus-visible {
 }
 
 .cgv {
+  background-color: rgb(96, 96, 96);
+  border-radius: 10px;
   -webkit-app-region: drag;
   user-select: none;
 
@@ -68,8 +77,9 @@ input:focus-visible {
 .cgv__last {
   grid-row: span 2;
   margin-right: 5%;
+  margin-bottom: 2.5%;
 
-  font-size: 3em;
+  font-size: 3.3em;
   font-weight: 800;
 }
   .cgv__last--ok {
@@ -114,6 +124,7 @@ input:focus-visible {
 }
 
 .widget-button {
+  -webkit-app-region:no-drag;
   padding-top: 5px;
   padding-left: 5px;
   padding-right: 5px;
@@ -132,11 +143,13 @@ input:focus-visible {
 
 .settings {
   height: 100%;
+  max-height: 100%;
 
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   padding: 5px;
+  padding-bottom: 15px;
 
   color: var(--color_settings_light);
   background-color: var(--color_settings_dark);
@@ -288,6 +301,7 @@ input:focus-visible {
   align-items: center;
 }
 .settings-footer__buttons {
+  margin-top: 5px;
   display: flex;
 }
 .settings-footer__meta {

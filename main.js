@@ -6,6 +6,8 @@ const Ajv = require(`ajv`);
 const log = require(`./js/logger`);
 const requestToUpdate = require(`./js/auto-update`);
 const isDev = process.env.NODE_ENV === `development`;
+const isMac = process.platform == `darwin`;
+
 
 // Only for v0.2.0-beta
 const { copyFileSync, existsSync, unlinkSync } = require(`fs`);
@@ -76,8 +78,6 @@ const createWindow = () => {
     alwaysOnTop: true,
     frame: false,
     transparent: true,
-    backgroundColor: `rgba(96, 96, 96, ${defaultWidgetValues.opacity / 100})`,
-
   });
 
   const settingsBounds = {
@@ -110,7 +110,8 @@ const createWindow = () => {
       preload: path.join(__dirname, `js/preload.js`)
     },
     backgroundColor: `rgb(44, 51, 51)`,
-    titleBarStyle: `hidden`,
+    titleBarStyle: isMac ? `default` : `hidden`,
+    titleBarOverlay: isMac ? false : true,
     show: configValid ? false : true,
     parent: mainWindow,
   });
@@ -120,7 +121,9 @@ const createWindow = () => {
 
   mainWindow.on(`moved`, () => {
     const { x, y } = mainWindow.getBounds();
-    config.set(`WIDGET.POSITION`, { x, y })
+    config.set(`WIDGET.POSITION`, { x, y });
+    const childPosition = getPosition();
+    settingsWindow.setPosition(childPosition.x, childPosition.y, false);
   });
 
   mainWindow.webContents.on(`did-finish-load`, () => {
@@ -258,41 +261,43 @@ app.whenReady().then(() => {
   });
 });
 
-powerMonitor.on(`unlock-screen`, () => {
-  if (app.isHidden()) {
-    app.show();
-    log.info(`App is shown after unlock-screen event`)
-  } else if (!app.isHidden()) {
-    log.silly(`Duplicated powerMonitor event handler called by 'unlock-screen' event`);
-  }
-});
+if (isMac) {
+  powerMonitor.on(`unlock-screen`, () => {
+    if (app.isHidden()) {
+      app.show();
+      log.info(`App is shown after unlock-screen event`)
+    } else if (!app.isHidden()) {
+      log.silly(`Duplicated powerMonitor event handler called by 'unlock-screen' event`);
+    }
+  });
 
-powerMonitor.on(`resume`, () => {
-  if (app.isHidden()) {
-    app.show();
-    log.info(`App is shown after resume event`)
-  } else if (!app.isHidden()) {
-    log.silly(`Duplicated powerMonitor event handler called by 'resume' event`);
-  } else {
-    app.relaunch();
-    app.exit();
-    log.info(`App was restarted after resume from sleep`);
-  }
-});
-
-nativeTheme.on('updated', () => {
-  if (app.isHidden()) {
-    app.show();
-    log.info(`App is shown after theme change event`)
-  } else if (!app.isHidden()) {
-    log.silly(`Duplicated nativeTheme event handler called by 'updated' event`);
-  } else {
-    app.relaunch();
-    app.exit();
-    log.info(`App was restarted due to theme change`);
-  }
-});
+  powerMonitor.on(`resume`, () => {
+    if (app.isHidden()) {
+      app.show();
+      log.info(`App is shown after resume event`)
+    } else if (!app.isHidden()) {
+      log.silly(`Duplicated powerMonitor event handler called by 'resume' event`);
+    } else {
+      app.relaunch();
+      app.exit();
+      log.info(`App was restarted after resume from sleep`);
+    }
+  });
+  
+  nativeTheme.on('updated', () => {
+    if (app.isHidden()) {
+      app.show();
+      log.info(`App is shown after theme change event`)
+    } else if (!app.isHidden()) {
+      log.silly(`Duplicated nativeTheme event handler called by 'updated' event`);
+    } else {
+      app.relaunch();
+      app.exit();
+      log.info(`App was restarted due to theme change`);
+    }
+  });
+}
 
 app.on(`window-all-closed`, () => {
-  if (process.platform !== `darwin`) app.quit();
+  if (!isMac) app.quit();
 });
