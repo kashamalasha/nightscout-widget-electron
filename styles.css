@@ -151,6 +151,7 @@ input:focus-visible {
   padding: 5px;
   padding-bottom: 15px;
 
+  font-family: inherit;
   color: var(--color_settings_light);
   background-color: var(--color_settings_dark);
 }
