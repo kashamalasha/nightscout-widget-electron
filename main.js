@@ -97,6 +97,11 @@ const createWindow = () => {
     return { x, y }
   }
 
+  const settingsColors = {
+    background: `rgb(44, 51, 51)`,
+    controls: `rgb(116, 177, 190)`
+  }
+
   const settingsWindow = new BrowserWindow({
     width: settingsBounds.width,
     height: settingsBounds.height,
@@ -109,9 +114,13 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, `js/preload.js`)
     },
-    backgroundColor: `rgb(44, 51, 51)`,
+    backgroundColor: settingsColors.background,
     titleBarStyle: `hidden`,
-    titleBarOverlay: isMac ? false : true,
+    titleBarOverlay: isMac ? false : {
+      color: settingsColors.background,
+      symbolColor: settingsColors.controls,
+      height: 40
+    },
     show: configValid ? false : true,
     parent: mainWindow,
   });
