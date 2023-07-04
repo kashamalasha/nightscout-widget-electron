@@ -110,7 +110,7 @@ const createWindow = () => {
       preload: path.join(__dirname, `js/preload.js`)
     },
     backgroundColor: `rgb(44, 51, 51)`,
-    titleBarStyle: isMac ? `default` : `hidden`,
+    titleBarStyle: `hidden`,
     titleBarOverlay: isMac ? false : true,
     show: configValid ? false : true,
     parent: mainWindow,
