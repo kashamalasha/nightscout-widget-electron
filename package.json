@@ -60,14 +60,14 @@
   "author": "kashamalasha",
   "license": "AGPL-3.0",
   "dependencies": {
-    "electron-updater": "^5.3.0",
+    "electron-updater": "^6.1.1",
     "electron-log": "^4.4.8",
     "electron-store": "^8.1.0"
   },
   "devDependencies": {
     "ajv": "^8.11.2",
-    "electron": "^22.3.8",
-    "electron-builder": "^23.6.0",
+    "electron": "^25.2.0",
+    "electron-builder": "^24.4.0",
     "electron-log": "^4.4.8",
     "electron-store": "^8.1.0"
   }
