@@ -77,6 +77,7 @@ const createWindow = () => {
     },
     alwaysOnTop: true,
     frame: false,
+    skipTaskbar: true,
     transparent: true,
   });
 
