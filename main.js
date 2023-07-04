@@ -120,7 +120,9 @@ const createWindow = () => {
 
   mainWindow.on(`moved`, () => {
     const { x, y } = mainWindow.getBounds();
-    config.set(`WIDGET.POSITION`, { x, y })
+    config.set(`WIDGET.POSITION`, { x, y });
+    const childPosition = getPosition();
+    settingsWindow.setPosition(childPosition.x, childPosition.y, false);
   });
 
   mainWindow.webContents.on(`did-finish-load`, () => {

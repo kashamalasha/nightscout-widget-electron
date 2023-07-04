@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
 :root {
   --color_cgv_ok: #209F20;
   --color_cgv_ok_shadow: #FFFFFF;
@@ -33,7 +35,7 @@ html {
 body {
   height: 100%;
 
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Lato', Tahoma, sans-serif;
   font-size: 1em;
 }
 
@@ -68,8 +70,9 @@ input:focus-visible {
 .cgv__last {
   grid-row: span 2;
   margin-right: 5%;
+  margin-bottom: 2.5%;
 
-  font-size: 3em;
+  font-size: 3.3em;
   font-weight: 800;
 }
   .cgv__last--ok {
@@ -138,6 +141,7 @@ input:focus-visible {
   justify-content: space-evenly;
   padding: 5px;
 
+  font-family: inherit;
   color: var(--color_settings_light);
   background-color: var(--color_settings_dark);
 }
@@ -288,6 +292,7 @@ input:focus-visible {
   align-items: center;
 }
 .settings-footer__buttons {
+  margin-top: 5px;
   display: flex;
 }
 .settings-footer__meta {
