@@ -109,7 +109,14 @@ input:focus-visible {
   text-align: center;
 }
 
+.cgv__trend {
+  min-width: 20px;
+  min-height: 20px;
+  text-align: center;
+}
+
 .widget-control {
+  -webkit-app-region: no-drag;
   user-select: none;
 
   position: absolute;

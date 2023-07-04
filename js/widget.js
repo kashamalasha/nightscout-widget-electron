@@ -20,6 +20,7 @@ const Fields = {
 const Buttons = {
   close: document.querySelector(`#button-close`),
   settings: document.querySelector(`#button-settings`),
+  browse: document.querySelector(`#button-browse`),
 };
 
 const ModMap = {
@@ -37,14 +38,15 @@ Buttons.settings.addEventListener(`click`, () => {
   window.electronAPI.showSettings();
 });
 
-Fields.last.addEventListener(`mousedown`, (evt) => {
-  if (evt.shiftKey) {
-    evt.preventDefault();
+Buttons.browse.addEventListener(`pointerdown`, () => {
+  Fields.last.classList.toggle(`cgv__last--accented`);
 
-    evt.target.classList.toggle(`cgv__last--accented`);
-    log.info(`Open nightscout site was triggered`);
-    window.electronAPI.openNightscout();
-  }
+  log.info(`Open nightscout site was triggered`);
+  window.electronAPI.openNightscout();
+});
+
+Buttons.browse.addEventListener(`pointerup`, () => {
+  Fields.last.classList.toggle(`cgv__last--accented`);
 });
 
 Fields.last.addEventListener(`mouseup`, (evt) => {
