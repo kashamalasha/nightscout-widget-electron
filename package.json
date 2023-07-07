@@ -40,6 +40,14 @@
       ],
       "icon": "asset/Appicon.ico"
     },
+    "nsis": {
+      "oneClick": true,
+      "installerIcon": "asset/Appicon.ico",
+      "uninstallerIcon": "asset/Appicon.ico",
+      "uninstallDisplayName": "Owlet-uninstaller",
+      "license": "LICENSE.md",
+      "allowToChangeInstallationDirectory": false
+    },
     "publish": [
       {
         "provider": "github",
