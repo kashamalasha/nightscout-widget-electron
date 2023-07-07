@@ -162,6 +162,9 @@ input:focus-visible {
   background-color: var(--color_settings_dark);
 }
   .settings__title {
+    -webkit-app-region: drag;
+    user-select: none;
+
     margin-top: 15px;
     margin-bottom: 15px;
     text-align: center;
@@ -197,6 +200,7 @@ input:focus-visible {
   border-radius: 5px;
 }
   .settings-field__title {
+    user-select: none;
     margin-bottom: 15px;
 
     font-weight: 500;

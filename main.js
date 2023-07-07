@@ -56,11 +56,15 @@ const createWindow = () => {
     opacity: 100,
   }
 
+  if (!configValid) {
+    config.set(`WIDGET.POSITION`, defaultWidgetValues.position);
+  }
+
   const widgetBounds = {
     width: 180,
     height: 80,
-    x: configValid ? config.get(`WIDGET.POSITION.x`) : defaultWidgetValues.position.x,
-    y: configValid ? config.get(`WIDGET.POSITION.y`) : defaultWidgetValues.position.y,
+    x: config.get(`WIDGET.POSITION.x`),
+    y: config.get(`WIDGET.POSITION.y`),
   };
 
   const mainWindow = new BrowserWindow({
@@ -87,12 +91,9 @@ const createWindow = () => {
   };
 
   const getPosition = () => {
-    const widgetLastPosition = {
-      x: configValid ? config.get(`WIDGET.POSITION.x`) - widgetBounds.width : defaultWidgetValues.position.x,
-      y: configValid ? config.get(`WIDGET.POSITION.y`) : defaultWidgetValues.position.y,
-    };
+    const widgetLastPosition = config.get(`WIDGET.POSITION`);
 
-    x = widgetLastPosition.x - (settingsBounds.width - widgetBounds.width);
+    x = widgetLastPosition.x - settingsBounds.width;
     y = widgetLastPosition.y;
 
     return { x, y }
@@ -178,9 +179,10 @@ const singleInstance = app.requestSingleInstanceLock();
 if (!singleInstance) app.quit();
 
 app.whenReady().then(() => {
-  if (!isDev) {
+  if (!isDev && isMac) {
     app.dock.hide();
   }
+
 
   const { session } = require(`electron`);
 
@@ -244,6 +246,9 @@ app.whenReady().then(() => {
     evt.preventDefault();
 
     try {
+      const { x, y } = widget.mainWindow.getBounds();
+      config.set(`WIDGET.POSITION`, { x, y });
+
       config.set(`NIGHTSCOUT.URL`, data[`nightscout-url`]);
       config.set(`NIGHTSCOUT.TOKEN`, data[`nightscout-token`]);
       config.set(`NIGHTSCOUT.INTERVAL`, parseInt(data[`nightscout-interval`], 10));
