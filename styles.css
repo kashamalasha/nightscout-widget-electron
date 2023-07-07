@@ -76,7 +76,6 @@ input:focus-visible {
 
 .cgv__last {
   grid-row: span 2;
-  margin-right: 5%;
   margin-bottom: 2.5%;
 
   font-size: 3.3em;
