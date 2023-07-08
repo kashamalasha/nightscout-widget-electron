@@ -33,6 +33,7 @@ On the first launch, the app will prompt you to fill the following settings (see
   <figcaption>First launch of Owlet on MacOS</figcaption>
 </figure>
 
+
 <figure>
   <p>
     <img src="asset/screenshot-settings-windows.png" alt="Screenshot-widget"/>
