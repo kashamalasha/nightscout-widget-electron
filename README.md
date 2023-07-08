@@ -6,7 +6,7 @@ This is the cross-platform application, built with Electron, uses the [Nightscou
 The widget will stay on top of your screen, so you don't need to keep your Nightscout site in the browser opened to see your/your relative's or kid's measurements in real-time anymore.
 I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5_NightscoutMon) solution, built on [M5 Stack's](https://m5stack.com/) hardware platform.
 
-<img src="asset/screenshot-widget.png" alt="Screenshot-widget" width="200"/>
+<img src="asset/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
 
 ### To install (for MacOS and MS Windows)
 
@@ -40,35 +40,41 @@ On the first launch, the app will prompt you to fill the following settings (see
   <figcaption>First launch of Owlet on Windows</figcaption>
 </figure>
 
-**Nightscout API Settings**:
+### Nightscout API Settings
+
 - **NIGHTSCOUT URL** - is the address of your nightscout (e.g. https://some-cgm.fly.dev) 
 - **NIGHTSCOUT TOKEN** - the access token you've created on the previous steps
 - **NIGHTSCOUT REQUEST INTERVAL (SEC.)** - the interval of the getting information from the Nightscout site to display in the widget (60 seconds will be OK)
 
-**Widget preferences**:
+### Widget preferences
 - **AGE LIMIT (MIN.)** - the timeout of data requesting interval, after that interval widget will change their appearance on "frozen" state. Usually it means that reader is offline or detached from the sensor, or the smartphone's battery is drained out
 <img src="asset/screenshot-widget-frozen.png" alt="Screenshot-widget" width="235"/>
+
 - **SHOW AGE** - that option displays additional information about how old the showing data is
 
-**Blood sugar levels preferences**:
+
+### Blood sugar levels preferences
+
+Set the tracking parameters using following guides:
+
 - Above the **HIGH LEVEL TRESHOLD** and below th **LOW LEVEL THRESHOLD** the last value will be colored in red
-<img style="padding-left: 15px"  src="asset/screenshot-widget-critical.png" alt="Screenshot-widget" width="200"/>
+<img src="asset/screenshot-widget-critical.png" alt="Screenshot-widget" width="200"/>
 - Above the **TARGET TOP LEVEL** and below the **TARGET BOTTOM LEVEL** the last value will be colored in orange
-<img style="padding-left: 15px" src="asset/screenshot-widget-warning.png" alt="Screenshot-widget" width="200"/>
+<img src="asset/screenshot-widget-warning.png" alt="Screenshot-widget" width="200"/>
 - By default the last value will be colored in green
 <img src="asset/screenshot-widget.png" alt="Screenshot-widget" width="235"/>
 
-You may test the entered connection parameters by clicking the **TEST** button to verify the Nightscout site is accessible and the token is correct
+- You may test the entered connection parameters by clicking the **TEST** button to verify the Nightscout site is accessible and the token is correct
 
-If everything is ok, press the **SAVE** button to save settings and restart the application
+- If everything is ok, press the **SAVE** button to save settings and restart the application
 
 ## 🧭 Using the widget
 
-After restart the widget will always stay on top of the screen until you close it by clicking the top left corner with the X sigh.
+- After restart the widget will always stay on top of the screen until you close it by clicking the top left corner with the X sigh.
 
-If you need to change the settings you can click by the gear symbol in the bottom left corner.
+- If you need to change the settings you can click by the gear symbol in the bottom left corner.
 
-If you want to fast navigate to the Nightscout site, you can click by the middle button with the graph symbol.
+- If you want to fast navigate to the Nightscout site, you can click by the middle button with the graph symbol.
 
 ## 🗜️ Content
 
@@ -91,7 +97,7 @@ A current application includes these files:
 
 ## 🛠️ To build it from source code
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line do:
 
 ```bash
 # Clone this repository
