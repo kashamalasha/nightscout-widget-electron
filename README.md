@@ -1,10 +1,10 @@
 # 🦉 Hello, I am Owlet!
 
-The app's new name is "Owlet," which means baby owl and was chosen because of the Nightscout logo.
+The app's new name is "Owlet", which means baby owl and was chosen because of the Nightscout logo.
 
 ## 👋 Project Description
 
-This is the cross-platform application, built with Electron, uses the [Nightscout API](https://nightscout.github.io/). The aim is to provide a lightweight interface for your T1D measurement visualization (blood sugar levels).
+This is the cross-platform application, built with Electron, uses the [Nightscout API](https://nightscout.github.io/). The aim is to provide a lightweight interface for your `T1D` measurement visualization (blood sugar levels).
 
 The widget will stay on top of your screen, so you don't need to keep your Nightscout site in the browser opened to see your/your relative's or kid's measurements in real-time anymore.
 
@@ -12,7 +12,7 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 <img src="asset/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
 
-### To install (for MacOS and MS Windows)
+## 📦 Installation (for MacOS and MS Windows)
 
 Download latest release from: https://github.com/kashamalasha/nightscout-widget-electron/releases
 
@@ -28,7 +28,7 @@ Download latest release from: https://github.com/kashamalasha/nightscout-widget-
 
 ## 🚀 First start
 
-On the first launch, the app will prompt you to fill the following settings (see below)
+On the first launch, the app will prompt you to fill the following settings
 
 <figure>
   <figcaption>First launch of Owlet on MacOS</figcaption>
@@ -44,20 +44,20 @@ On the first launch, the app will prompt you to fill the following settings (see
   </p>
 </figure>
 
-### Nightscout API Settings
+### 1. Nightscout API Settings
 
 - **NIGHTSCOUT URL** - is the address of your nightscout (e.g. https://some-cgm.fly.dev) 
 - **NIGHTSCOUT TOKEN** - the access token you've created on the previous steps
 - **NIGHTSCOUT REQUEST INTERVAL (SEC.)** - the interval of the getting information from the Nightscout site to display in the widget (60 seconds will be OK)
 
-### Widget preferences
+### 2. Widget preferences
 - **AGE LIMIT (MIN.)** - the timeout of data requesting interval, after that interval widget will change their appearance on "frozen" state. Usually it means that reader is offline or detached from the sensor, or the smartphone's battery is drained out
 <img src="asset/screenshot-widget-frozen.png" alt="Screenshot-widget" width="235"/>
 
-- **SHOW AGE** - that option displays additional information about how old the showing data is
+- **SHOW AGE** - that option displays additional information about how old the shown data is
 
 
-### Blood sugar levels preferences
+### 3. Blood sugar levels preferences
 
 Set the tracking parameters using following guides:
 
@@ -76,7 +76,7 @@ Set the tracking parameters using following guides:
 
 ## 🧭 Using the widget
 
-- After restart the widget will always stay on top of the screen until you close it by clicking the top left corner with the X sigh.
+- After restarting, the widget will always stay on top of the screen until you close it by clicking the top left corner with the X sign.
 
 - If you need to change the settings you can click by the gear symbol in the bottom left corner.
 
@@ -84,7 +84,7 @@ Set the tracking parameters using following guides:
 
 ## 🗜️ Content
 
-A current application includes these files:
+The current application includes these files:
 
 - `package.json` - Points to the app's main file and lists its details and dependencies.
 - `main.js` - Starts the app and creates a widget. This is the app's **main process**.
@@ -103,7 +103,7 @@ A current application includes these files:
 
 ## 🛠️ To build it from source code
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line do:
+To clone and run this repository, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line do:
 
 ```bash
 # Clone this repository
@@ -121,11 +121,11 @@ npm run dev
 ### Operating systems
 
 - Compatible with MacOS and MS Windows
-- It wasn't tested on Linux yet, feel free to fork it for testing and using on different OS. I will appreciate any pull request.
+- It hasn't been tested on Linux yet. Feel free to fork it for testing and use it on a different OS.
 
 ### Build Native Applications
 
-You can build a native application for your operating system's preferences from the source code using one of these instruments:
+You can build a native application for your operating system's preferences from the source code using one of these tools:
 
 - [electron-forge](https://www.electronforge.io/) 
 - [electron-builder](https://www.electron.build/) (currently using)
