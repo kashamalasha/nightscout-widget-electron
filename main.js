@@ -6,27 +6,7 @@ const Ajv = require(`ajv`);
 const log = require(`./js/logger`);
 const requestToUpdate = require(`./js/auto-update`);
 const isDev = process.env.NODE_ENV === `development`;
-
-// Only for v0.2.0-beta
-const { copyFileSync, existsSync, unlinkSync } = require(`fs`);
-
-const appPath = path.join(process.env.HOME, `Library`, `Application Support`);
-const configFileName = `config.json`;
-
-const oldConfig = path.join(appPath, `nightscout-widget-electron`, configFileName);
-const newConfig = path.join(appPath, `Owlet`, configFileName);
-
-try {
-  if (existsSync(oldConfig)) {
-    copyFileSync(oldConfig, newConfig);
-    log.warn(`Old settings were copied from ${oldConfig}`);
-    unlinkSync(oldConfig);
-    log.warn(`Old settings file were deleted`);
-  } 
-} catch(err) {
-  log.error(`Something went wrong while copying the old configuration from ${oldConfig}`);
-}
-// Only for v0.2.0-beta
+const isMac = process.platform == `darwin`;
 
 const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.json`)));
 const config = new Store();
@@ -54,11 +34,15 @@ const createWindow = () => {
     opacity: 100,
   }
 
+  if (!configValid) {
+    config.set(`WIDGET.POSITION`, defaultWidgetValues.position);
+  }
+
   const widgetBounds = {
     width: 180,
     height: 80,
-    x: configValid ? config.get(`WIDGET.POSITION.x`) : defaultWidgetValues.position.x,
-    y: configValid ? config.get(`WIDGET.POSITION.y`) : defaultWidgetValues.position.y,
+    x: config.get(`WIDGET.POSITION.x`),
+    y: config.get(`WIDGET.POSITION.y`),
   };
 
   const mainWindow = new BrowserWindow({
@@ -75,9 +59,8 @@ const createWindow = () => {
     },
     alwaysOnTop: true,
     frame: false,
+    skipTaskbar: true,
     transparent: true,
-    backgroundColor: `rgba(96, 96, 96, ${defaultWidgetValues.opacity / 100})`,
-
   });
 
   const settingsBounds = {
@@ -86,15 +69,17 @@ const createWindow = () => {
   };
 
   const getPosition = () => {
-    const widgetLastPosition = {
-      x: configValid ? config.get(`WIDGET.POSITION.x`) : defaultWidgetValues.position.x,
-      y: configValid ? config.get(`WIDGET.POSITION.y`) : defaultWidgetValues.position.y,
-    };
+    const widgetLastPosition = config.get(`WIDGET.POSITION`);
 
-    x = widgetLastPosition.x - (settingsBounds.width - widgetBounds.width);
+    x = widgetLastPosition.x - settingsBounds.width;
     y = widgetLastPosition.y;
 
     return { x, y }
+  }
+
+  const settingsColors = {
+    background: `rgb(44, 51, 51)`,
+    controls: `rgb(116, 177, 190)`
   }
 
   const settingsWindow = new BrowserWindow({
@@ -109,8 +94,13 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, `js/preload.js`)
     },
-    backgroundColor: `rgb(44, 51, 51)`,
+    backgroundColor: settingsColors.background,
     titleBarStyle: `hidden`,
+    titleBarOverlay: isMac ? false : {
+      color: settingsColors.background,
+      symbolColor: settingsColors.controls,
+      height: 40
+    },
     show: configValid ? false : true,
     parent: mainWindow,
   });
@@ -120,7 +110,9 @@ const createWindow = () => {
 
   mainWindow.on(`moved`, () => {
     const { x, y } = mainWindow.getBounds();
-    config.set(`WIDGET.POSITION`, { x, y })
+    config.set(`WIDGET.POSITION`, { x, y });
+    const childPosition = getPosition();
+    settingsWindow.setPosition(childPosition.x, childPosition.y, false);
   });
 
   mainWindow.webContents.on(`did-finish-load`, () => {
@@ -165,9 +157,10 @@ const singleInstance = app.requestSingleInstanceLock();
 if (!singleInstance) app.quit();
 
 app.whenReady().then(() => {
-  if (!isDev) {
+  if (!isDev && isMac) {
     app.dock.hide();
   }
+
 
   const { session } = require(`electron`);
 
@@ -231,6 +224,9 @@ app.whenReady().then(() => {
     evt.preventDefault();
 
     try {
+      const { x, y } = widget.mainWindow.getBounds();
+      config.set(`WIDGET.POSITION`, { x, y });
+
       config.set(`NIGHTSCOUT.URL`, data[`nightscout-url`]);
       config.set(`NIGHTSCOUT.TOKEN`, data[`nightscout-token`]);
       config.set(`NIGHTSCOUT.INTERVAL`, parseInt(data[`nightscout-interval`], 10));
@@ -258,41 +254,43 @@ app.whenReady().then(() => {
   });
 });
 
-powerMonitor.on(`unlock-screen`, () => {
-  if (app.isHidden()) {
-    app.show();
-    log.info(`App is shown after unlock-screen event`)
-  } else if (!app.isHidden()) {
-    log.silly(`Duplicated powerMonitor event handler called by 'unlock-screen' event`);
-  }
-});
+if (isMac) {
+  powerMonitor.on(`unlock-screen`, () => {
+    if (app.isHidden()) {
+      app.show();
+      log.info(`App is shown after unlock-screen event`)
+    } else if (!app.isHidden()) {
+      log.silly(`Duplicated powerMonitor event handler called by 'unlock-screen' event`);
+    }
+  });
 
-powerMonitor.on(`resume`, () => {
-  if (app.isHidden()) {
-    app.show();
-    log.info(`App is shown after resume event`)
-  } else if (!app.isHidden()) {
-    log.silly(`Duplicated powerMonitor event handler called by 'resume' event`);
-  } else {
-    app.relaunch();
-    app.exit();
-    log.info(`App was restarted after resume from sleep`);
-  }
-});
-
-nativeTheme.on('updated', () => {
-  if (app.isHidden()) {
-    app.show();
-    log.info(`App is shown after theme change event`)
-  } else if (!app.isHidden()) {
-    log.silly(`Duplicated nativeTheme event handler called by 'updated' event`);
-  } else {
-    app.relaunch();
-    app.exit();
-    log.info(`App was restarted due to theme change`);
-  }
-});
+  powerMonitor.on(`resume`, () => {
+    if (app.isHidden()) {
+      app.show();
+      log.info(`App is shown after resume event`)
+    } else if (!app.isHidden()) {
+      log.silly(`Duplicated powerMonitor event handler called by 'resume' event`);
+    } else {
+      app.relaunch();
+      app.exit();
+      log.info(`App was restarted after resume from sleep`);
+    }
+  });
+  
+  nativeTheme.on('updated', () => {
+    if (app.isHidden()) {
+      app.show();
+      log.info(`App is shown after theme change event`)
+    } else if (!app.isHidden()) {
+      log.silly(`Duplicated nativeTheme event handler called by 'updated' event`);
+    } else {
+      app.relaunch();
+      app.exit();
+      log.info(`App was restarted due to theme change`);
+    }
+  });
+}
 
 app.on(`window-all-closed`, () => {
-  if (process.platform !== `darwin`) app.quit();
+  if (!isMac) app.quit();
 });
