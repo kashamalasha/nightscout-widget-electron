@@ -1,5 +1,7 @@
 # 🦉 Hello, I am Owlet!
 
+The app's new name is "Owlet," which means baby owl and was chosen because of the Nightscout logo.
+
 ## 👋 Project Description
 
 This is the cross-platform application, built with Electron, uses the [Nightscout API](https://nightscout.github.io/). The aim is to provide a lightweight interface for your T1D measurement visualization (blood sugar levels).
