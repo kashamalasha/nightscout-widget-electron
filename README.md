@@ -5,7 +5,9 @@ The app's new name is "Owlet," which means baby owl and was chosen because of th
 ## 👋 Project Description
 
 This is the cross-platform application, built with Electron, uses the [Nightscout API](https://nightscout.github.io/). The aim is to provide a lightweight interface for your T1D measurement visualization (blood sugar levels).
+
 The widget will stay on top of your screen, so you don't need to keep your Nightscout site in the browser opened to see your/your relative's or kid's measurements in real-time anymore.
+
 I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5_NightscoutMon) solution, built on [M5 Stack's](https://m5stack.com/) hardware platform.
 
 <img src="asset/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
