@@ -12,7 +12,7 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 <img src="asset/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
 
-### 📦 Installation (for MacOS and MS Windows)
+## 📦 Installation (for MacOS and MS Windows)
 
 Download latest release from: https://github.com/kashamalasha/nightscout-widget-electron/releases
 
