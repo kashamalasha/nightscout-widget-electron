@@ -27,18 +27,17 @@ Download latest release from: https://github.com/kashamalasha/nightscout-widget-
 On the first launch, the app will prompt you to fill the following settings (see below)
 
 <figure>
+  <figcaption>First launch of Owlet on MacOS</figcaption>
   <p>
     <img src="asset/screenshot-settings-macos.png" alt="Screenshot-widget"/>
   </p>
-  <figcaption>First launch of Owlet on MacOS</figcaption>
 </figure>
 
-
 <figure>
+  <figcaption>First launch of Owlet on Windows</figcaption>
   <p>
     <img src="asset/screenshot-settings-windows.png" alt="Screenshot-widget"/>
   </p>
-  <figcaption>First launch of Owlet on Windows</figcaption>
 </figure>
 
 ### Nightscout API Settings
