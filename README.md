@@ -59,8 +59,10 @@ Set the tracking parameters using following guides:
 
 - Above the **HIGH LEVEL TRESHOLD** and below th **LOW LEVEL THRESHOLD** the last value will be colored in red
 <img src="asset/screenshot-widget-critical.png" alt="Screenshot-widget" width="200"/>
+
 - Above the **TARGET TOP LEVEL** and below the **TARGET BOTTOM LEVEL** the last value will be colored in orange
 <img src="asset/screenshot-widget-warning.png" alt="Screenshot-widget" width="200"/>
+
 - By default the last value will be colored in green
 <img src="asset/screenshot-widget.png" alt="Screenshot-widget" width="235"/>
 
