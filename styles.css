@@ -50,8 +50,6 @@ input:focus-visible {
 }
 
 .cgv {
-  background-color: rgb(96, 96, 96);
-  border-radius: 10px;
   -webkit-app-region: drag;
   user-select: none;
 
@@ -68,6 +66,8 @@ input:focus-visible {
   justify-items: center;
   justify-content: center;
 
+  border-radius: 10px;
+  background-color: rgb(96, 96, 96);
   color: var(--color_cgv_gauges);
 }
   .cgv--frozen {
