@@ -18,6 +18,11 @@ const dir2Char = {
 };
 
 const customAssign = (targetObject, patchObject) => {
+
+  if (patchObject === null) {
+    patchObject = '';
+  }
+
   for (const key of Object.keys(patchObject)) {
     if (key in targetObject) {
       if (typeof patchObject[key] != `object`) {
