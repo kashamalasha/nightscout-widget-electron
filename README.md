@@ -14,7 +14,10 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 ## 📦 Installation (for MacOS and MS Windows)
 
-Download latest release from: https://github.com/kashamalasha/nightscout-widget-electron/releases
+Download latest releases: 
+- Setup installer for MS Windows: [Owlet-Setup-0.3.0-beta.exe](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.3.0-beta/Owlet-Setup-0.3.0-beta.exe)
+- DMG pack for MacOS: [Owlet-0.3.0-beta-arm64.dmg](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.3.0-beta/Owlet-0.3.0-beta-arm64.dmg)
+- Other installation packs are available here: https://github.com/kashamalasha/nightscout-widget-electron/releases
 
 
 ## ⚠️ Before start
