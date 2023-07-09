@@ -36,7 +36,8 @@
     },
     "win": {
       "target": [
-        "nsis"
+        "nsis",
+        "zip"
       ],
       "icon": "asset/Appicon.ico"
     },
