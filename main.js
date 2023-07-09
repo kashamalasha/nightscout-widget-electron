@@ -12,10 +12,20 @@ const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.js
 const config = new Store();
 const ajv = new Ajv();
 
+if (config.size === 0) {
+  try {
+    config.clear();
+    log.warn(`Config created successfully`);
+  } catch (error) {
+    log.error(`Failed to create config:`, error);
+    alert(error);
+  }
+}
+
 const validate = ajv.compile(SCHEMA);
 const configValid = validate(config.get());
 
-if (!configValid) {
+if (!configValid && config.size > 0) {
   const key = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
   const value = config.get(key);
   const error = `Value ${value} of ${key} ${validate.errors[0].message}`;
