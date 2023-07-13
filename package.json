@@ -26,13 +26,15 @@
     "extraFiles": [
       "LICENSE"
     ],
+    "afterSign": "electron-builder-notarize",
     "mac": {
-      "icon": "asset/Appicon.icns",
+      "notarize": true,
       "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "icon": "asset/Appicon.icns",
       "entitlements": "build/entitlements.mac.plist",
       "entitlementsInherit": "build/entitlements.mac.plist",
-      "gatekeeperAssess": false,
-      "category": "public.app-category.developer-tools"
+      "category": "public.app-category.health"
     },
     "win": {
       "target": [
@@ -75,11 +77,12 @@
   "author": "kashamalasha",
   "license": "AGPL-3.0",
   "dependencies": {
-    "electron-updater": "^6.1.1",
     "electron-log": "^4.4.8",
-    "electron-store": "^8.1.0"
+    "electron-store": "^8.1.0",
+    "electron-updater": "^6.1.1"
   },
   "devDependencies": {
+    "@electron/notarize": "^2.1.0",
     "ajv": "^8.11.2",
     "electron": "^25.2.0",
     "electron-builder": "^24.4.0"
