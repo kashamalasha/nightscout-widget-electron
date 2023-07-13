@@ -82,9 +82,9 @@
     "electron-updater": "^6.1.1"
   },
   "devDependencies": {
-    "@electron/notarize": "^2.1.0",
     "ajv": "^8.11.2",
     "electron": "^25.2.0",
-    "electron-builder": "^24.4.0"
+    "electron-builder": "^24.4.0",
+    "electron-builder-notarize": "^1.5.1"
   }
 }
