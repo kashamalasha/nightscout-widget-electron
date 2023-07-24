@@ -5,6 +5,22 @@ import { getStatus } from "./backend.js";
 
 const CONFIG = await window.electronAPI.getSettings();
 const VERSION = await window.electronAPI.getVersion();
+const dialog = await window.electronAPI.dialog;
+
+const alert = (msg, type, title, sync = false) => {
+  const data = {
+    type: type,
+    title: title,
+    message: msg.toString(),
+    buttons: [`OK`],
+    defaultId: 0,
+  }
+  if (sync) {
+    dialog.showMessageBoxSync(data);
+  } else {
+    dialog.showMessageBox(data);
+  }
+}
 
 const log = window.electronAPI.logger;
 
@@ -67,8 +83,8 @@ const testConnection = (evt) => {
 
     const onSuccess = (result) => {
       if (evt.target.id === `button-test`) {
-        alert(`It looks good!`);
-        log.info(`Test connection to ${testParams.url} was successfull.`);
+        alert(`It looks good!`, `info`, `OK`);
+        log.info(`Connection successfully established.`);
       }
   
       resolve(result);
@@ -76,7 +92,7 @@ const testConnection = (evt) => {
 
     const onError = (errorMessage) => {
       log.error(errorMessage);
-      const msg = `Connection to ${testParams.url} wasn't successful because of ${errorMessage}.`;
+      const msg = `Connection failed: ${errorMessage}.`;
       
       reject(new Error(msg));
     };
@@ -89,7 +105,7 @@ FormButtons.TEST.addEventListener('click', async (evt) => {
   try {
     await testConnection(evt);
   } catch (error) {
-    alert(error);
+    alert(error, `error`, `Connection failed.`);
   }
 });
 
@@ -123,13 +139,13 @@ FormButtons.SUBMIT.addEventListener(`submit`, async (evt) => {
   try {
     await testConnection(evt);
     window.electronAPI.setSettings(formDataObj);
-    alert(msg);
+    alert(msg, `info`, `OK`, true);
     log.warn(msg);
     window.electronAPI.closeWindow();
     window.electronAPI.restart();
   } catch(error) {
     log.error(error);
-    alert(error);
+    alert(error, `error`, `Something went wrong`, true);
   }
 });
 

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell } = require(`electron`);
+const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell, dialog } = require(`electron`);
 const path = require(`path`);
 const { readFileSync } = require(`fs`);
 const { exec } = require(`child_process`);
@@ -127,7 +127,15 @@ const createWindow = () => {
      exec(`wmctrl -m`, (error, stdout, stderr) => {
       if (error) {
         log.error(`wmctrl is not installed on your system. Please install it.`);
-        alert(`Please install wmctrl using "sudo apt-get install wmctrl"`);
+        const msg = `Please install wmctrl using "sudo apt-get install wmctrl"`;
+        dialog.showMessageBox({
+          type: `error`,
+          title: `wmctrl not found`,
+          message: msg,
+          buttons: [`OK`],
+          defaultId: 0,
+          icon: `error`
+        });
       } else {
         exec(`wmctrl -r "${mainWindow.getTitle()}" -b add,skip_taskbar`, (error, stdout, stderr) => {
           if (error) {
@@ -210,16 +218,26 @@ app.whenReady().then(() => {
     const prefix = `%cRenderer:`;
     switch (level) {
       case `info`:
-        log.info(`${prefix} ${msg}`, `color: black`);
+        log.info(`${prefix} ${msg}`);
         break;
       case `warn`:
-        log.warn(`${prefix} ${msg}`, `color: blue`);
+        log.warn(`${prefix} ${msg}`, `color: orange`);
         break;
       case `error`:
         log.error(`${prefix} ${msg}`, `color: red`);
         break;
     }
   });
+
+  ipcMain.handle(`show-message-box`, async (evt, options) => {
+    const result = await dialog.showMessageBox(BrowserWindow.getFocusedWindow(), options);
+    return result.response
+  });
+
+  ipcMain.handle(`show-message-box-sync`, async (evt, options) => {
+    const result = await dialog.showMessageBoxSync(BrowserWindow.getFocusedWindow(), options);
+    return result.response
+  }); 
 
   ipcMain.on(`close-window`, (evt) => {
     if (evt.sender.getTitle() === `Owlet`) {
