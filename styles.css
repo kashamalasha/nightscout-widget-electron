@@ -346,3 +346,25 @@ input:focus-visible {
     background-color: var(--color_settings_darken);
     color: var(--color_settings_dark);
   }
+
+.settings-button-close {
+  -webkit-app-region: no-drag;
+  user-select: none;
+
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  max-width: 25px;
+  height: 25px;
+
+  background-color: var(--color_settings_dark);
+  border: none;
+  border-radius: 5px;
+}
+  .settings-button-close:hover {
+    background-color: var(--color_settings_darken);
+  }
+  .settings-button-close:active {
+    background-color: var(--color_settings_lighten);
+  }

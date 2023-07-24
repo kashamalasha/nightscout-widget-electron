@@ -8,6 +8,7 @@ const log = require(`./js/logger`);
 const requestToUpdate = require(`./js/auto-update`);
 const isDev = process.env.NODE_ENV === `development`;
 const isMac = process.platform == `darwin`;
+const isLinux = process.platform == `linux`;
 
 const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.json`)));
 const config = new Store();
@@ -114,6 +115,7 @@ const createWindow = () => {
     },
     show: configValid ? false : true,
     parent: mainWindow,
+    frame: isLinux ? false : `default`,
   });
 
   mainWindow.loadFile(`widget.html`);

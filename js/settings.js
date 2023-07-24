@@ -137,4 +137,10 @@ logLink.addEventListener(`click`, (evt) => {
 
   window.electronAPI.openLogFile();
   window.electronAPI.closeWindow();
-})
+});
+
+const closeButton = document.querySelector(`#button-close`);
+
+closeButton.addEventListener(`click`, () => {
+  window.electronAPI.closeWindow();
+});
