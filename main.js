@@ -107,15 +107,9 @@ const createWindow = () => {
       preload: path.join(__dirname, `js/preload.js`)
     },
     backgroundColor: settingsColors.background,
-    titleBarStyle: `hidden`,
-    titleBarOverlay: isMac ? false : {
-      color: settingsColors.background,
-      symbolColor: settingsColors.controls,
-      height: 40
-    },
     show: configValid ? false : true,
     parent: mainWindow,
-    frame: isLinux ? false : `default`,
+    frame: false,
   });
 
   mainWindow.loadFile(`widget.html`);

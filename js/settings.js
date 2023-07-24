@@ -29,6 +29,13 @@ const FormFields = {
   },
 };
 
+const FormButtons = {
+  SUBMIT: document.querySelector(`form`),
+  TEST: document.querySelector(`#button-test`),
+  LOG: document.querySelector(`.settings__log-link`),
+  CLOSE: document.querySelector(`#button-close`),
+}
+
 customAssign(FormFields, CONFIG);
 
 document.querySelector(`#app-version`).textContent = VERSION;
@@ -78,9 +85,7 @@ const testConnection = (evt) => {
   });
 };
 
-const buttonTest = document.querySelector(`#button-test`);
-
-buttonTest.addEventListener('click', async (evt) => {
+FormButtons.TEST.addEventListener('click', async (evt) => {
   try {
     await testConnection(evt);
   } catch (error) {
@@ -105,9 +110,7 @@ nightscoutTextInputs.forEach((input) => {
   input.addEventListener(`blur`, trimInputs);
 });
 
-const formSettings = document.querySelector(`form`);
-
-formSettings.addEventListener(`submit`, async (evt) => {
+FormButtons.SUBMIT.addEventListener(`submit`, async (evt) => {
   evt.preventDefault();
 
   const msg = `Settings were updated. Widget will be restarted.`;
@@ -130,17 +133,13 @@ formSettings.addEventListener(`submit`, async (evt) => {
   }
 });
 
-const logLink = document.querySelector(`.settings__log-link`);
-
-logLink.addEventListener(`click`, (evt) => {
+FormButtons.LOG.addEventListener(`click`, (evt) => {
   evt.preventDefault();
 
   window.electronAPI.openLogFile();
   window.electronAPI.closeWindow();
 });
 
-const closeButton = document.querySelector(`#button-close`);
-
-closeButton.addEventListener(`click`, () => {
+FormButtons.CLOSE.addEventListener(`click`, () => {
   window.electronAPI.closeWindow();
 });

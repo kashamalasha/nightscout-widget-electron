@@ -184,6 +184,13 @@ input:focus-visible {
       color: var(--color_settings_highlight);
     }
 
+.settings-header {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
 .settings-fields {
   display: grid;
   grid-template-columns: 40% auto;
@@ -355,16 +362,17 @@ input:focus-visible {
   top: 5px;
   right: 5px;
 
-  max-width: 25px;
+  width: 25px;
   height: 25px;
 
-  background-color: var(--color_settings_dark);
+  background-color: transparent;
+  opacity: 0.6;
   border: none;
-  border-radius: 5px;
+  border-radius: 15%;
 }
   .settings-button-close:hover {
-    background-color: var(--color_settings_darken);
+    opacity: 1;
   }
   .settings-button-close:active {
-    background-color: var(--color_settings_lighten);
+    background-color: var(--color_cgv_button-active);
   }
