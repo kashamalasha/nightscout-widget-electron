@@ -89,11 +89,6 @@ const createWindow = () => {
     return { x, y }
   }
 
-  const settingsColors = {
-    background: `rgb(44, 51, 51)`,
-    controls: `rgb(116, 177, 190)`
-  }
-
   const settingsWindow = new BrowserWindow({
     width: settingsBounds.width,
     height: settingsBounds.height,
@@ -106,7 +101,7 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, `js/preload.js`)
     },
-    backgroundColor: settingsColors.background,
+    transparent: true,
     show: configValid ? false : true,
     parent: mainWindow,
     frame: false,
