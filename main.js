@@ -123,8 +123,19 @@ const createWindow = () => {
   });
 
   mainWindow.webContents.on(`ready-to-show`, () => {
-    if (process.platform == `linux`) {
-      exec(`wmctrl -r "${mainWindow.getTitle()}" -b add,skip_taskbar`);
+    if (isLinux) {
+     exec(`wmctrl -m`, (error, stdout, stderr) => {
+      if (error) {
+        log.error(`wmctrl is not installed on your system. Please install it.`);
+        alert(`Please install wmctrl using "sudo apt-get install wmctrl"`);
+      } else {
+        exec(`wmctrl -r "${mainWindow.getTitle()}" -b add,skip_taskbar`, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`Failed to execute wmctrl: ${error.message}`);
+          }
+        });
+      }
+    });
     }
   });
 
