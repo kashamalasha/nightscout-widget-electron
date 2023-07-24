@@ -2,7 +2,7 @@
   "name": "nightscout-widget-electron",
   "productName": "Owlet",
   "description": "An Electron widget application to show on a desktop cgv value is getting from Nightscout API",
-  "version": "0.3.1-beta",
+  "version": "0.4-alpha",
   "main": "main.js",
   "scripts": {
     "start": "NODE_ENV=production electron .",
@@ -79,10 +79,10 @@
   "dependencies": {
     "electron-log": "^4.4.8",
     "electron-store": "^8.1.0",
-    "electron-updater": "^6.1.1"
+    "electron-updater": "^6.1.1",
+    "wmctrl": "0.0.3"
   },
   "devDependencies": {
-    "@electron/notarize": "^2.1.0",
     "ajv": "^8.11.2",
     "electron": "^25.2.0",
     "electron-builder": "^24.4.0",

@@ -1,12 +1,14 @@
 const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell } = require(`electron`);
 const path = require(`path`);
 const { readFileSync } = require(`fs`);
+const { exec } = require(`child_process`);
 const Store = require(`electron-store`);
 const Ajv = require(`ajv`);
 const log = require(`./js/logger`);
 const requestToUpdate = require(`./js/auto-update`);
 const isDev = process.env.NODE_ENV === `development`;
 const isMac = process.platform == `darwin`;
+const isLinux = process.platform == `linux`;
 
 const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.json`)));
 const config = new Store();
@@ -113,6 +115,7 @@ const createWindow = () => {
     },
     show: configValid ? false : true,
     parent: mainWindow,
+    frame: isLinux ? false : `default`,
   });
 
   mainWindow.loadFile(`widget.html`);
@@ -123,6 +126,12 @@ const createWindow = () => {
     config.set(`WIDGET.POSITION`, { x, y });
     const childPosition = getPosition();
     settingsWindow.setPosition(childPosition.x, childPosition.y, false);
+  });
+
+  mainWindow.webContents.on(`ready-to-show`, () => {
+    if (process.platform == `linux`) {
+      exec(`wmctrl -r "${mainWindow.getTitle()}" -b add,skip_taskbar`);
+    }
   });
 
   mainWindow.webContents.on(`did-finish-load`, () => {
@@ -208,7 +217,7 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on(`close-window`, (evt) => {
-    if (evt.sender.getTitle() === `Nightscout Widget`) {
+    if (evt.sender.getTitle() === `Owlet`) {
       app.exit();
       log.info(`App was closed due to close-window event`);
     } else {
