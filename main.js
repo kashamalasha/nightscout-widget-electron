@@ -118,7 +118,7 @@ const createWindow = () => {
   mainWindow.loadFile(`widget.html`);
   settingsWindow.loadFile('settings.html');
 
-  mainWindow.on(`moved`, () => {
+  mainWindow.on(`move`, () => {
     const { x, y } = mainWindow.getBounds();
     config.set(`WIDGET.POSITION`, { x, y });
     const childPosition = getPosition();
@@ -218,7 +218,7 @@ app.whenReady().then(() => {
   ipcMain.on(`log-message`, (evt, msg, level) => {
     evt.preventDefault();
 
-    const prefix = `%cRenderer:`;
+    const prefix = `Renderer:`;
     switch (level) {
       case `info`:
         log.info(`${prefix} ${msg}`);
