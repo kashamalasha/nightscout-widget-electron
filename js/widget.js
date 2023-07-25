@@ -17,6 +17,8 @@ const Fields = {
   ageValue: document.querySelector(`.cgv__age-value`),
 };
 
+const flickerFields = document.querySelectorAll(`.cgv--flicker`);
+
 const Buttons = {
   close: document.querySelector(`#button-close`),
   settings: document.querySelector(`#button-settings`),
@@ -104,11 +106,17 @@ let retry = 0;
 const onSuccess = (result) => {
   retry = 0;
   isAlertShown = false;
+
+  flickerFields.forEach((element) => {
+    element.classList.remove(`cgv--flicker`);
+  });
+
   render(prepareData(result));
 };
 
 const onError = (errorMessage) => {
   const msg = `${errorMessage} - was encountered over than ${retry++} times`;
+
   if (retry > CONNECTION_RETRY_LIMIT && !isAlertShown) {
     log.error(msg);
     Fields.cgv.classList.add(`cgv--frozen`);

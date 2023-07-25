@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
 
+@keyframes flicker {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
 :root {
   --color_cgv_ok: #209F20;
   --color_cgv_ok_shadow: #FFFFFF;
@@ -72,6 +78,9 @@ input:focus-visible {
 }
   .cgv--frozen {
     box-shadow: inset 0 0 50px var(--color_cgv_accent);
+  }
+  .cgv--flicker {
+    animation: flicker 1s infinite;
   }
 
 .cgv__last {

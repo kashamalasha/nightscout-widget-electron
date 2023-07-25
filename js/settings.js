@@ -67,8 +67,9 @@ const testConnection = (evt) => {
 
     const onSuccess = (result) => {
       if (evt.target.id === `button-test`) {
-        alert(`It looks good!`, `info`, `OK`);
-        log.info(`Connection successfully established.`);
+        const msg = `Connection successfully established.`;
+        alert(`It looks good!\n${msg}`, `info`, `OK`);
+        log.info(msg);
       }
   
       resolve(result);

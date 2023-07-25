@@ -79,8 +79,7 @@
   "dependencies": {
     "electron-log": "^4.4.8",
     "electron-store": "^8.1.0",
-    "electron-updater": "^6.1.1",
-    "wmctrl": "0.0.3"
+    "electron-updater": "^6.1.1"
   },
   "devDependencies": {
     "ajv": "^8.11.2",
