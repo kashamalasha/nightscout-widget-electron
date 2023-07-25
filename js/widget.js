@@ -1,7 +1,7 @@
 "use strict";
 
 import { getData } from "./backend.js";
-import { prepareData } from "./util.js";
+import { prepareData, alert } from "./util.js";
 
 const CONNECTION_RETRY_LIMIT = 5;
 const CONFIG = await window.electronAPI.getSettings();
@@ -113,7 +113,7 @@ const onError = (errorMessage) => {
     log.error(msg);
     Fields.cgv.classList.add(`cgv--frozen`);
     Fields.last.className = Fields.last.className.replace(/cgv__last--.*/, ModMap.default);
-    alert(msg);
+    alert(msg, `error`, `Connection error`);
     isAlertShown = true;
   }
 };

@@ -1,26 +1,10 @@
 "use strict";
 
-import { customAssign } from "./util.js";
+import { customAssign, alert } from "./util.js";
 import { getStatus } from "./backend.js";
 
 const CONFIG = await window.electronAPI.getSettings();
 const VERSION = await window.electronAPI.getVersion();
-const dialog = await window.electronAPI.dialog;
-
-const alert = (msg, type, title, sync = false) => {
-  const data = {
-    type: type,
-    title: title,
-    message: msg.toString(),
-    buttons: [`OK`],
-    defaultId: 0,
-  }
-  if (sync) {
-    dialog.showMessageBoxSync(data);
-  } else {
-    dialog.showMessageBox(data);
-  }
-}
 
 const log = window.electronAPI.logger;
 

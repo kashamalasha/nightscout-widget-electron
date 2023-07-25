@@ -19,8 +19,16 @@ if (config.size === 0) {
     config.clear();
     log.warn(`Config created successfully`);
   } catch (error) {
-    log.error(`Failed to create config:`, error);
-    alert(error);
+    const errorMessage =`Failed to create config: ${error}`;
+    dialog.showMessageBox({
+      type: `error`,
+      title: `Config wan't created`,
+      message: errorMessage,
+      buttons: [`OK`],
+      defaultId: 0,
+      icon: `error`
+    });
+    log.error(errorMessage);
   }
 }
 
@@ -122,11 +130,11 @@ const createWindow = () => {
      exec(`wmctrl -m`, (error, stdout, stderr) => {
       if (error) {
         log.error(`wmctrl is not installed on your system. Please install it.`);
-        const msg = `Please install wmctrl using "sudo apt-get install wmctrl"`;
+        const errorMessage = `Please install wmctrl using "sudo apt-get install wmctrl"`;
         dialog.showMessageBox({
           type: `error`,
           title: `wmctrl not found`,
-          message: msg,
+          message: errorMessage,
           buttons: [`OK`],
           defaultId: 0,
           icon: `error`

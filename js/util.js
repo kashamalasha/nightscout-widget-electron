@@ -74,4 +74,21 @@ const prepareData = (obj) => {
   return result;
 };
 
-export { prepareData, customAssign };
+const dialog = await window.electronAPI.dialog;
+
+const alert = (msg, type, title, sync = false) => {
+  const data = {
+    type: type,
+    title: title,
+    message: msg.toString(),
+    buttons: [`OK`],
+    defaultId: 0,
+  }
+  if (sync) {
+    dialog.showMessageBoxSync(data);
+  } else {
+    dialog.showMessageBox(data);
+  }
+}
+
+export { prepareData, customAssign, alert };
