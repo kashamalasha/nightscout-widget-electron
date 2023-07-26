@@ -65,23 +65,12 @@
     },
     "deb": {
       "depends": [
-        "wmctrl",
-        "gconf2", 
-        "gconf-service", 
-        "libnotify4", 
-        "libxtst6", 
-        "libnss3"
+        "wmctrl"
       ]
     },
     "rpm": {
       "depends": [
-        "wmctrl",
-        "gconf2", 
-        "gconf-service", 
-        "libappindicator1",
-        "libnotify4", 
-        "libxtst6", 
-        "libnss3"
+        "wmctrl"
       ]
     },
     "publish": [
