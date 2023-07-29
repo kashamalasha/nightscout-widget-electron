@@ -150,6 +150,51 @@ const createWindow = () => {
     }
   });
 
+  if (isLinux) {
+    
+    const linuxDependencies = ['wmctrl', 'xdg-utils'];
+
+    const checkDependencies = (() => {
+      let missingCounter = 0;
+      const missingDependencies = [];
+    
+      linuxDependencies.forEach((dependency) => {
+        exec(`which ${dependency}`, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`${dependency} is not installed on your system.`);
+            missingCounter++; // Increment the missing counter
+            missingDependencies.push(dependency); // Add missing dependency to the array
+          } else {
+            console.log(`${dependency} is installed.`);
+          }
+    
+          if (missingCounter === linuxDependencies.length) {
+            if (missingDependencies.length > 0) {
+              const errorMessage = `Please install the following dependencies:\n${missingDependencies.join('\n')}`;
+              dialog.showMessageBox({
+                type: 'error',
+                title: 'Missing Dependencies',
+                message: errorMessage,
+                buttons: ['OK'],
+                defaultId: 0,
+                icon: 'error'
+              });
+            }
+          }
+        });
+      });
+    });
+
+    mainWindow.webContents.on(`ready-to-show`, () => {
+      checkDependencies();
+      exec(`wmctrl -r "${mainWindow.getTitle()}" -b add, skip_taskbar`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Failed to execute wmctrl: ${error.message}`);
+        }
+      });
+    });
+  }
+
   mainWindow.webContents.on(`did-finish-load`, () => {
     requestToUpdate();
   });
