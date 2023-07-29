@@ -7,7 +7,7 @@
     "email": "dmitry.burnyshev@gmail.com"
   },
   "homepage": "https://github.com/kashamalasha/nightscout-widget-electron",
-  "version": "0.3.4-alpha",
+  "version": "0.3.6-alpha",
   "main": "main.js",
   "scripts": {
     "start": "NODE_ENV=production electron .",
@@ -58,22 +58,14 @@
     },
     "linux": {
       "target": [
-        "deb",
-        "rpm"
+        "appImage"
       ],
       "category": "Utility"
     },
-    "deb": {
+    "appImage": {
+      "license": "build/LICENSE.txt",
       "depends": [
         "wmctrl",
-        "libnotify",
-        "xdg-utils"
-      ]
-    },
-    "rpm": {
-      "depends": [
-        "wmctrl",
-        "libnotify",
         "xdg-utils"
       ]
     },
