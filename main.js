@@ -125,52 +125,30 @@ const createWindow = () => {
     settingsWindow.setPosition(childPosition.x, childPosition.y, false);
   });
 
-  mainWindow.webContents.on(`ready-to-show`, () => {
-    if (isLinux) {
-     exec(`wmctrl -m`, (error, stdout, stderr) => {
-      if (error) {
-        log.error(`wmctrl is not installed on your system. Please install it.`);
-        const errorMessage = `Please install wmctrl using "sudo apt-get install wmctrl"`;
-        dialog.showMessageBox({
-          type: `error`,
-          title: `wmctrl not found`,
-          message: errorMessage,
-          buttons: [`OK`],
-          defaultId: 0,
-          icon: `error`
-        });
-      } else {
-        exec(`wmctrl -r "${mainWindow.getTitle()}" -b add,skip_taskbar`, (error, stdout, stderr) => {
-          if (error) {
-            console.error(`Failed to execute wmctrl: ${error.message}`);
-          }
-        });
-      }
-    });
-    }
-  });
-
   if (isLinux) {
-    
-    const linuxDependencies = ['wmctrl', 'xdg-utils'];
+    const linuxDependencies = {
+      "wmctrl": "wmctrl",
+      "xdg-utils": "xdg-open",
+    }
 
     const checkDependencies = (() => {
       let missingCounter = 0;
       const missingDependencies = [];
     
-      linuxDependencies.forEach((dependency) => {
-        exec(`which ${dependency}`, (error, stdout, stderr) => {
+      Object.entries(linuxDependencies).forEach(([package, command]) => {
+        exec(`which ${command}`, (error, stdout, stderr) => {
           if (error) {
-            console.error(`${dependency} is not installed on your system.`);
-            missingCounter++; // Increment the missing counter
-            missingDependencies.push(dependency); // Add missing dependency to the array
+            log.error(`${package} is not installed on your system.`);
+            missingDependencies.push(package); 
           } else {
-            console.log(`${dependency} is installed.`);
+            log.info(`${package} is installed.`);
           }
+	
+          missingCounter++; 
     
-          if (missingCounter === linuxDependencies.length) {
+          if (missingCounter === Object.keys(linuxDependencies).length) {
             if (missingDependencies.length > 0) {
-              const errorMessage = `Please install the following dependencies:\n${missingDependencies.join('\n')}`;
+              const errorMessage = `Please install the following dependencies:\n - ${missingDependencies.join('\n - ')}`;
               dialog.showMessageBox({
                 type: 'error',
                 title: 'Missing Dependencies',
@@ -187,9 +165,9 @@ const createWindow = () => {
 
     mainWindow.webContents.on(`ready-to-show`, () => {
       checkDependencies();
-      exec(`wmctrl -r "${mainWindow.getTitle()}" -b add, skip_taskbar`, (error, stdout, stderr) => {
+      exec(`wmctrl -r "${mainWindow.getTitle()}" -b add,skip_taskbar`, (error, stdout, stderr) => {
         if (error) {
-          console.error(`Failed to execute wmctrl: ${error.message}`);
+          log.error(`Failed to execute wmctrl: ${error.message}`);
         }
       });
     });
