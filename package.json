@@ -60,14 +60,20 @@
       "target": [
         "appImage"
       ],
+      "extraFiles": [
+        {
+          "from": "/usr/bin/wmctrl",
+          "to": "usr/bin/wmctrl"
+        },
+        {
+          "from": "/usr/bin/xdg-open",
+          "to": "usr/bin/xdg-open"
+        }
+      ],
       "category": "Utility"
     },
     "appImage": {
-      "license": "build/LICENSE.txt",
-      "depends": [
-        "wmctrl",
-        "xdg-utils"
-      ]
+      "license": "build/LICENSE.txt"
     },
     "publish": [
       {
