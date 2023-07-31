@@ -60,6 +60,7 @@
       "target": [
         "appImage"
       ],
+      "icon": "asset/icons/png",
       "extraFiles": [
         {
           "from": "/usr/bin/wmctrl",
@@ -73,7 +74,6 @@
       "category": "Utility"
     },
     "appImage": {
-      "icon": "asset/icons/png",
       "license": "build/LICENSE.txt"
     },
     "publish": [
