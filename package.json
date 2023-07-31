@@ -1,5 +1,5 @@
 {
-  "name": "owlet",
+  "name": "nightscout-widget-electron",
   "productName": "Owlet",
   "description": "An Electron widget application to show on a desktop cgv value is getting from Nightscout API",
   "author": {
@@ -36,7 +36,7 @@
       "notarize": true,
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
-      "icon": "asset/Appicon.icns",
+      "icon": "asset/icons/mac/AppIcon.icns",
       "entitlements": "build/entitlements.mac.plist",
       "entitlementsInherit": "build/entitlements.mac.plist",
       "category": "public.app-category.health"
@@ -46,14 +46,14 @@
         "nsis",
         "zip"
       ],
-      "icon": "asset/Appicon.ico"
+      "icon": "asset/icons/win/AppIcon.ico"
     },
     "nsis": {
       "oneClick": true,
-      "installerIcon": "asset/Appicon.ico",
-      "uninstallerIcon": "asset/Appicon.ico",
+      "installerIcon": "asset/icons/win/Appicon.ico",
+      "uninstallerIcon": "asset/icons/win/Appicon.ico",
       "uninstallDisplayName": "Owlet-uninstaller",
-      "license": "LICENSE.md",
+      "license": "build/LICENSE.txt",
       "allowToChangeInstallationDirectory": false
     },
     "linux": {
@@ -73,6 +73,7 @@
       "category": "Utility"
     },
     "appImage": {
+      "icon": "asset/icons/png",
       "license": "build/LICENSE.txt"
     },
     "publish": [

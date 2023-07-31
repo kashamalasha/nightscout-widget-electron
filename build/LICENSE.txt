@@ -16,4 +16,5 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Full AGPL3 License text you can find here: https://github.com/kashamalasha/nightscout-widget-electron/LICENSE.md
+Full AGPL3 License text you can find here: 
+https://github.com/kashamalasha/nightscout-widget-electron/LICENSE.md
