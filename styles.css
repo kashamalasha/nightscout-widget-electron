@@ -108,7 +108,6 @@ input:focus-visible {
   }
 
 .cgv__age {
-  display: none;
   position: absolute;
   top: 33px;
   right: 5px;

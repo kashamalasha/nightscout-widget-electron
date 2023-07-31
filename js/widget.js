@@ -30,7 +30,7 @@ const ModMap = {
   warning: `cgv__last--warning`,
   ok: `cgv__last--ok`,
   default: `cgv__last--`,
-}
+};
 
 Buttons.close.addEventListener(`click`, () => {
   window.electronAPI.closeWindow();
@@ -53,7 +53,7 @@ Buttons.browse.addEventListener(`pointerup`, () => {
 
 Fields.last.addEventListener(`mouseup`, (evt) => {
   evt.target.classList.toggle(`cgv__last--accented`, false);
-})
+});
 
 const render = (data) => {
 
@@ -98,7 +98,7 @@ window.electronAPI.setAgeVisibility((_evt, show) => {
   } else {
     Fields.age.style.display = `none`;
   }
-})
+});
 
 let isAlertShown = false;
 let retry = 0;

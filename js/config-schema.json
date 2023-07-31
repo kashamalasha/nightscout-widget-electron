@@ -15,7 +15,8 @@
           "minLength": 10
         },
         "INTERVAL": {
-          "type": "integer"
+          "type": "integer",
+          "default": 60
         }
       },
       "required": [
@@ -29,22 +30,26 @@
       "properties": {
         "HIGH": {
           "type": "number",
-          "minimum": 1
+          "minimum": 1,
+          "default": 10
         },
         "LOW": {
           "type": "number",
-          "minimum": 1
+          "minimum": 1,
+          "default": 3.5
         },
         "TARGET": {
           "type": "object",
           "properties": {
             "TOP": {
               "type": "number",
-              "minimum": 1
+              "minimum": 1,
+              "default": 8
             },
             "BOTTOM": {
               "type": "number",
-              "minimum": 1
+              "minimum": 1,
+              "default": 4
             }
           },
           "required": [
@@ -67,22 +72,25 @@
         },
         "AGE_LIMIT": {
           "type": "integer",
-          "minimum": 0
+          "default": 20
         },
         "OPACITY": {
           "type": "integer",
           "minimum": 10,
           "maximum": 100,
-          "multipleOf": 10
+          "multipleOf": 10,
+          "default": 100
         },
         "POSITION": {
           "type": "object",
           "properties": {
             "x": {
-              "type": "integer"
+              "type": "integer",
+              "default": 1000
             },
             "y": {
-              "type": "integer"
+              "type": "integer",
+              "default": 100
             }
           },
           "required": [
@@ -98,13 +106,15 @@
       ]
     },
     "LAST_UPDATE_REQUEST": {
-      "type": "string"
+      "type": "string",
+      "default": "1/1/2000"
     }
   },
   "required": [
     "NIGHTSCOUT",
     "BG",
-    "WIDGET"
+    "WIDGET",
+    "LAST_UPDATE_REQUEST"
   ],
   "additionalProperties": false
 }

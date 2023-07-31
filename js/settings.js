@@ -34,7 +34,7 @@ const FormButtons = {
   TEST: document.querySelector(`#button-test`),
   LOG: document.querySelector(`.settings__log-link`),
   CLOSE: document.querySelector(`#button-close`),
-}
+};
 
 customAssign(FormFields, CONFIG);
 
@@ -56,7 +56,7 @@ FormFields.WIDGET.SHOW_AGE.addEventListener(`change`, (evt) => {
   } catch(error) {
     log.error(error);
   }
-})
+});
 
 const testConnection = (evt) => {
   return new Promise((resolve, reject) => {
@@ -103,7 +103,7 @@ const trimInputs = (evt) => {
   const inputValue = evt.target.value;
   const trimmedValue = inputValue.trim();
 
-  const modifiedValue = trimmedValue.replace(/[/\.]+$/, '');
+  const modifiedValue = trimmedValue.replace(/[./]+$/, '');
   evt.target.value = modifiedValue;
 };
 

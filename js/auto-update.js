@@ -15,7 +15,7 @@ const hasUpdateRequestForToday = () => {
 
   config.set(`LAST_UPDATE_REQUEST`, today);
   return true;
-}
+};
 
 const requestToUpdate = () => {
   if (!hasUpdateRequestForToday()) {
@@ -23,6 +23,6 @@ const requestToUpdate = () => {
     return false;
   }
   autoUpdater.checkForUpdatesAndNotify();
-}
+};
 
 module.exports = requestToUpdate;

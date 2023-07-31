@@ -6,12 +6,16 @@ const Store = require(`electron-store`);
 const Ajv = require(`ajv`);
 const log = require(`./js/logger`);
 const requestToUpdate = require(`./js/auto-update`);
+
 const isDev = process.env.NODE_ENV === `development`;
 const isMac = process.platform == `darwin`;
 const isLinux = process.platform == `linux`;
 
 const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.json`)));
-const config = new Store();
+const defaults = JSON.parse(readFileSync(path.join(__dirname, `js/config-default.json`)));
+
+const config = new Store({ defaults });
+
 const ajv = new Ajv();
 
 if (config.size === 0) {
@@ -52,7 +56,7 @@ const createWindow = () => {
       y: 100
     },
     opacity: 100,
-  }
+  };
 
   if (!configValid) {
     config.set(`WIDGET.POSITION`, defaultWidgetValues.position);
@@ -91,11 +95,11 @@ const createWindow = () => {
   const getPosition = () => {
     const widgetLastPosition = config.get(`WIDGET.POSITION`);
 
-    x = widgetLastPosition.x - settingsBounds.width;
-    y = widgetLastPosition.y;
+    const x = widgetLastPosition.x - settingsBounds.width;
+    const y = widgetLastPosition.y;
 
-    return { x, y }
-  }
+    return { x, y };
+  };
 
   const settingsWindow = new BrowserWindow({
     width: settingsBounds.width,
@@ -129,14 +133,14 @@ const createWindow = () => {
     const linuxDependencies = {
       "wmctrl": "wmctrl",
       "xdg-utils": "xdg-open",
-    }
+    };
 
     const checkDependencies = (() => {
       let missingCounter = 0;
       const missingDependencies = [];
     
       Object.entries(linuxDependencies).forEach(([package, command]) => {
-        exec(`which ${command}`, (error, stdout, stderr) => {
+        exec(`which ${command}`, (error) => {
           if (error) {
             log.error(`${package} is not installed on your system.`);
             missingDependencies.push(package); 
@@ -165,7 +169,7 @@ const createWindow = () => {
 
     mainWindow.webContents.on(`ready-to-show`, () => {
       checkDependencies();
-      exec(`wmctrl -r "${mainWindow.getTitle()}" -b add,skip_taskbar`, (error, stdout, stderr) => {
+      exec(`wmctrl -r "${mainWindow.getTitle()}" -b add,skip_taskbar`, (error) => {
         if (error) {
           log.error(`Failed to execute wmctrl: ${error.message}`);
         }
@@ -243,26 +247,26 @@ app.whenReady().then(() => {
 
     const prefix = `Renderer:`;
     switch (level) {
-      case `info`:
-        log.info(`${prefix} ${msg}`);
-        break;
-      case `warn`:
-        log.warn(`${prefix} ${msg}`, `color: orange`);
-        break;
-      case `error`:
-        log.error(`${prefix} ${msg}`, `color: red`);
-        break;
+    case `info`:
+      log.info(`${prefix} ${msg}`);
+      break;
+    case `warn`:
+      log.warn(`${prefix} ${msg}`, `color: orange`);
+      break;
+    case `error`:
+      log.error(`${prefix} ${msg}`, `color: red`);
+      break;
     }
   });
 
   ipcMain.handle(`show-message-box`, async (evt, options) => {
     const result = await dialog.showMessageBox(BrowserWindow.getFocusedWindow(), options);
-    return result.response
+    return result.response;
   });
 
   ipcMain.handle(`show-message-box-sync`, async (evt, options) => {
     const result = await dialog.showMessageBoxSync(BrowserWindow.getFocusedWindow(), options);
-    return result.response
+    return result.response;
   }); 
 
   ipcMain.on(`close-window`, (evt) => {
@@ -326,7 +330,7 @@ if (isMac) {
   powerMonitor.on(`unlock-screen`, () => {
     if (app.isHidden()) {
       app.show();
-      log.info(`App is shown after unlock-screen event`)
+      log.info(`App is shown after unlock-screen event`);
     } else if (!app.isHidden()) {
       log.silly(`Duplicated powerMonitor event handler called by 'unlock-screen' event`);
     }
@@ -335,7 +339,7 @@ if (isMac) {
   powerMonitor.on(`resume`, () => {
     if (app.isHidden()) {
       app.show();
-      log.info(`App is shown after resume event`)
+      log.info(`App is shown after resume event`);
     } else if (!app.isHidden()) {
       log.silly(`Duplicated powerMonitor event handler called by 'resume' event`);
     } else {
@@ -348,7 +352,7 @@ if (isMac) {
   nativeTheme.on('updated', () => {
     if (app.isHidden()) {
       app.show();
-      log.info(`App is shown after theme change event`)
+      log.info(`App is shown after theme change event`);
     } else if (!app.isHidden()) {
       log.silly(`Duplicated nativeTheme event handler called by 'updated' event`);
     } else {
