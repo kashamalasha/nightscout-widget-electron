@@ -37,6 +37,7 @@ const FormButtons = {
 };
 
 customAssign(FormFields, CONFIG);
+window.electronAPI.checkFormValidation();
 
 document.querySelector(`#app-version`).textContent = VERSION;
 

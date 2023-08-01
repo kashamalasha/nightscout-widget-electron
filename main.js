@@ -122,6 +122,23 @@ const createWindow = () => {
   mainWindow.loadFile(`widget.html`);
   settingsWindow.loadFile('settings.html');
 
+  settingsWindow.webContents.once(`ready-to-show`, () => {
+    ipcMain.on(`check-validation`, () => {
+      if (!configValid) {
+        const errorPath = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
+        const errorReason = validate.errors[0].keyword
+        dialog.showMessageBox({
+          type: 'error',
+          title: 'Config invalid',
+          message: `Config invalid: ${errorPath}\nReason: ${errorReason}`,
+          buttons: ['OK'],
+          defaultId: 0,
+          icon: 'error'
+        });
+      }
+    });
+  });
+
   mainWindow.on(`move`, () => {
     const { x, y } = mainWindow.getBounds();
     config.set(`WIDGET.POSITION`, { x, y });
