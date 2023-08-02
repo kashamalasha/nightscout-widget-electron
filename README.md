@@ -14,20 +14,18 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 ## 📦 Installation packages
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-win.zip)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-Setup-0.4.0.exe)
 
 [![Download for macOS](https://img.shields.io/badge/Download-macOS%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-arm64.dmg)
 
-[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](ttps://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-x64.Appimage)
+[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0.AppImage)
 
 [![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.4.0.tar.gz)
 
 [![Download Souces](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
----
-
 <details>
-  <summary>!! to <b>Linux</b> users: expand this.. </summary>
+  <summary><b>LINUX</b> user, expand it and read.. </summary>
 
   The widget is packed in an [AppImage](https://appimage.org/) package due to the following reasons:
 
@@ -61,7 +59,6 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 On the first launch, the app will prompt you to fill in the following settings
 
 <figure>
-  <figcaption>First launch of Owlet on MacOS</figcaption>
   <p>
     <img src="docs/screenshot-settings-default.png" alt="Screenshot-widget"/>
   </p>
@@ -71,14 +68,14 @@ On the first launch, the app will prompt you to fill in the following settings
 
 - **NIGHTSCOUT URL** - is the address of your nightscout (e.g. https://some-cgm.fly.dev) 
 - **NIGHTSCOUT TOKEN** - the access token you've created on the previous steps
-- **NIGHTSCOUT REQUEST INTERVAL (SEC.)** - (***DEFAULT: 60***) the interval of the getting information from the Nightscout site to display in the widget
+- **NIGHTSCOUT REQUEST INTERVAL (SEC.)** - (*default: 60*) the interval of the getting information from the Nightscout site to display in the widget
 
 ### 2. Widget preferences
-- **AGE LIMIT (MIN.)** - (***DEFAULT: 20***) the timeout of data requesting interval, after that interval widget will change its appearance to "frozen" state. Usually, it means that the reader is offline or detached from the sensor, or the smartphone's battery is drained out
+- **AGE LIMIT (MIN.)** - (*default: 20*) the timeout of data requesting interval, after that interval widget will change its appearance to "frozen" state. Usually, it means that the reader is offline or detached from the sensor, or the smartphone's battery is drained out
 
 <img src="docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
 
-- **SHOW AGE** - (***DEFAULT: enabled***) that option displays additional information about how old the shown data is
+- **SHOW AGE** - (*default: enabled*) that option displays additional information about how old the shown data is
 
 
 ### 3. Blood sugar levels preferences
@@ -86,11 +83,11 @@ On the first launch, the app will prompt you to fill in the following settings
 
 Set the blood sugar tracking parameters using the following guides:
 
-- Above the **HIGH LEVEL TRESHOLD** (***DEFAULT: 10***) and below th **LOW LEVEL THRESHOLD** (***DEFAULT: 3.5***) the last value will be colored in red
+- Above the **HIGH LEVEL TRESHOLD** (*default: 10*) and below th **LOW LEVEL THRESHOLD** (*default: 3.5*) the last value will be colored in red
 
 <img src="docs/screenshot-widget-critical.png" alt="Screenshot-widget" width="200"/>
 
-- Above the **TARGET TOP LEVEL** (***DEFAULT: 8.5***) and below the **TARGET BOTTOM LEVEL** (***DEFAULT: 4***) the last value will be colored in orange
+- Above the **TARGET TOP LEVEL** (*default: 8.5*) and below the **TARGET BOTTOM LEVEL** (*default: 4*) the last value will be colored in orange
 
 <img src="docs/screenshot-widget-warning.png" alt="Screenshot-widget" width="200"/>
 
