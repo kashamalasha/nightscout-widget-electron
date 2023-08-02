@@ -296,7 +296,13 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on(`restart`, () => {
-    app.relaunch();
+    const args = process.argv.slice(1);
+    const options = { args };
+    if (process.env.APPIMAGE) {
+      options.execPath = process.env.APPIMAGE;
+      options.args.unshift(`--appimage-extract-and-run`);
+    }
+    app.relaunch(options);
     app.exit();
     log.info(`App was restarted due to renderer event`);
   });
