@@ -136,7 +136,7 @@ const createWindow = () => {
 
   settingsWindow.webContents.once(`ready-to-show`, () => {
     ipcMain.on(`check-validation`, () => {
-      if (!configValid && !isFirstRun()) {
+      if (!isFirstRun() && !configValid) {
         const errorPath = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
         const errorReason = validate.errors[0].keyword;
         alert(`error`, `Config invalid`, `Config invalid: ${errorPath}\nReason: ${errorReason}`);
