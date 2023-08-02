@@ -20,7 +20,7 @@ const dir2Char = {
 const customAssign = (targetObject, patchObject) => {
 
   if (patchObject === null) {
-    patchObject = '';
+    patchObject = ``;
   }
 
   for (const key of Object.keys(patchObject)) {
@@ -76,7 +76,7 @@ const prepareData = (obj) => {
 
 const dialog = await window.electronAPI.dialog;
 
-const alert = (msg, type, title, sync = false) => {
+const alert = (type, title, msg, sync = false) => {
   const data = {
     type: type,
     title: title,

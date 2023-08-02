@@ -37,7 +37,6 @@ const FormButtons = {
 };
 
 customAssign(FormFields, CONFIG);
-window.electronAPI.checkFormValidation();
 
 document.querySelector(`#app-version`).textContent = VERSION;
 
@@ -69,7 +68,7 @@ const testConnection = (evt) => {
     const onSuccess = (result) => {
       if (evt.target.id === `button-test`) {
         const msg = `Connection successfully established.`;
-        alert(`It looks good!\n${msg}`, `info`, `OK`);
+        alert(`info`, `OK`, `It looks good!\n${msg}`);
         log.info(msg);
       }
   
@@ -87,11 +86,11 @@ const testConnection = (evt) => {
   });
 };
 
-FormButtons.TEST.addEventListener('click', async (evt) => {
+FormButtons.TEST.addEventListener(`click`, async (evt) => {
   try {
     await testConnection(evt);
   } catch (error) {
-    alert(error, `error`, `Connection failed.`);
+    alert(`error`, `Connection failed.`, error);
   }
 });
 
@@ -104,7 +103,7 @@ const trimInputs = (evt) => {
   const inputValue = evt.target.value;
   const trimmedValue = inputValue.trim();
 
-  const modifiedValue = trimmedValue.replace(/[./]+$/, '');
+  const modifiedValue = trimmedValue.replace(/[./]+$/, ``);
   evt.target.value = modifiedValue;
 };
 
@@ -125,13 +124,13 @@ FormButtons.SUBMIT.addEventListener(`submit`, async (evt) => {
   try {
     await testConnection(evt);
     window.electronAPI.setSettings(formDataObj);
-    alert(msg, `info`, `OK`, true);
+    alert(`info`, `OK`, msg, true);
     log.warn(msg);
     window.electronAPI.closeWindow();
     window.electronAPI.restart();
   } catch(error) {
     log.error(error);
-    alert(error, `error`, `Something went wrong`, true);
+    alert(`error`, `Something went wrong`, msg, true);
   }
 });
 
@@ -145,3 +144,5 @@ FormButtons.LOG.addEventListener(`click`, (evt) => {
 FormButtons.CLOSE.addEventListener(`click`, () => {
   window.electronAPI.closeWindow();
 });
+
+setTimeout(window.electronAPI.checkFormValidation, 100);

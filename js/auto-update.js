@@ -19,7 +19,7 @@ const hasUpdateRequestForToday = () => {
 
 const requestToUpdate = () => {
   if (!hasUpdateRequestForToday()) {
-    log.info('Update was already requested for today');
+    log.info(`Update was already requested for today`);
     return false;
   }
   autoUpdater.checkForUpdatesAndNotify();

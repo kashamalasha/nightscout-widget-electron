@@ -121,12 +121,12 @@ const onError = (errorMessage) => {
     log.error(msg);
     Fields.cgv.classList.add(`cgv--frozen`);
     Fields.last.className = Fields.last.className.replace(/cgv__last--.*/, ModMap.default);
-    alert(msg, `error`, `Connection error`);
+    alert(`error`, `Connection error`, msg);
     isAlertShown = true;
   }
 };
 
-document.addEventListener("visibilitychange", () => {
+document.addEventListener(`visibilitychange`, () => {
   if (document.visibilityState === `visible`) {
     getData(onSuccess, onError);
     log.info(`Get data due to visibility change`);

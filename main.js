@@ -30,9 +30,9 @@ const alert = (type, title, msg) => {
 };
 
 const isFirstRun = () => {
-  const isFirstRun = config.get('IS_FIRST_RUN');
+  const isFirstRun = config.get(`IS_FIRST_RUN`);
   if (isFirstRun) {
-    config.set('IS_FIRST_RUN', false);
+    config.set(`IS_FIRST_RUN`, false);
   }
   return isFirstRun;
 };
@@ -51,14 +51,6 @@ if (config.size === 0) {
 const validate = ajv.compile(SCHEMA);
 const configValid = validate(config.get());
 
-if (!configValid) {
-  const key = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
-  const value = config.get(key);
-  const error = `Value ${value} of ${key} ${validate.errors[0].message}`;
-
-  log.error(error);
-  log.error(`Schema reference: `, validate.errors[0]);
-}
 
 const createWindow = () => {
 
@@ -132,14 +124,22 @@ const createWindow = () => {
   });
 
   mainWindow.loadFile(`widget.html`);
-  settingsWindow.loadFile('settings.html');
+  settingsWindow.loadFile(`settings.html`);
 
   settingsWindow.webContents.once(`ready-to-show`, () => {
     ipcMain.on(`check-validation`, () => {
-      if (!isFirstRun() && !configValid) {
+      if (!configValid) {
         const errorPath = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
+        const errorValue = config.get(errorPath);
         const errorReason = validate.errors[0].keyword;
-        alert(`error`, `Config invalid`, `Config invalid: ${errorPath}\nReason: ${errorReason}`);
+        const errorMessage = `Config invalid on:\n${errorPath}\nValue: ${errorValue}\nReason: ${errorReason}`;
+
+        log.error(errorMessage.replaceAll(`\n`, ` `));
+        log.error(`Schema reference: `, validate.errors[0]);
+
+        if (!isFirstRun()) {
+          alert(`error`, `Config invalid`, errorMessage);
+        }
       }
     });
   });
@@ -153,8 +153,8 @@ const createWindow = () => {
 
   if (isLinux) {
     const linuxDependencies = {
-      "wmctrl": "wmctrl",
-      "xdg-utils": "xdg-open",
+      "wmctrl": `wmctrl`,
+      "xdg-utils": `xdg-open`,
     };
 
     const checkDependencies = (() => {
@@ -174,7 +174,7 @@ const createWindow = () => {
     
           if (missingCounter === Object.keys(linuxDependencies).length) {
             if (missingDependencies.length > 0) {
-              const errorMessage = `Please install the following dependencies:\n - ${missingDependencies.join('\n - ')}`;
+              const errorMessage = `Please install the following dependencies:\n - ${missingDependencies.join(`\n - `)}`;
               alert(`error`, `Missing dependencies`, errorMessage);
             }
           }
@@ -327,7 +327,7 @@ app.whenReady().then(() => {
       config.set(`BG.TARGET.TOP`, parseFloat(data[`bg-target-top`]));
       config.set(`BG.TARGET.BOTTOM`, parseFloat(data[`bg-target-bottom`]));
 
-      log.info('Config was updated successfully');
+      log.info(`Config was updated successfully`);
     } catch (error) {
       log.error(error, data);
     }
@@ -339,7 +339,7 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on(`test-age-visibility`, (_evt, show) => {
-    widget.mainWindow.webContents.send('set-age-visibility', show);
+    widget.mainWindow.webContents.send(`set-age-visibility`, show);
   });
 });
 
@@ -366,7 +366,7 @@ if (isMac) {
     }
   });
   
-  nativeTheme.on('updated', () => {
+  nativeTheme.on(`updated`, () => {
     if (app.isHidden()) {
       app.show();
       log.info(`App is shown after theme change event`);
