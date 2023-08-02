@@ -51,7 +51,11 @@ body {
 }
 
 input:focus,
-input:focus-visible {
+input:focus-visible,
+button:focus,
+button:focus-visible,
+a:focus,
+a:focus-visible {
   outline: none;
 }
 
@@ -193,6 +197,10 @@ input:focus-visible {
     text-transform: capitalize;
   }
     .settings__log-link:hover {
+      color: var(--color_settings_highlight);
+    }
+    .settings__log-link:focus,
+    .settings__log-link:focus-visible {
       color: var(--color_settings_highlight);
     }
 
@@ -364,6 +372,10 @@ input:focus-visible {
   .settings-button:active {
     background-color: var(--color_settings_darken);
     color: var(--color_settings_dark);
+  }
+  .settings-button:focus,
+  .settings-button:focus-visible {
+    box-shadow: 0 0 10px var(--color_settings_highlight);
   }
 
 .settings-button-close {

@@ -18,20 +18,32 @@ const config = new Store({ defaults });
 
 const ajv = new Ajv();
 
+const alert = (type, title, msg) => {
+  dialog.showMessageBox({
+    type: type,
+    title: title,
+    message: msg,
+    buttons: [`OK`],
+    defaultId: 0,
+    icon: type
+  }); 
+};
+
+const isFirstRun = () => {
+  const isFirstRun = config.get('IS_FIRST_RUN');
+  if (isFirstRun) {
+    config.set('IS_FIRST_RUN', false);
+  }
+  return isFirstRun;
+};
+
 if (config.size === 0) {
   try {
     config.clear();
     log.warn(`Config created successfully`);
   } catch (error) {
     const errorMessage =`Failed to create config: ${error}`;
-    dialog.showMessageBox({
-      type: `error`,
-      title: `Config wan't created`,
-      message: errorMessage,
-      buttons: [`OK`],
-      defaultId: 0,
-      icon: `error`
-    });
+    alert(`error`, `Config wasn't created`, errorMessage);
     log.error(errorMessage);
   }
 }
@@ -39,7 +51,7 @@ if (config.size === 0) {
 const validate = ajv.compile(SCHEMA);
 const configValid = validate(config.get());
 
-if (!configValid && config.size > 0) {
+if (!configValid) {
   const key = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
   const value = config.get(key);
   const error = `Value ${value} of ${key} ${validate.errors[0].message}`;
@@ -124,17 +136,10 @@ const createWindow = () => {
 
   settingsWindow.webContents.once(`ready-to-show`, () => {
     ipcMain.on(`check-validation`, () => {
-      if (!configValid) {
+      if (!configValid && !isFirstRun()) {
         const errorPath = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
-        const errorReason = validate.errors[0].keyword
-        dialog.showMessageBox({
-          type: 'error',
-          title: 'Config invalid',
-          message: `Config invalid: ${errorPath}\nReason: ${errorReason}`,
-          buttons: ['OK'],
-          defaultId: 0,
-          icon: 'error'
-        });
+        const errorReason = validate.errors[0].keyword;
+        alert(`error`, `Config invalid`, `Config invalid: ${errorPath}\nReason: ${errorReason}`);
       }
     });
   });
@@ -170,14 +175,7 @@ const createWindow = () => {
           if (missingCounter === Object.keys(linuxDependencies).length) {
             if (missingDependencies.length > 0) {
               const errorMessage = `Please install the following dependencies:\n - ${missingDependencies.join('\n - ')}`;
-              dialog.showMessageBox({
-                type: 'error',
-                title: 'Missing Dependencies',
-                message: errorMessage,
-                buttons: ['OK'],
-                defaultId: 0,
-                icon: 'error'
-              });
+              alert(`error`, `Missing dependencies`, errorMessage);
             }
           }
         });
@@ -233,7 +231,9 @@ const createWindow = () => {
 };
 
 const singleInstance = app.requestSingleInstanceLock();
-if (!singleInstance) app.quit();
+if (!singleInstance) {
+  app.quit();
+}
 
 app.whenReady().then(() => {
   if (!isDev && isMac) {

@@ -19,5 +19,6 @@
             "y": 100
         }
     },
-    "LAST_UPDATE_REQUEST": "1/1/2000"
+    "LAST_UPDATE_REQUEST": "1/1/2000",
+    "IS_FIRST_RUN": true
 }

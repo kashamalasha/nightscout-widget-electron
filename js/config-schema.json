@@ -108,13 +108,18 @@
     "LAST_UPDATE_REQUEST": {
       "type": "string",
       "default": "1/1/2000"
+    },
+    "IS_FIRST_RUN": {
+      "type": "boolean",
+      "default": true
     }
   },
   "required": [
     "NIGHTSCOUT",
     "BG",
     "WIDGET",
-    "LAST_UPDATE_REQUEST"
+    "LAST_UPDATE_REQUEST",
+    "IS_FIRST_RUN"
   ],
   "additionalProperties": false
 }
