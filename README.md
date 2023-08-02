@@ -1,25 +1,51 @@
 # 🦉 Hello, I am Owlet!
 
-The app's new name is "Owlet", which means baby owl and is chosen because of the Nightscout logo.
+The app's name is "Owlet", which means baby owl and is chosen because of the Nightscout project logo.
 
 ## 👋 Project Description
 
-This is the cross-platform application, built with Electron, that uses the [Nightscout API](https://nightscout.github.io/). The aim is to provide a lightweight interface for your `T1D` measurement visualization (blood sugar levels).
+This is the cross-platform application, built with [Electron framework](https://www.electronjs.org/), that uses the [Nightscout API](https://nightscout.github.io/). The aim is to provide a lightweight interface for your `T1D` measurement visualization (blood sugar levels).
 
 The widget will stay on top of your screen, so you don't need to keep your Nightscout site in the browser opened to see your/your relative's or kid's measurements in real-time anymore.
 
 I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5_NightscoutMon) solution, built on [M5 Stack's](https://m5stack.com/) hardware platform.
 
-<img src="asset/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
+<img src="docs/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
 
-## 📦 Installation (for MacOS and MS Windows)
+## 📦 Installation packages
 
-Download the latest releases: 
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-win.zip)
 
-- Setup installer for MS Windows: [Owlet-Win-Setup.exe](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.3.1-beta/Owlet-Setup-0.3.1-beta.exe)
-- DMG pack for MacOS: [Owlet-MacOS.dmg](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.3.1-beta/Owlet-0.3.1-beta-arm64.dmg)
-- Other installation packs are available here: https://github.com/kashamalasha/nightscout-widget-electron/releases/latest/
+[![Download for macOS](https://img.shields.io/badge/Download-macOS%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-arm64.dmg)
 
+[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](ttps://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-x64.Appimage)
+
+[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.4.0.tar.gz)
+
+[![Download Souces](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
+
+---
+
+<details>
+  <summary>!! to <b>Linux</b> users: expand this.. </summary>
+
+  The widget is packed in an [AppImage](https://appimage.org/) package due to the following reasons:
+
+  - It runs on all common Linux distributions
+  - It supports an auto-update feature
+  - AppImage usage simplifies the development process and testing on many different Linux distributions
+
+  I recommend using [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) to properly integrate the AppImage into the OS and create all the necessary .desktop files to launch it as an installed application. However, this decision is entirely up to you.
+
+  Please install the listed dependencies using the OS package manager:
+
+  - wmctrl
+  - xdg-utils
+
+  Without these listed dependencies, the widget will still work, but it might be difficult to manage the window states properly (wmctrl is used to hide the app from the application panel and tray) and to open other applications (xdg-open is used to open the browser for redirecting to the Nightscout site and open the file manager to navigate to the logs folder).
+
+  Without these packages, the widget will alert you about the missing dependencies once a day on every launch.
+</details>
 
 ## ⚠️ Before start
 
@@ -37,14 +63,7 @@ On the first launch, the app will prompt you to fill in the following settings
 <figure>
   <figcaption>First launch of Owlet on MacOS</figcaption>
   <p>
-    <img src="asset/screenshot-settings-macos.png" alt="Screenshot-widget"/>
-  </p>
-</figure>
-
-<figure>
-  <figcaption>First launch of Owlet on Windows</figcaption>
-  <p>
-    <img src="asset/screenshot-settings-windows.png" alt="Screenshot-widget"/>
+    <img src="docs/screenshot-settings-default.png" alt="Screenshot-widget"/>
   </p>
 </figure>
 
@@ -52,39 +71,55 @@ On the first launch, the app will prompt you to fill in the following settings
 
 - **NIGHTSCOUT URL** - is the address of your nightscout (e.g. https://some-cgm.fly.dev) 
 - **NIGHTSCOUT TOKEN** - the access token you've created on the previous steps
-- **NIGHTSCOUT REQUEST INTERVAL (SEC.)** - the interval of the getting information from the Nightscout site to display in the widget (60 seconds will be OK)
+- **NIGHTSCOUT REQUEST INTERVAL (SEC.)** - (***DEFAULT: 60***) the interval of the getting information from the Nightscout site to display in the widget
 
 ### 2. Widget preferences
-- **AGE LIMIT (MIN.)** - the timeout of data requesting interval, after that interval widget will change its appearance to "frozen" state. Usually, it means that the reader is offline or detached from the sensor, or the smartphone's battery is drained out
-<img src="asset/screenshot-widget-frozen.png" alt="Screenshot-widget" width="235"/>
+- **AGE LIMIT (MIN.)** - (***DEFAULT: 20***) the timeout of data requesting interval, after that interval widget will change its appearance to "frozen" state. Usually, it means that the reader is offline or detached from the sensor, or the smartphone's battery is drained out
 
-- **SHOW AGE** - that option displays additional information about how old the shown data is
+<img src="docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
+
+- **SHOW AGE** - (***DEFAULT: enabled***) that option displays additional information about how old the shown data is
 
 
 ### 3. Blood sugar levels preferences
 
-Set the tracking parameters using the following guides:
 
-- Above the **HIGH LEVEL TRESHOLD** and below th **LOW LEVEL THRESHOLD** the last value will be colored in red
-<img src="asset/screenshot-widget-critical.png" alt="Screenshot-widget" width="200"/>
+Set the blood sugar tracking parameters using the following guides:
 
-- Above the **TARGET TOP LEVEL** and below the **TARGET BOTTOM LEVEL** the last value will be colored in orange
-<img src="asset/screenshot-widget-warning.png" alt="Screenshot-widget" width="200"/>
+- Above the **HIGH LEVEL TRESHOLD** (***DEFAULT: 10***) and below th **LOW LEVEL THRESHOLD** (***DEFAULT: 3.5***) the last value will be colored in red
+
+<img src="docs/screenshot-widget-critical.png" alt="Screenshot-widget" width="200"/>
+
+- Above the **TARGET TOP LEVEL** (***DEFAULT: 8.5***) and below the **TARGET BOTTOM LEVEL** (***DEFAULT: 4***) the last value will be colored in orange
+
+<img src="docs/screenshot-widget-warning.png" alt="Screenshot-widget" width="200"/>
 
 - By default, the last value will be colored in green
-<img src="asset/screenshot-widget.png" alt="Screenshot-widget" width="235"/>
+
+<img src="docs/screenshot-widget-ok.png" alt="Screenshot-widget" width="200"/>
 
 - You may test the entered connection parameters by clicking the **TEST** button to verify the Nightscout site is accessible and the token is correct
-
 - If everything is ok, press the **SAVE** button to save settings and restart the application
 
 ## 🧭 Using the widget
 
 - After restarting, the widget will always stay on top of the screen until you close it by clicking the top left corner with the X sign.
-
 - If you need to change the settings you can click by the gear symbol in the bottom left corner.
-
 - If you want to fast navigate to the Nightscout site, you can click the middle button with the graph symbol.
+
+## ⬇️ Auto updates
+
+- The widget has a built-in implementation of the update system.
+- The widget will check for the latest release availability every time it starts, but only once a day.
+- If the latest release is available, the widget will automatically download and install it right after exiting.
+- On **Mac** and **Windows** operating systems, users will receive a notification about the newly downloaded version.
+- On **Linux**, the notification doesn't work properly yet.
+
+## 🚧 In Progress 
+
+- Feature of selecting mmol/l <-> mg/dl measurement units
+- Feature of calculating trend indicator when this data is absent on Nightscout
+
 
 ## 🗜️ Content
 
@@ -104,6 +139,7 @@ The current application includes these files:
 - `js/auto-update.js` - The app's auto-updater JS implementation.
 - `js/config-schema.json` - The app's config json schema validation file.
 - `js/config-sample.json` - The app's config.json example
+- `js/config-default.json` - The default values for the config.json
 
 ## 🛠️ To build it from source code
 
@@ -124,8 +160,10 @@ npm run dev
 
 ### Operating systems
 
-- Compatible with MacOS and MS Windows
-- It hasn't been tested on Linux yet. Feel free to fork it for testing and use it on a different OS.
+Compatible with:
+* MacOS, 
+* MS Windows, 
+* Linux (tested on Ubuntu, Fedora, CentOS, Alma on GNOME Desktop and XFCE)
 
 ### Build Native Applications
 
@@ -137,7 +175,9 @@ You can build a native application for your operating system's preferences from 
 ### Additional Resources
 
 - [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
+- [electron.build](https://electron.build) - electron-builder documentationn
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - Nightscout API v3 documentation
+- [Icons8.com](https://icons8.com/) - Great icons and assets collection that I used in this project
 
 ## ⚖️ License
 
