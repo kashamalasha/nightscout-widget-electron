@@ -90,7 +90,6 @@ a:focus-visible {
 .cgv__last {
   grid-row: span 2;
   margin-bottom: 2.5%;
-  margin-right: 2.5%;
 
   font-size: 3.3em;
   font-weight: 800;
