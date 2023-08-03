@@ -292,6 +292,10 @@ a:focus-visible {
       color: var(--color_settings_darken);
       font-style: italic;
     }
+    .settings-input__field::selection {
+      color: var(--color_settings_darken);
+      background-color: var(--color_settings_highlight);
+    }
     .settings-input__check:checked:disabled ~ * .settings-input__field--checkbox {
       background-image: url(./asset/icons8-check-disabled.png);
       background-size: 100% 100%;
