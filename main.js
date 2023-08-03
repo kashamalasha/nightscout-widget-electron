@@ -18,16 +18,19 @@ const config = new Store({ defaults });
 
 const ajv = new Ajv();
 
-const alert = (type, title, msg) => {
-  dialog.showMessageBox({
-    type: type,
-    title: title,
-    message: msg,
-    buttons: [`OK`],
+const alert = (type, title, message, parentWindow = null) => {
+  const options = {
+    type,
+    title,
+    message,
+    buttons: ['OK'],
     defaultId: 0,
-    icon: type
-  }); 
+    icon: type,
+  };
+
+  dialog.showMessageBox(parentWindow, options);
 };
+
 
 const isFirstRun = () => {
   const isFirstRun = config.get(`IS_FIRST_RUN`);
@@ -138,7 +141,7 @@ const createWindow = () => {
         log.error(`Schema reference: `, validate.errors[0]);
 
         if (!isFirstRun()) {
-          alert(`error`, `Config invalid`, errorMessage);
+          alert(`error`, `Config invalid`, errorMessage, settingsWindow);
         }
       }
     });
