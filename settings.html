@@ -7,17 +7,22 @@
   </head>
 <body>
   <main class="settings">
-    <h1 class="settings__title">Nightscout Widget Settings</h1>
+    <header class="settings-header">
+      <h1 class="settings__title">Widget settings</h1>
+      <button class="settings-button-close" type="button" id="button-close">
+        <img src="asset/icons8-check.png" alt="close" width="25px" height="25px">
+      </button>
+    </header>
     <form>
       <div class="settings-fields">
         <section class="settings-field settings-fields__nightscout">
           <h2 class="settings-field__title">Nightscout API settings</h2>
           <div class="settings-input">
-            <input class="settings-input__field" type="text" name="nightscout-url" id="nightscout-url" required>
+            <input class="settings-input__field" type="text" name="nightscout-url" id="nightscout-url" spellcheck="false" required>
             <label class="settings-input__label" for="nightscout-url">Nightscout URL</label>
           </div>
           <div class="settings-input">
-            <input class="settings-input__field" type="text" name="nightscout-token" id="nightscout-token" required>
+            <input class="settings-input__field" type="text" name="nightscout-token" id="nightscout-token" spellcheck="false" required>
             <label class="settings-input__label" for="nightscout-token">Nightscout token</label>
           </div>
           <div class="settings-input">
@@ -72,7 +77,7 @@
           </div>
         </section>
       </div>
-      <div class="settings-footer">
+      <footer class="settings-footer">
         <div class="settings-footer__buttons">
           <button class="settings-button" type="submit" id="button-submit">Save</button>
           <button class="settings-button" type="button" id="button-test">Test</button>

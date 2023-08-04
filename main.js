@@ -1,52 +1,61 @@
-const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell } = require(`electron`);
+const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell, dialog } = require(`electron`);
 const path = require(`path`);
 const { readFileSync } = require(`fs`);
+const { exec } = require(`child_process`);
 const Store = require(`electron-store`);
 const Ajv = require(`ajv`);
 const log = require(`./js/logger`);
 const requestToUpdate = require(`./js/auto-update`);
+
 const isDev = process.env.NODE_ENV === `development`;
 const isMac = process.platform == `darwin`;
+const isLinux = process.platform == `linux`;
 
 const SCHEMA = JSON.parse(readFileSync(path.join(__dirname, `js/config-schema.json`)));
-const config = new Store();
+const defaults = JSON.parse(readFileSync(path.join(__dirname, `js/config-default.json`)));
+
+const config = new Store({ defaults });
+
 const ajv = new Ajv();
+
+const alert = (type, title, message, parentWindow = null) => {
+  const options = {
+    type,
+    title,
+    message,
+    buttons: ['OK'],
+    defaultId: 0,
+    icon: type,
+  };
+
+  dialog.showMessageBox(parentWindow, options);
+};
+
+
+const isFirstRun = () => {
+  const isFirstRun = config.get(`IS_FIRST_RUN`);
+  if (isFirstRun) {
+    config.set(`IS_FIRST_RUN`, false);
+  }
+  return isFirstRun;
+};
 
 if (config.size === 0) {
   try {
     config.clear();
     log.warn(`Config created successfully`);
   } catch (error) {
-    log.error(`Failed to create config:`, error);
-    alert(error);
+    const errorMessage =`Failed to create config: ${error}`;
+    alert(`error`, `Config wasn't created`, errorMessage);
+    log.error(errorMessage);
   }
 }
 
 const validate = ajv.compile(SCHEMA);
 const configValid = validate(config.get());
 
-if (!configValid && config.size > 0) {
-  const key = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
-  const value = config.get(key);
-  const error = `Value ${value} of ${key} ${validate.errors[0].message}`;
-
-  log.error(error);
-  log.error(`Schema reference: `, validate.errors[0]);
-}
 
 const createWindow = () => {
-
-  const defaultWidgetValues = {
-    position: {
-      x: 1000,
-      y: 100
-    },
-    opacity: 100,
-  }
-
-  if (!configValid) {
-    config.set(`WIDGET.POSITION`, defaultWidgetValues.position);
-  }
 
   const widgetBounds = {
     width: 180,
@@ -81,16 +90,11 @@ const createWindow = () => {
   const getPosition = () => {
     const widgetLastPosition = config.get(`WIDGET.POSITION`);
 
-    x = widgetLastPosition.x - settingsBounds.width;
-    y = widgetLastPosition.y;
+    const x = widgetLastPosition.x - settingsBounds.width;
+    const y = widgetLastPosition.y;
 
-    return { x, y }
-  }
-
-  const settingsColors = {
-    background: `rgb(44, 51, 51)`,
-    controls: `rgb(116, 177, 190)`
-  }
+    return { x, y };
+  };
 
   const settingsWindow = new BrowserWindow({
     width: settingsBounds.width,
@@ -104,26 +108,80 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, `js/preload.js`)
     },
-    backgroundColor: settingsColors.background,
-    titleBarStyle: `hidden`,
-    titleBarOverlay: isMac ? false : {
-      color: settingsColors.background,
-      symbolColor: settingsColors.controls,
-      height: 40
-    },
+    transparent: true,
     show: configValid ? false : true,
     parent: mainWindow,
+    frame: false,
   });
 
   mainWindow.loadFile(`widget.html`);
-  settingsWindow.loadFile('settings.html');
+  settingsWindow.loadFile(`settings.html`);
 
-  mainWindow.on(`moved`, () => {
+  settingsWindow.webContents.once(`ready-to-show`, () => {
+    ipcMain.on(`check-validation`, () => {
+      if (!configValid) {
+        const errorPath = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
+        const errorValue = config.get(errorPath);
+        const errorReason = validate.errors[0].keyword;
+        const errorMessage = `Config invalid on:\n${errorPath}\nValue: ${errorValue}\nReason: ${errorReason}`;
+
+        log.error(errorMessage.replaceAll(`\n`, ` `));
+        log.error(`Schema reference: `, validate.errors[0]);
+
+        if (!isFirstRun()) {
+          alert(`error`, `Config invalid`, errorMessage, settingsWindow);
+        }
+      }
+    });
+  });
+
+  mainWindow.on(`move`, () => {
     const { x, y } = mainWindow.getBounds();
     config.set(`WIDGET.POSITION`, { x, y });
     const childPosition = getPosition();
     settingsWindow.setPosition(childPosition.x, childPosition.y, false);
   });
+
+  if (isLinux) {
+    const linuxDependencies = {
+      "wmctrl": `wmctrl`,
+      "xdg-utils": `xdg-open`,
+    };
+
+    const checkDependencies = (() => {
+      let missingCounter = 0;
+      const missingDependencies = [];
+    
+      Object.entries(linuxDependencies).forEach(([package, command]) => {
+        exec(`which ${command}`, (error) => {
+          if (error) {
+            log.error(`${package} is not installed on your system.`);
+            missingDependencies.push(package); 
+          } else {
+            log.info(`${package} is installed.`);
+          }
+	
+          missingCounter++; 
+    
+          if (missingCounter === Object.keys(linuxDependencies).length) {
+            if (missingDependencies.length > 0) {
+              const errorMessage = `Please install the following dependencies:\n - ${missingDependencies.join(`\n - `)}`;
+              alert(`error`, `Missing dependencies`, errorMessage);
+            }
+          }
+        });
+      });
+    });
+
+    mainWindow.webContents.on(`ready-to-show`, () => {
+      checkDependencies();
+      exec(`wmctrl -r "${mainWindow.getTitle()}" -b add,skip_taskbar`, (error) => {
+        if (error) {
+          log.error(`Failed to execute wmctrl: ${error.message}`);
+        }
+      });
+    });
+  }
 
   mainWindow.webContents.on(`did-finish-load`, () => {
     requestToUpdate();
@@ -164,7 +222,9 @@ const createWindow = () => {
 };
 
 const singleInstance = app.requestSingleInstanceLock();
-if (!singleInstance) app.quit();
+if (!singleInstance) {
+  app.quit();
+}
 
 app.whenReady().then(() => {
   if (!isDev && isMac) {
@@ -193,22 +253,32 @@ app.whenReady().then(() => {
   ipcMain.on(`log-message`, (evt, msg, level) => {
     evt.preventDefault();
 
-    const prefix = `%cRenderer:`;
+    const prefix = `Renderer:`;
     switch (level) {
-      case `info`:
-        log.info(`${prefix} ${msg}`, `color: black`);
-        break;
-      case `warn`:
-        log.warn(`${prefix} ${msg}`, `color: blue`);
-        break;
-      case `error`:
-        log.error(`${prefix} ${msg}`, `color: red`);
-        break;
+    case `info`:
+      log.info(`${prefix} ${msg}`);
+      break;
+    case `warn`:
+      log.warn(`${prefix} ${msg}`, `color: orange`);
+      break;
+    case `error`:
+      log.error(`${prefix} ${msg}`, `color: red`);
+      break;
     }
   });
 
+  ipcMain.handle(`show-message-box`, async (evt, options) => {
+    const result = await dialog.showMessageBox(BrowserWindow.getFocusedWindow(), options);
+    return result.response;
+  });
+
+  ipcMain.handle(`show-message-box-sync`, async (evt, options) => {
+    const result = await dialog.showMessageBoxSync(BrowserWindow.getFocusedWindow(), options);
+    return result.response;
+  }); 
+
   ipcMain.on(`close-window`, (evt) => {
-    if (evt.sender.getTitle() === `Nightscout Widget`) {
+    if (evt.sender.getTitle() === `Owlet`) {
       app.exit();
       log.info(`App was closed due to close-window event`);
     } else {
@@ -217,7 +287,13 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on(`restart`, () => {
-    app.relaunch();
+    const args = process.argv.slice(1);
+    const options = { args };
+    if (process.env.APPIMAGE) {
+      options.execPath = process.env.APPIMAGE;
+      options.args.unshift(`--appimage-extract-and-run`);
+    }
+    app.relaunch(options);
     app.exit();
     log.info(`App was restarted due to renderer event`);
   });
@@ -248,7 +324,7 @@ app.whenReady().then(() => {
       config.set(`BG.TARGET.TOP`, parseFloat(data[`bg-target-top`]));
       config.set(`BG.TARGET.BOTTOM`, parseFloat(data[`bg-target-bottom`]));
 
-      log.info('Config was updated successfully');
+      log.info(`Config was updated successfully`);
     } catch (error) {
       log.error(error, data);
     }
@@ -260,7 +336,7 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on(`test-age-visibility`, (_evt, show) => {
-    widget.mainWindow.webContents.send('set-age-visibility', show);
+    widget.mainWindow.webContents.send(`set-age-visibility`, show);
   });
 });
 
@@ -268,7 +344,7 @@ if (isMac) {
   powerMonitor.on(`unlock-screen`, () => {
     if (app.isHidden()) {
       app.show();
-      log.info(`App is shown after unlock-screen event`)
+      log.info(`App is shown after unlock-screen event`);
     } else if (!app.isHidden()) {
       log.silly(`Duplicated powerMonitor event handler called by 'unlock-screen' event`);
     }
@@ -277,7 +353,7 @@ if (isMac) {
   powerMonitor.on(`resume`, () => {
     if (app.isHidden()) {
       app.show();
-      log.info(`App is shown after resume event`)
+      log.info(`App is shown after resume event`);
     } else if (!app.isHidden()) {
       log.silly(`Duplicated powerMonitor event handler called by 'resume' event`);
     } else {
@@ -287,10 +363,10 @@ if (isMac) {
     }
   });
   
-  nativeTheme.on('updated', () => {
+  nativeTheme.on(`updated`, () => {
     if (app.isHidden()) {
       app.show();
-      log.info(`App is shown after theme change event`)
+      log.info(`App is shown after theme change event`);
     } else if (!app.isHidden()) {
       log.silly(`Duplicated nativeTheme event handler called by 'updated' event`);
     } else {

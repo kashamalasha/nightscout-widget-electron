@@ -1,6 +1,6 @@
 "use strict";
 
-import { customAssign } from "./util.js";
+import { customAssign, alert } from "./util.js";
 import { getStatus } from "./backend.js";
 
 const CONFIG = await window.electronAPI.getSettings();
@@ -29,6 +29,13 @@ const FormFields = {
   },
 };
 
+const FormButtons = {
+  SUBMIT: document.querySelector(`form`),
+  TEST: document.querySelector(`#button-test`),
+  LOG: document.querySelector(`.settings__log-link`),
+  CLOSE: document.querySelector(`#button-close`),
+};
+
 customAssign(FormFields, CONFIG);
 
 document.querySelector(`#app-version`).textContent = VERSION;
@@ -49,7 +56,7 @@ FormFields.WIDGET.SHOW_AGE.addEventListener(`change`, (evt) => {
   } catch(error) {
     log.error(error);
   }
-})
+});
 
 const testConnection = (evt) => {
   return new Promise((resolve, reject) => {
@@ -60,8 +67,9 @@ const testConnection = (evt) => {
 
     const onSuccess = (result) => {
       if (evt.target.id === `button-test`) {
-        alert(`It looks good!`);
-        log.info(`Test connection to ${testParams.url} was successfull.`);
+        const msg = `Connection successfully established.`;
+        alert(`info`, `OK`, `It looks good!\n${msg}`);
+        log.info(msg);
       }
   
       resolve(result);
@@ -69,7 +77,7 @@ const testConnection = (evt) => {
 
     const onError = (errorMessage) => {
       log.error(errorMessage);
-      const msg = `Connection to ${testParams.url} wasn't successful because of ${errorMessage}.`;
+      const msg = `Connection failed: ${errorMessage}.`;
       
       reject(new Error(msg));
     };
@@ -78,13 +86,11 @@ const testConnection = (evt) => {
   });
 };
 
-const buttonTest = document.querySelector(`#button-test`);
-
-buttonTest.addEventListener('click', async (evt) => {
+FormButtons.TEST.addEventListener(`click`, async (evt) => {
   try {
     await testConnection(evt);
   } catch (error) {
-    alert(error);
+    alert(`error`, `Connection failed.`, error);
   }
 });
 
@@ -97,7 +103,7 @@ const trimInputs = (evt) => {
   const inputValue = evt.target.value;
   const trimmedValue = inputValue.trim();
 
-  const modifiedValue = trimmedValue.replace(/[/\.]+$/, '');
+  const modifiedValue = trimmedValue.replace(/[./]+$/, ``);
   evt.target.value = modifiedValue;
 };
 
@@ -105,9 +111,7 @@ nightscoutTextInputs.forEach((input) => {
   input.addEventListener(`blur`, trimInputs);
 });
 
-const formSettings = document.querySelector(`form`);
-
-formSettings.addEventListener(`submit`, async (evt) => {
+FormButtons.SUBMIT.addEventListener(`submit`, async (evt) => {
   evt.preventDefault();
 
   const msg = `Settings were updated. Widget will be restarted.`;
@@ -120,21 +124,25 @@ formSettings.addEventListener(`submit`, async (evt) => {
   try {
     await testConnection(evt);
     window.electronAPI.setSettings(formDataObj);
-    alert(msg);
+    alert(`info`, `OK`, msg, true);
     log.warn(msg);
     window.electronAPI.closeWindow();
     window.electronAPI.restart();
   } catch(error) {
     log.error(error);
-    alert(error);
+    alert(`error`, `Something went wrong`, msg, true);
   }
 });
 
-const logLink = document.querySelector(`.settings__log-link`);
-
-logLink.addEventListener(`click`, (evt) => {
+FormButtons.LOG.addEventListener(`click`, (evt) => {
   evt.preventDefault();
 
   window.electronAPI.openLogFile();
   window.electronAPI.closeWindow();
-})
+});
+
+FormButtons.CLOSE.addEventListener(`click`, () => {
+  window.electronAPI.closeWindow();
+});
+
+setTimeout(window.electronAPI.checkFormValidation, 100);

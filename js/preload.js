@@ -17,4 +17,9 @@ contextBridge.exposeInMainWorld(`electronAPI`, {
     warn: (msg) => ipcRenderer.send(`log-message`, msg, `warn`),
     error: (msg) => ipcRenderer.send(`log-message`, msg, `error`),
   },
+  dialog: {
+    showMessageBox: (options) => ipcRenderer.invoke(`show-message-box`, options),
+    showMessageBoxSync: (options) => ipcRenderer.invoke(`show-message-box-sync`, options),
+  },
+  checkFormValidation: () => ipcRenderer.send(`check-validation`),
 });

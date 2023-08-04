@@ -2,11 +2,17 @@
   "name": "nightscout-widget-electron",
   "productName": "Owlet",
   "description": "An Electron widget application to show on a desktop cgv value is getting from Nightscout API",
-  "version": "0.3.1-beta",
+  "author": {
+    "name": "Dmitry Burnyshev",
+    "email": "dmitry.burnyshev@gmail.com"
+  },
+  "homepage": "https://github.com/kashamalasha/nightscout-widget-electron",
+  "version": "0.4.0",
   "main": "main.js",
   "scripts": {
     "start": "NODE_ENV=production electron .",
     "dev": "NODE_ENV=development electron .",
+    "lint": "eslint .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "ship": "electron-builder -p always"
@@ -14,6 +20,7 @@
   "build": {
     "appId": "com.burny.owlet.app",
     "productName": "Owlet",
+    "artifactName": "${productName}-${version}-${os}.${ext}",
     "directories": {
       "output": "dist"
     },
@@ -31,7 +38,7 @@
       "notarize": true,
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
-      "icon": "asset/Appicon.icns",
+      "icon": "asset/icons/mac/AppIcon.icns",
       "entitlements": "build/entitlements.mac.plist",
       "entitlementsInherit": "build/entitlements.mac.plist",
       "category": "public.app-category.health"
@@ -41,15 +48,25 @@
         "nsis",
         "zip"
       ],
-      "icon": "asset/Appicon.ico"
+      "icon": "asset/icons/win/AppIcon.ico"
     },
     "nsis": {
       "oneClick": true,
-      "installerIcon": "asset/Appicon.ico",
-      "uninstallerIcon": "asset/Appicon.ico",
+      "installerIcon": "asset/icons/win/Appicon.ico",
+      "uninstallerIcon": "asset/icons/win/Appicon.ico",
       "uninstallDisplayName": "Owlet-uninstaller",
-      "license": "LICENSE.md",
+      "license": "build/LICENSE.txt",
       "allowToChangeInstallationDirectory": false
+    },
+    "linux": {
+      "target": [
+        "appImage"
+      ],
+      "icon": "asset/icons/png",
+      "category": "Utility"
+    },
+    "appImage": {
+      "license": "build/LICENSE.txt"
     },
     "publish": [
       {
@@ -74,7 +91,6 @@
     "dexcom",
     "nightscout"
   ],
-  "author": "kashamalasha",
   "license": "AGPL-3.0",
   "dependencies": {
     "electron-log": "^4.4.8",
@@ -85,6 +101,10 @@
     "ajv": "^8.11.2",
     "electron": "^25.2.0",
     "electron-builder": "^24.4.0",
-    "electron-builder-notarize": "^1.5.1"
+    "electron-builder-notarize": "^1.5.1",
+    "eslint": "^8.46.0",
+    "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1"
   }
 }
