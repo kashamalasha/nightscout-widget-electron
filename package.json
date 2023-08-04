@@ -7,7 +7,7 @@
     "email": "dmitry.burnyshev@gmail.com"
   },
   "homepage": "https://github.com/kashamalasha/nightscout-widget-electron",
-  "version": "0.4.0-alpha",
+  "version": "0.4.0",
   "main": "main.js",
   "scripts": {
     "start": "NODE_ENV=production electron .",

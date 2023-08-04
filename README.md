@@ -14,11 +14,11 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 ## 📦 Installation packages
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-Setup-0.4.0.exe)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-win.exe)
 
-[![Download for macOS](https://img.shields.io/badge/Download-macOS%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-arm64.dmg)
+[![Download for macOS](https://img.shields.io/badge/Download-macOS%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-mac.dmg)
 
-[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0.AppImage)
+[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-linux.AppImage)
 
 [![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.4.0.tar.gz)
 
@@ -116,7 +116,11 @@ Set the blood sugar tracking parameters using the following guides:
 
 - Feature of selecting mmol/l <-> mg/dl measurement units
 - Feature of calculating trend indicator when this data is absent on Nightscout
+- Localization
+- Github-page landing using Jakil
 
+If you feel desire to improve it or help. You can suggest any ideas or detected bugs to the project board:
+https://github.com/users/kashamalasha/projects/2/views/1 
 
 ## 🗜️ Content
 
