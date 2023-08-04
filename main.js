@@ -57,18 +57,6 @@ const configValid = validate(config.get());
 
 const createWindow = () => {
 
-  const defaultWidgetValues = {
-    position: {
-      x: 1000,
-      y: 100
-    },
-    opacity: 100,
-  };
-
-  if (!configValid) {
-    config.set(`WIDGET.POSITION`, defaultWidgetValues.position);
-  }
-
   const widgetBounds = {
     width: 180,
     height: 80,
