@@ -14,26 +14,26 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 ## 📦 Installation packages
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-win.exe)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0-beta/Owlet-0.4.0-beta-win.exe)
 
-[![Download for macOS](https://img.shields.io/badge/Download-macOS%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-mac.dmg)
+[![Download for macOS](https://img.shields.io/badge/Download-macOS%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0-beta/Owlet-0.4.0-beta-mac.dmg)
 
-[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0/Owlet-0.4.0-linux.AppImage)
+[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.0-beta/Owlet-0.4.0-beta-linux.AppImage)
 
-[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.4.0.tar.gz)
+[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.4.0-beta.tar.gz)
 
 [![Download Souces](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
 <details>
   <summary><b>LINUX</b> user, expand it and read.. </summary>
-
+  <br>
   The widget is packed in an [AppImage](https://appimage.org/) package due to the following reasons:
 
   - It runs on all common Linux distributions
-  - It supports an auto-update feature
+  - It supports an auto-update feature (but doesn't support notification about it)
   - AppImage usage simplifies the development process and testing on many different Linux distributions
 
-  I recommend using [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) to properly integrate the AppImage into the OS and create all the necessary .desktop files to launch it as an installed application. However, this decision is entirely up to you.
+  I recommend using [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) to properly integrate the AppImage into the OS and create all the necessary `.desktop` files to launch it as an installed application. However, this decision is entirely up to you. You can launch the application immediately after downloading from the folder you choose to download and create the `.desktop` file manually.
 
   Please install the listed dependencies using the OS package manager:
 
@@ -43,6 +43,11 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
   Without these listed dependencies, the widget will still work, but it might be difficult to manage the window states properly (wmctrl is used to hide the app from the application panel and tray) and to open other applications (xdg-open is used to open the browser for redirecting to the Nightscout site and open the file manager to navigate to the logs folder).
 
   Without these packages, the widget will alert you about the missing dependencies once a day on every launch.
+
+  <b>Auto-update may cause freezing</b>. The application starts checking for updates right after the launch, but only once a day. If it finds a new version in the latest releases, it will begin downloading and replacing the AppImage on your drive, which usually takes about 1-2 minutes. If the application freezes, you need to wait until it awakens, or alternatively, you can kill the process using the `ps` command and restart it.
+
+  Please note that the AppImage doesn't have yet a built-in mechanism to notify about the updates. If you are knowledgeable about how to implement this feature, you are welcome to contribute by submitting a pull request; I would sincerely appreciate it.
+
 </details>
 
 ## ⚠️ Before start
