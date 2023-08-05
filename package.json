@@ -31,7 +31,7 @@
       "!asset/screenshot*"
     ],
     "extraFiles": [
-      "LICENSE"
+      "LICENSE.md"
     ],
     "afterSign": "electron-builder-notarize",
     "mac": {
