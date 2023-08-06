@@ -7,7 +7,7 @@
     "email": "dmitry.burnyshev@gmail.com"
   },
   "homepage": "https://github.com/kashamalasha/nightscout-widget-electron",
-  "version": "0.4.0-beta",
+  "version": "0.4.1-beta",
   "main": "main.js",
   "scripts": {
     "start": "NODE_ENV=production electron .",
@@ -41,7 +41,16 @@
       "icon": "asset/icons/mac/AppIcon.icns",
       "entitlements": "build/entitlements.mac.plist",
       "entitlementsInherit": "build/entitlements.mac.plist",
-      "category": "public.app-category.health"
+      "category": "public.app-category.health",
+      "target": [
+        {
+          "target": "default",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
     },
     "win": {
       "target": [
