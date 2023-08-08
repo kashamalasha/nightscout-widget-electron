@@ -20,10 +20,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '18.14.0'
-          repo-token: ${{ secrets.PROD_GITHUB_TOKEN }}
         
       - name: Install dependencies
         run: npm install
+      
+      - name: Set GH_TOKEN
+        run: export GH_TOKEN=${{ secrets.PROD_GITHUB_TOKEN }}
 
-      - name: Build x64 dmg
+      - name: Build package
         run: npm run ship
