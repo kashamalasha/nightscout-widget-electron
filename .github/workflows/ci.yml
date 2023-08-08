@@ -24,15 +24,12 @@ jobs:
       - name: Install dependencies
         run: npm install
       
-      - name: Codesign and notarize preparation
+      - name: Keychain preparation
         env: 
           MACOS_CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
           MACOS_CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
           MACOS_CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
           MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
-          PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
-          PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
-          PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
         run: |
           # Turn our base64-encoded certificate back to a regular .p12 file
           
@@ -57,7 +54,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }} 
           APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
-          APPLE_ID_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }} 
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }} 
       #     APPLE_KEYCHAIN: /Users/runner/Library/Keychains/build.keychain-db
       #     APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
         run: npm run ship
