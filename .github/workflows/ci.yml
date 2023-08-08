@@ -2,17 +2,16 @@ name: Test action
 
 on:
   push:
-    branches: [ "develop" ]
+    branches:
+      - "develop"
 
 jobs:
   build:
-
     runs-on: ${{matrix.os}}
-
     strategy:
       matrix:
         os: [macos-latest-xl]
 
     steps:
-    - name: Check arch for Mac
-    - run: system_profiler SPHardwareDataType | grep Chip
+      - name: Check arch for Mac
+        run: system_profiler SPHardwareDataType | grep Chip
