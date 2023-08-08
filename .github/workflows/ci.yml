@@ -25,7 +25,9 @@ jobs:
         run: npm install
       
       - name: Set GH_TOKEN
-        run: export GH_TOKEN=${{ secrets.PROD_GITHUB_TOKEN }}
+        env: 
+          PROD_GITHUB_TOKEN: ${{ secrets.PROD_GITHUB_TOKEN }}
+        run: export GH_TOKEN=$PROD_GITHUB_TOKEN
 
       - name: Build package
         run: npm run ship
