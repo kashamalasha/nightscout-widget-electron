@@ -51,14 +51,16 @@ jobs:
 
           echo "Create keychain profile"
           xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
+          security find-generic-password -s "notarytool-profile" /Users/runner/Library/Keychains/build.keychain-db
 
 
-      - name: Build the package
-        env:
-          GH_TOKEN: ${{ github.token }}
-          APPLE_KEYCHAIN: /Users/runner/Library/Keychains/build.keychain-db
-          APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
-        run: npm run ship
+
+      # - name: Build the package
+      #   env:
+      #     GH_TOKEN: ${{ github.token }}
+      #     APPLE_KEYCHAIN: /Users/runner/Library/Keychains/build.keychain-db
+      #     APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
+      #   run: npm run ship
 
       - name: Upload Error Log as Artifact
         if: failure()
