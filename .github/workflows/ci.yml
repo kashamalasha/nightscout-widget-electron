@@ -1,0 +1,33 @@
+name: Test action
+
+on:
+  push:
+    branches:
+      - "develop"
+
+jobs:
+  build:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.14.0'
+        
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Set GH_TOKEN
+        env: 
+          PROD_GITHUB_TOKEN: ${{ secrets.PROD_GITHUB_TOKEN }}
+        run: export GH_TOKEN=$PROD_GITHUB_TOKEN
+
+      - name: Build package
+        run: npm run ship
