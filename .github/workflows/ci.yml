@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [macos-latest-xl]
+        os: [macos-latest]
 
     steps:
       - name: Check arch for Mac
