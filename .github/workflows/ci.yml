@@ -19,11 +19,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18.14.0' # Specify the Node.js version you want to install
+          node-version: '18.14.0'
         
       - name: Install dependencies
         run: npm install
         
       - name: Build x64 dmg
-        run: npm run dist -- --mac x64
+        run: npm run dist -- --mac
 
