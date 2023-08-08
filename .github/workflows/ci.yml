@@ -10,11 +10,9 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [macos-latest, macos-13]
 
     steps:
       - name: Check arch for Mac
-        run: |
-          system_profiler SPHardwareDataType
-          system_profiler SPHardwareDataType | grep Chip || true
+        run: system_profiler SPHardwareDataType
 
