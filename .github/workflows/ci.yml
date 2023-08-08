@@ -25,5 +25,5 @@ jobs:
         run: npm install
         
       - name: Build x64 dmg
-        run: npm run dist
+        run: npm run dist -- --clean
 
