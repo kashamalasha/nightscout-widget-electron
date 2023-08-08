@@ -15,4 +15,5 @@ jobs:
     steps:
       - name: Check arch for Mac
         run: system_profiler SPHardwareDataType
+        run: uname -m
 
