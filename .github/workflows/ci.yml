@@ -56,7 +56,7 @@ jobs:
       - name: Build the package
         env:
           GH_TOKEN: ${{ github.token }}
-          APPLE_KEYCHAIN: build.keychain-db
+          APPLE_KEYCHAIN: /Users/runner/Library/Keychains/build.keychain-db
           APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
         run: npm run ship
 
