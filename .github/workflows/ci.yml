@@ -57,8 +57,9 @@ jobs:
           APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
           GH_TOKEN: ${{ github.token }}
         run: |
+          security list-keychains
           security show-keychain-info "$APPLE_KEYCHAIN"
-          security dump "$APPLE_KEYCHAIN"
+          security find-generic-password -l "$APPLE_KEYCHAIN"
           # npm run ship
 
 
