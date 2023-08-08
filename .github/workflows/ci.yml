@@ -6,14 +6,14 @@ on:
       - "develop"
 
 jobs:
-  build:
+  test:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
         os: [macos-latest, macos-13]
 
     steps:
-      - name: Check arch for Mac
-        run: system_profiler SPHardwareDataType
+      - name: Check OS Name 
+        run: system_profiler SPHardwareDataType | grep Processor
+      - name: Check architecture type
         run: uname -m
-
