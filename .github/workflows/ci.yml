@@ -6,14 +6,24 @@ on:
       - "develop"
 
 jobs:
-  test:
+  build:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [macos-latest, macos-13]
+        os: [macos-13]
 
     steps:
-      - name: Check OS Name 
-        run: system_profiler SPHardwareDataType | grep Processor
-      - name: Check architecture type
-        run: uname -m
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.14.0' # Specify the Node.js version you want to install
+        
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Build x64 dmg
+        run: npm run dist -- --mac x64
+
