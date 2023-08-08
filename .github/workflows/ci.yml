@@ -53,17 +53,17 @@ jobs:
           xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
 
 
-      - name: Build the package
-        env:
-          GH_TOKEN: ${{ github.token }}
-          APPLE_KEYCHAIN: build.keychain
-          APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
-        run: npm run ship
+      # - name: Build the package
+      #   env:
+      #     GH_TOKEN: ${{ github.token }}
+      #     APPLE_KEYCHAIN: build.keychain
+      #     APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
+      #   run: npm run ship
 
-      - name: Upload Error Log as Artifact
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: notarization-error-log
-          path: notarization-error.log
+      # - name: Upload Error Log as Artifact
+      #   if: failure()
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: notarization-error-log
+      #     path: notarization-error.log
 
