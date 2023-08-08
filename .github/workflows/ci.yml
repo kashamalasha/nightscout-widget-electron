@@ -3,14 +3,14 @@ name: Test action
 on:
   push:
     branches:
-      - "develop"
+      - "actions"
 
 jobs:
   build:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
 
     steps:
       - name: Checkout code
@@ -27,7 +27,8 @@ jobs:
       - name: Set GH_TOKEN
         env: 
           PROD_GITHUB_TOKEN: ${{ secrets.PROD_GITHUB_TOKEN }}
-        run: export GH_TOKEN=$PROD_GITHUB_TOKEN
+        run: echo "GH_TOKEN=$PROD_GITHUB_TOKEN" >> $GITHUB_ENV
+
 
       - name: Build package
         run: npm run ship
