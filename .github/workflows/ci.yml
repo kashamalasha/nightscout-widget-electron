@@ -27,8 +27,4 @@ jobs:
       - name: Set GH_TOKEN
         env: 
           PROD_GITHUB_TOKEN: ${{ secrets.PROD_GITHUB_TOKEN }}
-        run: echo "GH_TOKEN=$PROD_GITHUB_TOKEN" >> $GITHUB_ENV
-
-
-      - name: Build package
-        run: npm run ship
+        run: echo $PROD_GITHUB_TOKEN
