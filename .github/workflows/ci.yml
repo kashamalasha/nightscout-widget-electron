@@ -6,7 +6,7 @@ on:
       - "develop"
 
 jobs:
-  build package:
+  build:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
