@@ -47,20 +47,20 @@ jobs:
           security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
           security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-          security list-keychains
 
-          echo "Create keychain profile"
-          xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
-          security find-generic-password -s "notarytool-profile" /Users/runner/Library/Keychains/build.keychain-db
+          # echo "Create keychain profile"
+          # xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
+      
 
-
-
-      # - name: Build the package
-      #   env:
-      #     GH_TOKEN: ${{ github.token }}
+      - name: Build the package
+        env:
+          GH_TOKEN: ${{ github.token }}
+          APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }} 
+          APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }} 
       #     APPLE_KEYCHAIN: /Users/runner/Library/Keychains/build.keychain-db
       #     APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
-      #   run: npm run ship
+        run: npm run ship
 
       - name: Upload Error Log as Artifact
         if: failure()
