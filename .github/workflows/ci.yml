@@ -13,18 +13,7 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18.14.0'
-        
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Set GH_TOKEN
-        env: 
-          PROD_GITHUB_TOKEN: ${{ secrets.PROD_GITHUB_TOKEN }}
-        run: echo $PROD_GITHUB_TOKEN
+      - name: Check the GH_TOKEN
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: echo $GH_TOKEN
