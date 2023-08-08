@@ -55,4 +55,5 @@ jobs:
       - name: Build the package
         env:
           GH_TOKEN: ${{ github.token }}
+          APPLE_KEYCHAIN_PROFILE: notarytool-profile 
         run: npm run ship
