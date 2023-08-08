@@ -55,7 +55,8 @@ jobs:
       - name: Build the package
         env:
           GH_TOKEN: ${{ github.token }}
-          APPLE_KEYCHAIN_PROFILE: notarytool-profile 
+          APPLE_KEYCHAIN: build.keychain
+          APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
         run: npm run ship
 
       - name: Upload Error Log as Artifact
