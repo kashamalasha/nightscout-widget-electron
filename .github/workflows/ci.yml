@@ -6,11 +6,11 @@ on:
       - "develop"
 
 jobs:
-  build:
+  build package:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - name: Checkout code
@@ -20,9 +20,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '18.14.0'
+          repo-token: ${{ secrets.PROD_GITHUB_TOKEN }}
         
       - name: Install dependencies
         run: npm install
-        
+
       - name: Build x64 dmg
-        run: npm run dist
+        run: npm run ship
