@@ -51,9 +51,9 @@ jobs:
           APPLE_KEYCHAIN: "/Users/runner/Library/Keychains/build.keychain-db"
           APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
           GH_TOKEN: ${{ github.token }}
-          PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
-          PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
-          PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
+          PROD_MACOS_NOTARIZATION_APPLE_ID: dmitry.burnyshev@gmail.com
+          PROD_MACOS_NOTARIZATION_TEAM_ID: H8VCCB3CMX
+          PROD_MACOS_NOTARIZATION_PWD: alta-exzr-hupu-qqyv
         run: |
           echo "PROD_MACOS_NOTARIZATION_APPLE_ID: $PROD_MACOS_NOTARIZATION_APPLE_ID"
           echo "PROD_MACOS_NOTARIZATION_TEAM_ID: $PROD_MACOS_NOTARIZATION_TEAM_ID"
