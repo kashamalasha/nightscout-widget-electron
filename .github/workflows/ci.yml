@@ -30,6 +30,7 @@ jobs:
           MACOS_CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
           MACOS_CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
           MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
+          PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID}}
         run: |
           # Turn our base64-encoded certificate back to a regular .p12 file
           
@@ -44,6 +45,8 @@ jobs:
           security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
           security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+          security find-identity -v
+          xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
 
       
       - name: Build the package
@@ -51,15 +54,11 @@ jobs:
           APPLE_KEYCHAIN: "/Users/runner/Library/Keychains/build.keychain-db"
           APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
           GH_TOKEN: ${{ github.token }}
-          PROD_MACOS_NOTARIZATION_APPLE_ID: dmitry.burnyshev@gmail.com
-          PROD_MACOS_NOTARIZATION_TEAM_ID: H8VCCB3CMX
-          PROD_MACOS_NOTARIZATION_PWD: alta-exzr-hupu-qqyv
         run: |
           echo "PROD_MACOS_NOTARIZATION_APPLE_ID: $PROD_MACOS_NOTARIZATION_APPLE_ID"
           echo "PROD_MACOS_NOTARIZATION_TEAM_ID: $PROD_MACOS_NOTARIZATION_TEAM_ID"
           echo "PROD_MACOS_NOTARIZATION_PWD: $PROD_MACOS_NOTARIZATION_PWD"
           echo "Create keychain profile"
-          xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
           security list-keychains
           security show-keychain-info "$APPLE_KEYCHAIN"
           security find-generic-password -l "$APPLE_KEYCHAIN"
