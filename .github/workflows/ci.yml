@@ -34,7 +34,7 @@ jobs:
       
       - name: Keychain preparation
         run: |
-          echo ${{ env.CERTIFICATE }} | base64 --decode > certificate.p12
+          echo "${{ env.CERTIFICATE }}" | base64 --decode > certificate.p12
           security create-keychain -p ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN_NAME }}
           security default-keychain -s ${{ env.KEYCHAIN_NAME }}
           security unlock-keychain -p ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN_NAME }}
