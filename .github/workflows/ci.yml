@@ -40,7 +40,7 @@ jobs:
           security import certificate.p12 -k $env.KEYCHAIN_NAME -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" $env.KEYCHAIN_NAME
       
-      - name: Creatin keychain-profile for notarytool
+      - name: Creating keychain-profile for notarytool
         env:
           MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
           APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
@@ -53,11 +53,11 @@ jobs:
           --apple-id "$APPLE_ID" \
           --team-id "$APPLE_TEAM_ID" \
           --password "$APPLE_APP_SPECIFIC_PASSWORD" \
-          --keychain "${{env.KEYCHAIN_PATH}}${{env.KEYCHAIN_NAME}}"
+          --keychain "${{env.KEYCHAIN_PATH}}${{env.KEYCHAIN_NAME}}-db"
       
       - name: Build the package
         env: 
-          KEYCHAIN: "${{env.KEYCHAIN_PATH}}${{env.KEYCHAIN_NAME}}" 
+          KEYCHAIN: "${{env.KEYCHAIN_PATH}}${{env.KEYCHAIN_NAME}}-db" 
           KEYCHAIN_PROFILE: "$env.NOTARYTOOL_PROFILE"
           GH_TOKEN: ${{ github.token }}
         run: |
