@@ -37,14 +37,14 @@ module.exports = function (context) {
   }
   const prefix = `  •`;
 
-  console.log(`${prefix || ''} afterSign hook triggered for the ${context.packager.appInfo.productFilename}.app`);
+  console.log(`${prefix} afterSign hook triggered for the ${context.packager.appInfo.productFilename}.app`);
 
   if (!fs.existsSync(params.appPath)) {
-    console.log(`${prefix || ''} !! notarization process was skipped due to File not found`);
+    console.log(`${prefix} !! notarization process was skipped due to File not found`);
     return;
   }
 
-  console.log(`${prefix || ''} notarizing App file at ${params.appPath}`);
+  console.log(`${prefix} notarizing App file at ${params.appPath}`);
   console.log(context);
 
 //   try {
@@ -53,5 +53,5 @@ module.exports = function (context) {
 //     console.error(error);
 //   }
 
-  console.log(`${prefix || ''} done notarizing for the ${context.packager.appInfo.productFilename}.app`);
+  console.log(`${prefix} done notarizing for the ${context.packager.appInfo.productFilename}.app`);
 };

@@ -11,7 +11,7 @@ jobs:
     env:
       CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
       CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
-      CERTIFICATE_CHECKSUM: ${{ secret.PROD_MACOS_CERTIFICATE_CHECKSUM }}
+      CERTIFICATE_CHECKSUM: ${{ secrets.PROD_MACOS_CERTIFICATE_CHECKSUM }}
       KEYCHAIN_NAME: "build.keychain"
       KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
       KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
