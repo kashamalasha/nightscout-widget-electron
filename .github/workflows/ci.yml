@@ -49,7 +49,7 @@ jobs:
 
         run: |
           security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" ${{env.KEYCHAIN_NAME}}
-          xcrun notarytool store-credentials $env.NOTARYTOOL_PROFILE \
+          xcrun notarytool store-credentials ${{env.NOTARYTOOL_PROFILE}} \
           --apple-id "$APPLE_ID" \
           --team-id "$APPLE_TEAM_ID" \
           --password "$APPLE_APP_SPECIFIC_PASSWORD" \
