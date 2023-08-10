@@ -9,6 +9,7 @@ jobs:
   build-macos:
     runs-on: macos-latest
     env:
+      CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
       KEYCHAIN_NAME: "build.keychain"
       KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
       NOTARYTOOL_PROFILE: "notarytool-profile"
@@ -26,10 +27,8 @@ jobs:
       # - name: Install dependencies
       #   run: npm install
       - name: Decoding certificate
-        env: 
-          CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
         run: |
-          echo ${CERTIFICATE} | base64 --decode > certificate.p12
+          echo ${{ env.CERTIFICATE }} | base64 --decode > certificate.p12
           ls -la certificate*
 
       - name: Creating keychain
