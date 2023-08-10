@@ -5,20 +5,21 @@ on:
     branches:
       - "actions"
 
+env: 
+  CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
+  CERTIFICATE_PASSWORD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
+  CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
+  KEYCHAIN_PASSWORD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
+  KEYCHAIN_NAME: "build.keychain"
+  KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
+  APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
+  APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
+  APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
+  NOTARYTOOL_PROFILE_NAME: "notarytool-profile" 
+
 jobs:
   build-macos:
     runs-on: macos-latest
-    env: 
-      CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
-      CERTIFICATE_PASSWORD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
-      CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
-      KEYCHAIN_PASSWORD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
-      KEYCHAIN_NAME: "build.keychain"
-      KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
-      APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
-      APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
-      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
-      NOTARYTOOL_PROFILE_NAME: "notarytool-profile" 
 
     steps:
       # - name: Checkout code
@@ -34,7 +35,7 @@ jobs:
       
       - name: Keychain preparation
         run: |
-          echo "${{ env.CERTIFICATE }}" | base64 --decode > certificate.p12
+          echo ${{ env.CERTIFICATE }} | base64 --decode > certificate.p12
           security create-keychain -p ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN_NAME }}
           security default-keychain -s ${{ env.KEYCHAIN_NAME }}
           security unlock-keychain -p ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN_NAME }}
