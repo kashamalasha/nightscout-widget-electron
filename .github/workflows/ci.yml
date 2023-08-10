@@ -14,59 +14,14 @@ jobs:
       NOTARYTOOL_PROFILE: "notarytool-profile"
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18.14.0'
-        
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Keychain preparation
-        env: 
-          MACOS_CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
-          MACOS_CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
-          MACOS_CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
-          MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
-
-        run: |
-          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-          security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" "${{env.KEYCHAIN_NAME}}"
-          security default-keychain -s "${{env.KEYCHAIN_NAME}}"
-          security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" "${{env.KEYCHAIN_NAME}}"
-          security import certificate.p12 -k "${{env.KEYCHAIN_NAME}}" -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" "${{env.KEYCHAIN_NAME}}"
-      
-      - name: Creating keychain-profile for notarytool
+      - name: Check env substance 
         env:
-          MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
-          APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
-          APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
-
-        run: |
-          security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" "${{env.KEYCHAIN_NAME}}"
-          xcrun notarytool store-credentials $env.NOTARYTOOL_PROFILE \
-          --apple-id "$APPLE_ID" \
-          --team-id "$APPLE_TEAM_ID" \
-          --password "$APPLE_APP_SPECIFIC_PASSWORD" \
-          --keychain "${{env.KEYCHAIN_PATH}}${{env.KEYCHAIN_NAME}}-db"
-      
-      - name: Build the package
-        env: 
-          KEYCHAIN: "${{env.KEYCHAIN_PATH}}${{env.KEYCHAIN_NAME}}-db" 
-          KEYCHAIN_PROFILE: "$env.NOTARYTOOL_PROFILE"
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          npm run ship
-
-      - name: Upload Error Log as Artifact
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: notarization-error-log
-          path: notarization-error.log
+          TEST_VAR: "local-step-var"
+        run: >
+          echo '1: $TEST_VAR'
+          echo '2: "$TEST_VAR"'
+          echo '3: ${TEST_VAR}'
+          echo '4: ${env.KEYCHAIN_NAME}'
+          echo '5: ${{env.KEYCHAIN_NAME}}'
+        
 
