@@ -3,7 +3,8 @@ const fs = require('fs')
 const path = require('path')
 const electronNotarize = require('@electron/notarize');
 
-const result = dotenv.config({ path: path.join(__dirname, `.env`)})
+// const result = dotenv.config({ path: path.join(__dirname, `.env`)})
+const result = dotenv.config()
 
 if (result.error) {
   throw result.error
