@@ -17,11 +17,11 @@ jobs:
       - name: Check env substance 
         env:
           TEST_VAR: "local-step-var"
-        run: >
-          echo '1: $TEST_VAR'
-          echo '2: "$TEST_VAR"'
-          echo '3: ${TEST_VAR}'
-          echo '4: ${env.KEYCHAIN_NAME}'
-          echo '5: ${{env.KEYCHAIN_NAME}}'
+        run: |
+          echo 1: $TEST_VAR
+          echo 2: "$TEST_VAR"
+          echo 3: ${TEST_VAR}
+          echo 4: ${env.KEYCHAIN_NAME}
+          echo 5: ${{env.KEYCHAIN_NAME}}
         
 
