@@ -13,16 +13,16 @@ jobs:
         os: [macos-latest]
 
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
         
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '18.14.0'
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.14.0'
         
-      # - name: Install dependencies
-      #   run: npm install
+      - name: Install dependencies
+        run: npm install
       
       - name: Keychain preparation
         env: 
@@ -58,20 +58,7 @@ jobs:
           APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "Create keychain profile"
-          security list-keychains
-          security show-keychain-info "$APPLE_KEYCHAIN"
-          security find-generic-password -l "$APPLE_KEYCHAIN"
-          # npm run ship
-
-
-
-      # - name: Build the package
-      #   env:
-      #     GH_TOKEN: ${{ github.token }}
-      #     APPLE_KEYCHAIN: "/Users/runner/Library/Keychains/build.keychain-db"
-      #     APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
-      #   run: npm run ship
+          npm run ship
 
       - name: Upload Error Log as Artifact
         if: failure()
