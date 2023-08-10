@@ -2,53 +2,57 @@ const fs = require('fs')
 const path = require('path')
 const electronNotarize = require('@electron/notarize');
 
-if (!process.env.GITHUB_ACTIONS) {
-    const dotenv = require(`dotenv`)
-    const result = dotenv.config({ path: path.join(__dirname, `.env`)})
+module.exports = async function (context) {
 
-    if (result.error) {
-    throw result.error
+    const params = {
+        tool: `notarytool`,
+        appPath: path.join(context.appOutDir, `${context.packager.appInfo.productFilename}.app`)
+    };
+
+    if (!process.env.GITHUB_ACTIONS) {
+        const dotenv = require(`dotenv`)
+        const result = dotenv.config({ path: path.join(__dirname, `.env`)})
+
+        params = { 
+        ...params, 
+        appBundleId: process.env.APP_ID,
+        appleId: process.env.APPLE_ID,
+        appleIdPassword: process.env.APPLE_APP_SPECIFIC_PASSWORD,
+        teamId: process.env.APPLE_TEAM_ID,
+        }
+
+        if (result.error) {
+            throw result.error
+        }
+    } else {
+        params = {
+        ... params,
+        keychain: process.env.KEYCHAIN,
+        keychainProfile: process.env.KEYCHAIN_PROFILE,
+        }
     }
-}
 
-module.exports = async function (params) {
-
-    const appPath = path.join(params.appOutDir, `${params.packager.appInfo.productFilename}.app`);
-    const appleId = process.env.APPLE_ID; 
-    const appId = process.env.APP_ID;
-    const appIdPassword = process.env.APPLE_APP_SPECIFIC_PASSWORD;
-    const appleTeamId = process.env.APPLE_TEAM_ID;
-    const keychain = process.env.KEYCHAIN;
-    const keychainProfile = process.env.KEYCHAIN_PROFILE;
     const prefix = `  •`
 
     if (process.platform !== 'darwin') {
         return
     }
+    console.log(context.packager.appInfo)
 
-    console.log(`${prefix} afterSign hook triggered for the ${params.packager.appInfo.productFilename}.app`)
+    console.log(`${prefix} afterSign hook triggered for the ${context.packager.appInfo.productFilename}.app`)
 
-    if (!fs.existsSync(appPath)) {
+    if (!fs.existsSync(params.appPath)) {
         console.log(`${prefix} !! notarization process was skiped due to File not found`)
         return
     }
 
-    console.log(`${prefix} notarizing ${appId} found at ${appPath} with Apple ID ${appleId}`)
+    console.log(`${prefix} notarizing App file at ${params.appPath}`)
 
     try {
-        await electronNotarize.notarize({
-            tool: `notarytool`,
-            // appBundleId: appId,
-            // appPath: appPath,
-            // appleId: appleId,
-            // appleIdPassword: appIdPassword,
-            // teamId: appleTeamId,
-            keychain,
-            keychainProfile,
-        })
+        await electronNotarize.notarize(params)
     } catch (error) {
         console.error(error)
     }
 
-    console.log(`${prefix} done notarizing ${appId} for the ${params.packager.appInfo.productFilename}.app`)
+    console.log(`${prefix} done notarizing for the ${context.packager.appInfo.productFilename}.app`)
 }
