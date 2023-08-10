@@ -34,6 +34,7 @@ module.exports = async function (context) {
   if (process.platform !== 'darwin') {
     return;
   }
+  const prefix = `  •`;
 
   console.log(`${prefix || ''} afterSign hook triggered for the ${context.packager.appInfo.productFilename}.app`);
 
