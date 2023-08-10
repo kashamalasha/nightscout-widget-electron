@@ -18,6 +18,8 @@ module.exports = async function (params) {
     const appId = process.env.APP_ID;
     const appIdPassword = process.env.APPLE_APP_SPECIFIC_PASSWORD;
     const appleTeamId = process.env.APPLE_TEAM_ID;
+    const keychain = process.env.KEYCHAIN;
+    const keychainProfile = process.env.KEYCHAIN_PROFILE;
     const prefix = `  •`
 
     if (process.platform !== 'darwin') {
@@ -36,11 +38,13 @@ module.exports = async function (params) {
     try {
         await electronNotarize.notarize({
             tool: `notarytool`,
-            appBundleId: appId,
-            appPath: appPath,
-            appleId: appleId,
-            appleIdPassword: appIdPassword,
-            teamId: appleTeamId,
+            // appBundleId: appId,
+            // appPath: appPath,
+            // appleId: appleId,
+            // appleIdPassword: appIdPassword,
+            // teamId: appleTeamId,
+            keychain,
+            keychainProfile,
         })
     } catch (error) {
         console.error(error)
