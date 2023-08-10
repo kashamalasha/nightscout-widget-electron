@@ -49,14 +49,14 @@ jobs:
           security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
           security find-identity -v
-          xcrun notarytool store-credentials notarytool-profile --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID"
+          xcrun notarytool store-credentials notarytool-profile --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
 
       
       - name: Build the package
         env: 
           MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
-          APPLE_KEYCHAIN: /Users/runner/Library/Keychains/build.keychain-db
-          APPLE_KEYCHAIN_PROFILE: notarytool-profile 
+          APPLE_KEYCHAIN: "/Users/runner/Library/Keychains/build.keychain-db"
+          APPLE_KEYCHAIN_PROFILE: "notarytool-profile" 
           GH_TOKEN: ${{ github.token }}
         run: |
           security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" "$APPLE_KEYCHAIN"
