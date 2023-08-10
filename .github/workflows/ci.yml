@@ -7,10 +7,14 @@ on:
 
 jobs:
   build:
-    runs-on: ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [macos-latest]
+    env:
+      KEYCHAIN_NAME: "build.keychain"
+      KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
+      NOTARYTOOL_PROFILE: "notarytool-profile"
 
     steps:
       - name: Checkout code
@@ -33,11 +37,11 @@ jobs:
 
         run: |
           echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-          security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain 
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-          security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+          security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" "$env.KEYCHAIN_NAME" 
+          security default-keychain -s "$env.KEYCHAIN_NAME"
+          security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" "$env.KEYCHAIN_NAME"
+          security import certificate.p12 -k "$env.KEYCHAIN_NAME" -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" "$env.KEYCHAIN_NAME"
       
       - name: Creatin keychain-profile for notarytool
         env:
@@ -47,13 +51,17 @@ jobs:
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
 
         run: |
-          security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-          xcrun notarytool store-credentials notarytool-profile --apple-id "$APPLE_ID" --team-id "$APPLE_TEAM_ID" --password "$APPLE_APP_SPECIFIC_PASSWORD" --keychain "/Users/runner/Library/Keychains/build.keychain-db" 
+          security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" "$env.KEYCHAIN_NAME"
+          xcrun notarytool store-credentials $env.NOTARYTOOL_PROFILE \
+          --apple-id "$APPLE_ID" \
+          --team-id "$APPLE_TEAM_ID" \
+          --password "$APPLE_APP_SPECIFIC_PASSWORD" \
+          --keychain "${env.KEYCHAIN_PATH}${env.KEYCHAIN_NAME}" 
       
       - name: Build the package
         env: 
-          KEYCHAIN: "/Users/runner/Library/Keychains/build.keychain-db"
-          KEYCHAIN_PROFILE: "notarytool-profile" 
+          KEYCHAIN: "${env.KEYCHAIN_PATH}${env.KEYCHAIN_NAME}" 
+          KEYCHAIN_PROFILE: "$env.NOTARYTOOL_PROFILE"
           GH_TOKEN: ${{ github.token }}
         run: |
           npm run ship
