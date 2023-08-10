@@ -48,7 +48,7 @@ jobs:
 
         run: |
           security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-          xcrun notarytool store-credentials notarytool-profile --apple-id "$APPLE_ID" --team-id "$APPLE_TEAM_ID" --password "$APPLE_APP_SPECIFIC_PASSWORD" --keychain build.keychain
+          xcrun notarytool store-credentials notarytool-profile --apple-id "$APPLE_ID" --team-id "$APPLE_TEAM_ID" --password "$APPLE_APP_SPECIFIC_PASSWORD" --keychain "/Users/runner/Library/Keychains/build.keychain-db" 
       
       - name: Build the package
         env: 
