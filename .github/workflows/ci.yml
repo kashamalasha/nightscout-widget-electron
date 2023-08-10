@@ -51,15 +51,15 @@ jobs:
         run: |
           security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
           xcrun notarytool store-credentials ${{ env.NOTARYTOOL_PROFILE }} \
-          --apple-id "${{ env.APPLE_ID }}" \
-          --team-id "${{ env.APPLE_TEAM_ID }}" \
+          --apple-id ${{ env.APPLE_ID }} \
+          --team-id ${{ env.APPLE_TEAM_ID }} \
           --password "${{ env.APPLE_APP_SPECIFIC_PASSWORD }}" \
           --keychain "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db"
       
       - name: Build the artifacts and upload them on Github
         env: 
           KEYCHAIN: "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db" 
-          KEYCHAIN_PROFILE: "${{ env.NOTARYTOOL_PROFILE }}"
+          KEYCHAIN_PROFILE: ${{ env.NOTARYTOOL_PROFILE }}
           GH_TOKEN: ${{ github.token }}
         run: |
           npm run ship
