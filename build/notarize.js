@@ -45,7 +45,7 @@ module.exports = function (context) {
   }
 
   console.log(`${prefix || ''} notarizing App file at ${params.appPath}`);
-  console.log(params);
+  console.log(context);
 
 //   try {
 //     await electronNotarize.notarize(params);
