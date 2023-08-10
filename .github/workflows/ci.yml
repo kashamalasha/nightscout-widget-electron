@@ -9,7 +9,7 @@ jobs:
   build-macos:
     runs-on: macos-latest
     env: 
-      CERTIFICATE: $PROD_MACOS_CERTIFICATE
+      CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
       CERTIFICATE_PASSWORD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
       CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
       KEYCHAIN_PASSWORD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
