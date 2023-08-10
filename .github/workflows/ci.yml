@@ -37,7 +37,7 @@ jobs:
           echo ${{ env.CERTIFICATE }} | base64 --decode > certificate.p12
           ls -la certificate*
           diff <( printf '%s\n' "${{ env.CERTIFICATE_CHECKSUM }}" ) <( printf '%s\n' "$(md5 -q certificate.p12)")
-          [ $? -gt 0 ] && exit 1 || exit 0
+          [ $? -eq 0 ] && (echo "File is identical" && exit 0) || (echo "File is different" && exit 1) 
 
       - name: Create keychain storage
         run: |
@@ -62,46 +62,46 @@ jobs:
           KEYCHAIN_PROFILE: ${{ env.NOTARYTOOL_PROFILE }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          npm run ship
+          npm run ship --mac universal
 
-  # build-windows:
-  #   runs-on: windows-latest
+  build-windows:
+    runs-on: windows-latest
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
         
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '18.14.0'
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.14.0'
         
-  #     - name: Install dependencies
-  #       run: npm install 
+      - name: Install dependencies
+        run: npm install 
 
-  #     - name: Build the artifacts and upload them on Github
-  #       env: 
-  #         GH_TOKEN: ${{ github.token }}
-  #       run: |
-  #         npm run ship
+      - name: Build the artifacts and upload them on Github
+        env: 
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm run ship --windows
 
-  # build-linux:
-  #   runs-on: ubuntu-latest
+  build-linux:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
         
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '18.14.0'
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.14.0'
         
-  #     - name: Install dependencies
-  #       run: npm install 
+      - name: Install dependencies
+        run: npm install 
 
-  #     - name: Build the artifacts and upload them on Github
-  #       env: 
-  #         GH_TOKEN: ${{ github.token }}
-  #       run: |
-  #         npm run ship
+      - name: Build the artifacts and upload them on Github
+        env: 
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm run ship --linux
