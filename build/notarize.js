@@ -1,13 +1,14 @@
-const dotenv = require(`dotenv`)
 const fs = require('fs')
 const path = require('path')
 const electronNotarize = require('@electron/notarize');
 
-// const result = dotenv.config({ path: path.join(__dirname, `.env`)})
-const result = dotenv.config()
+if (!process.env.GITHUB_ACTIONS) {
+    const dotenv = require(`dotenv`)
+    const result = dotenv.config({ path: path.join(__dirname, `.env`)})
 
-if (result.error) {
-  throw result.error
+    if (result.error) {
+    throw result.error
+    }
 }
 
 module.exports = async function (params) {
