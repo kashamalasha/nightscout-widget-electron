@@ -6,9 +6,6 @@ on:
       - "actions"
 
 env: 
-  CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
-  CERTIFICATE_PASSWORD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
-  CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
   KEYCHAIN_PASSWORD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
   KEYCHAIN_NAME: "build.keychain"
   KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
@@ -32,16 +29,14 @@ jobs:
         
       # - name: Install dependencies
       #   run: npm install
-      - name: Prepare base64-encoded certificate
+      - name: Prepare certificate
+        env:
+          CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
+          CERTIFICATE_PASSWORD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
+          CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
         run: |
-          echo "${{ env.CERTIFICATE }}" > certificate.base64
-          ls -la certificate*
+          echo ${CERTIFICATE} | base64 --decode > certificate.p12
 
-      - name: Decode certificate
-        run: |
-          base64 -d certificate.base64 > certificate.p12
-          ls -la certificate*
-      
       - name: Keychain preparation
         run: |
           security create-keychain -p ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN_NAME }}
