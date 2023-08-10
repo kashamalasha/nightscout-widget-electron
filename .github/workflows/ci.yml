@@ -44,7 +44,6 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ env.KEYCHAIN_PWD }}" ${{env.KEYCHAIN_NAME}}
       
       - name: Creating keychain profile for notarytool
-        env:
         run: |
           security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{env.KEYCHAIN_NAME}}
           xcrun notarytool store-credentials ${{env.NOTARYTOOL_PROFILE}} \
