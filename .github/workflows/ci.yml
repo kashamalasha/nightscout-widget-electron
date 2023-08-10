@@ -62,7 +62,7 @@ jobs:
           KEYCHAIN_PROFILE: ${{ env.NOTARYTOOL_PROFILE }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          npm run ship -- --mac universal
+          npm run ship -- --mac --universal
 
   build-windows:
     runs-on: windows-latest
