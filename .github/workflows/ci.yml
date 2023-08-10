@@ -8,7 +8,18 @@ on:
 jobs:
   build-macos:
     runs-on: macos-latest
-    
+    env: 
+      CERTIFICATE: $PROD_MACOS_CERTIFICATE
+      CERTIFICATE_PASSWORD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
+      CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
+      KEYCHAIN_PASSWORD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
+      KEYCHAIN_NAME: "build.keychain"
+      KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
+      APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
+      APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
+      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
+      NOTARYTOOL_PROFILE_NAME: "notarytool-profile" 
+
     steps:
       # - name: Checkout code
       #   uses: actions/checkout@v2
@@ -22,42 +33,29 @@ jobs:
       #   run: npm install
       
       - name: Keychain preparation
-        env: 
-          MACOS_CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
-          MACOS_CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
-          MACOS_CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}
-          MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
-          KEYCHAIN_NAME: "build.keychain"
-          KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
-
         run: |
-          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-          security create-keychain -p ${MACOS_CI_KEYCHAIN_PWD} ${KEYCHAIN_NAME}
-          security default-keychain -s ${KEYCHAIN_NAME}
-          security unlock-keychain -p ${MACOS_CI_KEYCHAIN_PWD} ${KEYCHAIN_NAME}
-          security import certificate.p12 -k ${KEYCHAIN_NAME} -P ${MACOS_CERTIFICATE_PWD} -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k ${MACOS_CI_KEYCHAIN_PWD} ${KEYCHAIN_NAME}
+          echo ${{ env.CERTIFICATE }} | base64 --decode > certificate.p12
+          security create-keychain -p ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN_NAME }}
+          security default-keychain -s ${{ env.KEYCHAIN_NAME }}
+          security unlock-keychain -p ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN_NAME }}
+          security import certificate.p12 -k ${{ env.KEYCHAIN_NAME }} -P ${{ env.CERTIFICATE_PASSWORD }} -T /usr/bin/codesign
+          security set-key-partition-list \
+          -S apple-tool:,apple:,codesign: \
+          -s -k ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN_NAME }}
       
-      - name: Creating keychain-profile for notarytool
-        env:
-          MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
-          APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
-          APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
-          NOTARYTOOL_PROFILE_NAME: "notarytool-profile" 
-
+      - name: Creating keychain profile for notarytool
         run: |
-          security unlock-keychain -p ${MACOS_CI_KEYCHAIN_PWD} ${KEYCHAIN_NAME}
-          xcrun notarytool store-credentials ${NOTARYTOOL_PROFILE_NAME} \
-          --apple-id ${APPLE_ID} \
-          --team-id ${APPLE_TEAM_ID} \
-          --password ${APPLE_APP_SPECIFIC_PASSWORD} \
-          --keychain "${KEYCHAIN_PATH}${KEYCHAIN_NAME}-db"
+          security unlock-keychain -p ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN_NAME }}
+          xcrun notarytool store-credentials ${{ env.NOTARYTOOL_PROFILE_NAME }} \
+          --apple-id ${{ env.APPLE_ID }} \
+          --team-id ${{ env.APPLE_TEAM_ID }} \
+          --password ${{ env.APPLE_APP_SPECIFIC_PASSWORD }} \
+          --keychain "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db"
       
       # - name: Build the package
       #   env: 
       #     KEYCHAIN: "${{env.KEYCHAIN_PATH}}${{env.KEYCHAIN_NAME}}-db" 
-      #     KEYCHAIN_PROFILE: $NOTARYTOOL_PROFILE_NAME
+      #     KEYCHAIN_PROFILE: ${{ env.NOTARYTOOL_PROFILE_NAME }}
       #     GH_TOKEN: ${{ github.token }}
       #   run: |
       #     npm run ship
