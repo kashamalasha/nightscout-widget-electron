@@ -35,10 +35,12 @@ jobs:
       - name: Prepare base64-encoded certificate
         run: |
           echo "${{ env.CERTIFICATE }}" > certificate.base64
+          ls -la certificate*
 
       - name: Decode certificate
         run: |
           base64 -d certificate.base64 > certificate.p12
+          ls -la certificate*
       
       - name: Keychain preparation
         run: |
