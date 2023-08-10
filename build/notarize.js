@@ -17,7 +17,7 @@ module.exports = async function (context) {
       appBundleId: process.env.APP_ID,
       appleId: process.env.APPLE_ID,
       appleIdPassword: process.env.APPLE_APP_SPECIFIC_PASSWORD,
-      teamId: process.env.APPLE_TEAM_ID,
+      teamId: process.env.APPLE_TEAM_ID
     };
 
     if (result.error) {
@@ -27,7 +27,7 @@ module.exports = async function (context) {
     params = {
       ...params,
       keychain: process.env.KEYCHAIN,
-      keychainProfile: process.env.KEYCHAIN_PROFILE,
+      keychainProfile: process.env.KEYCHAIN_PROFILE
     };
   }
 
