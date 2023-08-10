@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const electronNotarize = require('@electron/notarize');
 
-module.exports = async function (context) {
+// module.exports = async function (context) {
+module.exports = function (context) {
   let params = {
     tool: `notarytool`,
     appPath: path.join(context.appOutDir, `${context.packager.appInfo.productFilename}.app`),
@@ -44,12 +45,13 @@ module.exports = async function (context) {
   }
 
   console.log(`${prefix || ''} notarizing App file at ${params.appPath}`);
+  console.log(params);
 
-  try {
-    await electronNotarize.notarize(params);
-  } catch (error) {
-    console.error(error);
-  }
+//   try {
+//     await electronNotarize.notarize(params);
+//   } catch (error) {
+//     console.error(error);
+//   }
 
   console.log(`${prefix || ''} done notarizing for the ${context.packager.appInfo.productFilename}.app`);
 };
