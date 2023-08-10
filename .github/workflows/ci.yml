@@ -25,25 +25,28 @@ jobs:
         
       # - name: Install dependencies
       #   run: npm install
-      
-      - name: Keychain preparation
+      - name: Decoding certificate
         env: 
           CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
-          CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
         run: |
           echo ${CERTIFICATE} | base64 --decode > certificate.p12
+          ls -la certificate*
+
+      - name: Creating keychain
+        env: 
+          CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
+        run: |
           security create-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{env.KEYCHAIN_NAME}}
           security default-keychain -s ${{env.KEYCHAIN_NAME}}
           security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{env.KEYCHAIN_NAME}}
           security import certificate.p12 -k ${{env.KEYCHAIN_NAME}} -P "${CERTIFICATE_PWD}" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ env.KEYCHAIN_PWD }}" ${{env.KEYCHAIN_NAME}}
       
-      - name: Creating keychain-profile for notarytool
+      - name: Creating keychain profile for notarytool
         env:
           APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
           APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
-
         run: |
           security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{env.KEYCHAIN_NAME}}
           xcrun notarytool store-credentials ${{env.NOTARYTOOL_PROFILE}} \
