@@ -13,8 +13,11 @@ jobs:
       CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
       KEYCHAIN_NAME: "build.keychain"
       KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
-      NOTARYTOOL_PROFILE: "notarytool-profile"
       KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
+      APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
+      APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
+      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
+      NOTARYTOOL_PROFILE: "notarytool-profile"
 
     steps:
       # - name: Checkout code
@@ -42,15 +45,12 @@ jobs:
       
       - name: Creating keychain profile for notarytool
         env:
-          APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
-          APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
         run: |
           security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{env.KEYCHAIN_NAME}}
           xcrun notarytool store-credentials ${{env.NOTARYTOOL_PROFILE}} \
-          --apple-id "${APPLE_ID}" \
-          --team-id "${APPLE_TEAM_ID}" \
-          --password "${APPLE_APP_SPECIFIC_PASSWORD}" \
+          --apple-id "${{ env.APPLE_ID }}" \
+          --team-id "${{ env.APPLE_TEAM_ID }}" \
+          --password "${{ env.APPLE_APP_SPECIFIC_PASSWORD }}" \
           --keychain "${{env.KEYCHAIN_PATH}}${{env.KEYCHAIN_NAME}}-db"
       
       # - name: Build the package
