@@ -20,7 +20,7 @@
   "build": {
     "appId": "com.burny.owlet.app",
     "productName": "Owlet",
-    "artifactName": "${productName}-${version}-${os}.${ext}",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "dist"
     },
