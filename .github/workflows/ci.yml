@@ -62,9 +62,14 @@ jobs:
             "${HOST}${ENDPOINT}"
           )
           data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))}')
-          RELEASE_DATA=${data}
-          echo "${data}"
-          echo "${data}" >> ${{ env.RELEASE_DATA }}
+
+          # the following lines are only required for multi line json
+          data="${data//'%'/'%25'}"
+          data="${data//$'\n'/'%0A'}"
+          data="${data//$'\r'/'%0D'}"
+          # end of optional handling for multi line json
+
+          echo "$data"
 
       # - name: Filter requested data
       #   id: jq_filter
