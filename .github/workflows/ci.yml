@@ -73,7 +73,11 @@ jobs:
       
       - name: Read the output
         run: |
-          echo "${{ steps.releases_data.outputs.release_data }}"
+          decoded_json=$(echo -e "${{ steps.releases_data.outputs.release_data }}")
+          decoded_json="${decoded_json//'%'/'%25'}"
+          decoded_json="${decoded_json//$'\n'/'%0A'}"
+          decoded_json="${decoded_json//$'\r'/'%0D'}"
+          echo -e "$decoded_json"
 
 
       # - name: Filter requested data
