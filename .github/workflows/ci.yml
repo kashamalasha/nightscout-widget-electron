@@ -11,8 +11,8 @@ jobs:
 
     steps:
 
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # - name: Checkout code
+      #   uses: actions/checkout@v2
 
       - name: Get latest release info
         id: get_latest_release
@@ -55,7 +55,18 @@ jobs:
   
       - name: Get the result
         run: |
-          chmod +x build/remove_blockmaps.sh
-          ./build/remove_blockmaps.sh "${{ steps.jq_filter.outputs.blockmap_list }}"
+          array_string="${{ steps.jq_filter.outputs.blockmap_list }}"
+          array_string="${array_string#(}"
+          array_string="${array_string%)}"
+
+          # Convert the array string to an actual array
+          IFS=', ' read -ra elements <<< "$array_string"
+          
+          # Iterate over the array elements
+          echo "Iterating over the elements:"
+          for el in "${elements[@]}"; do
+            echo "$el"
+          done
+
         
 
