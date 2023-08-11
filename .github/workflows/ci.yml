@@ -3,14 +3,14 @@ name: Build artifacts
 on:
   push:
     branches:
-      - "actions"
+      - "post-actions"
 
 jobs:
   build-macos:
     runs-on: macos-latest
 
     steps:
-      - name: Get some infor from repo
+      - name: Get some infor from repo-
         uses: octokit/graphql-action@v2.x
         with:
           query: |
