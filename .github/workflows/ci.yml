@@ -73,7 +73,7 @@ jobs:
       
       - name: Read the output
         run: |
-          echo "${{ steps.releases_data.outputs.release_data }}"
+          echo "${{ fromJson(steps.releases_data.outputs.release_data) }}"
 
 
       # - name: Filter requested data
