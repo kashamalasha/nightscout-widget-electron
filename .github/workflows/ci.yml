@@ -66,7 +66,7 @@ jobs:
       
       - name: Read the output
         run: |
-          echo "${{ steps.releases_data.outputs.release_data }}" | jq '{name, id, assets: [.assets[] | {name, id}]}'
+          echo "${{ steps.releases_data.outputs.release_data }}" | jq '.'
 
 
       # - name: Filter requested data
