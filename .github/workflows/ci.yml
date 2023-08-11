@@ -72,12 +72,12 @@ jobs:
       - name: Filter requested data
         id: jq_filter
         run: |
-          blockmaps=$(
+          # blockmaps=$(
             echo '${{ steps.releases_data.outputs.release_data }}' | jq '.' | \
             .assets | map(select(.name | endswith(".blockmap")).id) | "\"" + . + "\"") | join(" ")' 
-          )
-          echo "( ${blockmaps} )"
-          echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
+          # )
+          # echo "( ${blockmaps} )"
+          # echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
   
       # - name: Remove the blockmap files
       #   env:
