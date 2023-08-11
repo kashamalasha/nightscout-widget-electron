@@ -46,7 +46,7 @@ jobs:
           OWNER: ${{ github.event.repository.owner.name }}
           REPO: ${{ github.event.repository.name }}
         with:
-          route: GET /repos/${OWNER}/${REPO}/releases/latest
+          route: GET /repos/$OWNER/$REPO/releases/latest
 
       # - name: Get all assets
       #   run: |
