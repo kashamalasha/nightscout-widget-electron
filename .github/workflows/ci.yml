@@ -39,6 +39,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get all assets
+        run:
+          echo "${{ steps.get_latest_release.outputs.data }}"
+
       - name: Filter requested data
         id: jq_filter
         run: |
