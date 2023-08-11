@@ -23,6 +23,10 @@ jobs:
                     createdAt
                     tagName
                     description
+                    id
+                    assets {
+                      name
+                    }
                   }
                 }
               }
@@ -32,5 +36,6 @@ jobs:
             repo: ${{ github.event.repository.name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo 'latest release: ${{ steps.get_latest_release.outputs }}"
+      - name: Get the request data
+        run: "echo 'latest release: ${{ steps.get_latest_release.outputs }}"
 
