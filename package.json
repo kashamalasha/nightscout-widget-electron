@@ -33,7 +33,6 @@
     "extraFiles": [
       "LICENSE"
     ],
-    "afterSign": "build/notarize.js",
     "mac": {
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
