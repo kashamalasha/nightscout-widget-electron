@@ -44,8 +44,8 @@ jobs:
         run: |
           blockmaps=$(echo '${{ steps.get_latest_release.outputs.data }}' | jq \
           -r '.repository.releases.nodes[].releaseAssets.nodes |
-          map(select(.name | endswith(".blockmap")).id) | join(",")')
-          echo "blockmap_list=[\"$blockmaps\"]" >> $GITHUB_OUTPUT
+          map(select(.name | endswith(".blockmap")).id | "\"" + . + "\"") | join(",")')
+          echo "blockmap_list=[$blockmaps]" >> $GITHUB_OUTPUT
   
       - name: Get the result
         run: |
