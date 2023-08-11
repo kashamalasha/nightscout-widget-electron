@@ -6,8 +6,8 @@ on:
       - "post-actions"
 
 jobs:
-  build-macos:
-    runs-on: macos-latest
+  clean-release:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Get latest release info
@@ -15,7 +15,7 @@ jobs:
         uses: octokit/graphql-action@v2.x
         with:
           query: |
-            query release($owner:String!,$repor:String!) {
+            query release($owner:String!,$repo:String!) {
               repository(owner:$owner,name:$repo) {
                 releases(first:1) {
                   nodes {
