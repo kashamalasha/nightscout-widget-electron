@@ -43,12 +43,13 @@ jobs:
         id: jq_filter
         run: |
           BLOCKMAP_IDS=$(echo '${{ steps.get_latest_release.outputs.data }}' | jq \
-          'reduce .repository.releases.nodes[].releaseAssets.nodes[] as $asset ([]; \
-          if ($asset.name | endswith(".blockmap")) \
-          then . + [$asset.id] \
-          else . \
-          end \
+          'reduce .repository.releases.nodes[].releaseAssets.nodes[] as $asset ([];
+          if ($asset.name | endswith(".blockmap"))
+            then . + [$asset.id]
+            else .
+          end
           )')
+
           echo "{blockmap_ids}={BLOCKMAP_IDS}" >> GITHUB_OUTPUT
       
       - name: Get the result
