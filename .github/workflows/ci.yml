@@ -25,7 +25,9 @@ jobs:
                     description
                     id
                     assets {
-                      name
+                      nodes {
+                        name
+                      }
                     }
                   }
                 }
