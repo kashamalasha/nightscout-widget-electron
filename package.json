@@ -51,6 +51,7 @@
         }
       ]
     },
+    "afterSign": "build/notarize.js",
     "win": {
       "target": [
         "nsis",
