@@ -8,105 +8,26 @@ on:
 jobs:
   build-macos:
     runs-on: macos-latest
-    env:
-      CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
-      CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
-      CERTIFICATE_CHECKSUM: ${{ secrets.PROD_MACOS_CERTIFICATE_CHECKSUM }}
-      KEYCHAIN_NAME: "build.keychain"
-      KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
-      KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
-      APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
-      APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
-      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
-      NOTARYTOOL_PROFILE: "notarytool-profile"
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - name: Get some infor from repo
+        uses: octokit/graphql-action@v2.x
         with:
-          node-version: '18.14.0'
-        
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Test ubuntu
-        if: ${{ matrix.os }} == 'ubuntu-latest'
-        run: |
-          echo "I am running only on ${{ matrix.os }}"
-
-      - name: Decode Apple Developer certificate
-        run: |
-          echo ${{ env.CERTIFICATE }} | base64 --decode > certificate.p12
-          ls -la certificate*
-          diff <( printf '%s\n' "${{ env.CERTIFICATE_CHECKSUM }}" ) <( printf '%s\n' "$(md5 -q certificate.p12)")
-          [ $? -eq 0 ] && (echo "File is identical" && exit 0) || (echo "File is different" && exit 1) 
-
-      - name: Create keychain storage
-        run: |
-          security create-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{env.KEYCHAIN_NAME}}
-          security default-keychain -s ${{ env.KEYCHAIN_NAME }}
-          security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
-          security import certificate.p12 -k ${{ env.KEYCHAIN_NAME }} -P "${{ env.CERTIFICATE_PWD }}" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
-      
-      - name: Create keychain profile for notarytool
-        run: |
-          security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
-          xcrun notarytool store-credentials ${{ env.NOTARYTOOL_PROFILE }} \
-          --apple-id ${{ env.APPLE_ID }} \
-          --team-id ${{ env.APPLE_TEAM_ID }} \
-          --password "${{ env.APPLE_APP_SPECIFIC_PASSWORD }}" \
-          --keychain "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db"
-      
-      - name: Build the artifacts and upload them on Github
-        env: 
-          KEYCHAIN: "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db" 
-          KEYCHAIN_PROFILE: ${{ env.NOTARYTOOL_PROFILE }}
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          npm run ship -- --mac --universal
-
-  # build-windows:
-  #   runs-on: windows-latest
-
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
-        
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '18.14.0'
-        
-  #     - name: Install dependencies
-  #       run: npm install 
-
-  #     - name: Build the artifacts and upload them on Github
-  #       env: 
-  #         GH_TOKEN: ${{ github.token }}
-  #       run: |
-  #         npm run ship -- --windows
-
-  # build-linux:
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
-        
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '18.14.0'
-        
-  #     - name: Install dependencies
-  #       run: npm install 
-
-  #     - name: Build the artifacts and upload them on Github
-  #       env: 
-  #         GH_TOKEN: ${{ github.token }}
-  #       run: |
-  #         npm run ship -- --linux
+          query: |
+            query release($OWNER:String!,$REPO:String!) {
+              repository(owner:$OWNER,name:$REPO) {
+                releases(first:1) {
+                  nodes {
+                    name
+                    createdAt
+                    tagName
+                    description
+                  }
+                }
+              }
+            }
+          variables: |
+            OWNER: ${{ github.event.repository.owner.name }}
+            REPOR: ${{ github.event.repository.name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
