@@ -52,7 +52,7 @@ jobs:
   
       - name: Get the result
         run: |
-          ls
+          ls -la .
           # chmod +x build/remove_blockmaps.sh
           # ./build/remove_blockmaps.sh ${{ steps.jq_filter.outputs.blockmap_list }}
         
