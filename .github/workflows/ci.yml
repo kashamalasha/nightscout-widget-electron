@@ -41,11 +41,9 @@ jobs:
 
       - name: Filter requested data
         id: jq_filter
-        uses: sergeysova/jq-action@v2
-        with: 
-          cmd: |
-            jq '.repository.releases.nodes[].releaseAssets.nodes[] | select(.name | endswith('.blockmap'))' \
-            ${{ steps.get_latest_release.outputs.data }} -r
+        run: |
+          echo ${{ steps.get_latest_release.outputs.data }} | jq \
+          '.repository.releases.nodes[].releaseAssets.nodes[] | select(.name | endswith('.blockmap'))'
       
       - name: Get the result
         run: |
