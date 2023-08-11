@@ -64,20 +64,20 @@ jobs:
           data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))} | tostring')
           echo "release_data=${data}" >> $GITHUB_OUTPUT
       
-      - name: Read the output
-        run: |
-          echo ${{ steps.releases_data.outputs.release_data }} | jq '.'
-
-
-      # - name: Filter requested data
-      #   id: jq_filter
+      # - name: Read the output
       #   run: |
-      #     blockmaps=$(
-      #       echo '${{ steps.releases_data.outputs.release_data }}' | jq \
-      #       .[0] | .assets | map(select(.name | endswith(".blockmap")).id) | "\"" + . + "\"") | join(" ")' 
-      #     )
-      #     echo "( ${blockmaps} )"
-      #     echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
+      #     echo ${{ steps.releases_data.outputs.release_data }} | jq '.'
+
+
+      - name: Filter requested data
+        id: jq_filter
+        run: |
+          blockmaps=$(
+            echo '${{ steps.releases_data.outputs.release_data }}' | jq '.' | \
+            .assets | map(select(.name | endswith(".blockmap")).id) | "\"" + . + "\"") | join(" ")' 
+          )
+          echo "( ${blockmaps} )"
+          echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
   
       # - name: Remove the blockmap files
       #   env:
