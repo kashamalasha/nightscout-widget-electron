@@ -54,15 +54,3 @@ jobs:
         run: |
           echo ${{ steps.jq_filter.outputs.blockmap_list }}
 
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Remove Blockmap
-        uses: .github/actions/remove_blockmap
-        with:
-          asset_ids: ${{ steps.jq_filter.outputs.blockmap_list }}
-          
-      
-      
-
-
