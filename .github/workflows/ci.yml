@@ -8,6 +8,8 @@ on:
 jobs:
   clean-release:
     runs-on: ubuntu-latest
+    env:
+      RELEASE_DATA: ""
 
     steps:
 
@@ -61,8 +63,7 @@ jobs:
           )
           data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))}')
           echo "${data}"
-          echo "RELEASE_DATA=${data}" >> $GITHUB_ENV
-
+          echo "${data}" >> ${{ env.RELEASE_DATA }}
 
       # - name: Filter requested data
       #   id: jq_filter
