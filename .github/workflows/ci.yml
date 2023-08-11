@@ -44,8 +44,8 @@ jobs:
         run: |
           echo "${{ steps.get_latest_release.outputs.data }}" |
           jq '.repository.releases.nodes[].releaseAssets.nodes[] |
-          select(.name | endswith(".blockmap"))' |
-          map(.id)
+          select(.name | endswith(".blockmap")) |
+          map(.id)'
       
       - name: Get the result
         run: |
