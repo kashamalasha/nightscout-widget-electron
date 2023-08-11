@@ -65,7 +65,7 @@ jobs:
 
           # the following lines are only required for multi line json
           data="${data//'%'/'%25'}"
-          data="${data//$'\n'/'%0A'}"
+          # data="${data//$'\n'/'%0A'}"
           data="${data//$'\r'/'%0D'}"
           # end of optional handling for multi line json
 
@@ -73,7 +73,7 @@ jobs:
       
       - name: Read the output
         run: |
-          echo "${{ fromJson(steps.releases_data.outputs.release_data) }}"
+          echo "${{ steps.releases_data.outputs.release_data }}"
 
 
       # - name: Filter requested data
