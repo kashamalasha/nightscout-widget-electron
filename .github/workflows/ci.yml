@@ -49,28 +49,28 @@ jobs:
       #     echo '${{ steps.get_latest_release.outputs.data }}' | jq '.[0] | .assets | map(select(.name | endswith(".blockmap")).id)'
         
       - name: Get the release data
+        id: releases_data
         env:
           HOST: "https://api.github.com"
           ENDPOINT: "/repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases"
         run: |
-            data=$(
-              curl -X GET -s \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              "${HOST}${ENDPOINT}"
-            )
-            echo "${data}"
+          data=$(
+            curl -X GET -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "${HOST}${ENDPOINT}"
+          )
+          echo "data=${data}" >> $GITHUB_OUTPUT
 
 
-      # - name: Filter requested data
-      #   id: jq_filter
-      #   run: |
-      #     blockmaps=$(
-      #       echo '${{ steps.get_latest_release.outputs.data }}' | jq \
-      #       -r '.repository.releases.nodes[].releaseAssets.nodes |
-      #       map(select(.name | endswith(".blockmap")).id | "\"" + . + "\"") | join(" ")'
-      #     )
-      #     echo "( ${blockmaps} )"
-      #     echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
+      - name: Filter requested data
+        id: jq_filter
+        run: |
+          blockmaps=$(
+            echo '${{ steps.releases_data.outputs.data }}' | jq \
+            .[0] | .assets | map(select(.name | endswith(".blockmap")).id) | "\"" + . + "\"") | join(" ")' 
+          )
+          echo "( ${blockmaps} )"
+          echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
   
       # - name: Remove the blockmap files
       #   env:
