@@ -41,15 +41,15 @@ jobs:
 
       - uses: octokit/request-action@v2.x
         id: get_latest_release
-        with:
-          route: GET /repos/${OWNER}/${REPO}/releases/latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.event.repository.owner.name }}
           REPO: ${{ github.event.repository.name }}
+        with:
+          route: GET /repos/${OWNER}/${REPO}/releases/latest
 
       # - name: Get all assets
-      #   run:
+      #   run: |
       #     echo "${{ steps.get_latest_release.outputs.data }}"
 
       # - name: Filter requested data
