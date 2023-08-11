@@ -47,6 +47,6 @@ jobs:
       
       - name: Get the result
         run: |
-          echo '${{ steps.jq_filter.outputs }}'
+          echo '${{ fromJson(steps.jq_filter.outputs) }}'
 
 
