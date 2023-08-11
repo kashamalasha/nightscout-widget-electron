@@ -24,7 +24,7 @@ jobs:
                     tagName
                     description
                     id
-                    assets {
+                    assets(first:20) {
                       nodes {
                         name
                       }
