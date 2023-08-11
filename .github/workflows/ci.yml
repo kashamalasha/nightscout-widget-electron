@@ -56,6 +56,6 @@ jobs:
       - name: Get the result
         run: |
           chmod +x build/remove_blockmaps.sh
-          ./build/remove_blockmaps.sh ${{ steps.jq_filter.outputs.blockmap_list }}
+          ./build/remove_blockmaps.sh "${{ steps.jq_filter.outputs.blockmap_list }}"
         
 
