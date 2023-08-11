@@ -61,14 +61,7 @@ jobs:
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "${HOST}${ENDPOINT}"
           )
-          data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))}')
-
-          # the following lines are only required for multi line json
-          data="${data//'%'/'%25'}"
-          data="${data//$'\n'/'%0A'}"
-          data="${data//$'\r'/'%0D'}"
-          # end of optional handling for multi line json
-
+          data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))} | tostring')
           echo "release_data=${data}" >> $GITHUB_OUTPUT
       
       - name: Read the output
