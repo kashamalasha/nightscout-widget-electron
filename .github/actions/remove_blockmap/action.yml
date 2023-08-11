@@ -13,7 +13,6 @@ runs:
         IFS=',' read -ra asset_ids <<< "${{ inputs.asset_ids }}"
         for asset_id in "${asset_ids[@]}"; do
           echo "Deleting asset with ID: $asset_id"
-          curl -X DELETE -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          curl -X DELETE -s -H "Authorization: token $GITHUB_TOKEN" \
             "https://api.github.com/repos/kashamalasha/nightscout-widget-electron/releases/assets/$asset_id"
         done
-        
