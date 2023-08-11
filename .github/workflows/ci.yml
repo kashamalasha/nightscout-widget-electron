@@ -59,7 +59,7 @@ jobs:
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "${HOST}${ENDPOINT}"
           )
-          data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))}'
+          data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))}')
           echo "${data}"
           echo "release_data=${data}" >> $GITHUB_OUTPUT
 
