@@ -48,7 +48,7 @@ jobs:
 
       - name: Get all assets
         run: |
-          echo "${{ steps.get_latest_release.outputs.data }}"
+          echo "${{ fromJson(steps.get_latest_release.outputs.data) }}"
 
       # - name: Filter requested data
       #   id: jq_filter
