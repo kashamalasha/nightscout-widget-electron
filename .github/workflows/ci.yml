@@ -48,7 +48,7 @@ jobs:
             -r '.repository.releases.nodes[].releaseAssets.nodes |
             map(select(.name | endswith(".blockmap")).id | "\"" + . + "\"") | join(",")'
           )
-          echo "blockmap_list=($blockmaps)" >> $GITHUB_OUTPUT
+          echo "blockmap_list=[$blockmaps]" >> $GITHUB_OUTPUT
   
       - name: Get the result
         run: |
