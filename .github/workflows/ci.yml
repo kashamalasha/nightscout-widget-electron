@@ -73,8 +73,8 @@ jobs:
         id: jq_filter
         run: |
           # blockmaps=$(
-            echo '${{ steps.releases_data.outputs.release_data }}' | jq '.' | \
-            .assets | map(select(.name | endswith(".blockmap")).id) | "\"" + . + "\"") | join(" ")' 
+            echo '${{ steps.releases_data.outputs.release_data }}' | jq '. | \
+            .assets | map(select(.name | endswith(".blockmap"))) | map(.id | tostring) | join(" ")' 
           # )
           # echo "( ${blockmaps} )"
           # echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
