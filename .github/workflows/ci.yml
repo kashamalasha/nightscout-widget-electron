@@ -66,11 +66,7 @@ jobs:
       
       - name: Read the output
         run: |
-          decoded_json=$(echo -e "${{ steps.releases_data.outputs.release_data }}")
-          # Convert the JSON output back to the original format using jq
-          formatted_json=$(echo "$decoded_json" | jq 'fromjson')
-          # Print the formatted JSON
-          echo "$formatted_json"
+          echo "${{ steps.releases_data.outputs.release_data }}"
 
 
       # - name: Filter requested data
