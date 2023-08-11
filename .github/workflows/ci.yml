@@ -36,14 +36,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Get the request data
         run: |
-          "echo 'latest release: ${{ steps.get_latest_release.outputs.data }}'"
+          echo 'latest release: ${{ steps.get_latest_release.outputs.data }}'
       - name: Install the jq util
         run: |
           apt-get install -y jq
       - name: Get all blockmaps ids
         run: |
-          "echo ${{ steps.get_latest_release.outputs.data }} \
+          echo ${{ steps.get_latest_release.outputs.data }} \
           | jq '.repository.releases.nodes[].releaseAssets.nodes[] \
-          | select(.name | endswith(".blockmap"))'"
+          | select(.name | endswith(".blockmap"))'
 
 
