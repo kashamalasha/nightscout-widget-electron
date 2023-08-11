@@ -62,6 +62,7 @@ jobs:
             "${HOST}${ENDPOINT}"
           )
           data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))}')
+          RELEASE_DATA=${data}
           echo "${data}"
           echo "${data}" >> ${{ env.RELEASE_DATA }}
 
