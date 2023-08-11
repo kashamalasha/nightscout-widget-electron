@@ -14,28 +14,37 @@ jobs:
       # - name: Checkout code
       #   uses: actions/checkout@v2
 
-      - name: Get latest release info
+      # - name: Get latest release info
+      #   id: get_latest_release
+      #   uses: octokit/graphql-action@v2.x
+      #   with:
+      #     query: |
+      #       query release($owner:String!,$repo:String!) {
+      #         repository(owner:$owner,name:$repo) {
+      #           releases(first:1) {
+      #             nodes {
+      #               releaseAssets(first:20) {
+      #                 nodes {
+      #                   id
+      #                   name
+      #                 }
+      #               }
+      #             }
+      #           }
+      #         }
+      #       }
+      #     variables: |
+      #       owner: ${{ github.event.repository.owner.name }}
+      #       repo: ${{ github.event.repository.name }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: octokit/request-action@v2.x
         id: get_latest_release
-        uses: octokit/graphql-action@v2.x
         with:
-          query: |
-            query release($owner:String!,$repo:String!) {
-              repository(owner:$owner,name:$repo) {
-                releases(first:1) {
-                  nodes {
-                    releaseAssets(first:20) {
-                      nodes {
-                        id
-                        name
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          variables: |
-            owner: ${{ github.event.repository.owner.name }}
-            repo: ${{ github.event.repository.name }}
+          route: GET /repos/{owner}/{repo}/releases/latest
+          owner: ${{ github.event.repository.owner.name }}
+          repo: ${{ github.event.repository.name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -43,37 +52,37 @@ jobs:
         run:
           echo "${{ steps.get_latest_release.outputs.data }}"
 
-      - name: Filter requested data
-        id: jq_filter
-        run: |
-          blockmaps=$(
-            echo '${{ steps.get_latest_release.outputs.data }}' | jq \
-            -r '.repository.releases.nodes[].releaseAssets.nodes |
-            map(select(.name | endswith(".blockmap")).id | "\"" + . + "\"") | join(" ")'
-          )
-          echo "( ${blockmaps} )"
-          echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
+      # - name: Filter requested data
+      #   id: jq_filter
+      #   run: |
+      #     blockmaps=$(
+      #       echo '${{ steps.get_latest_release.outputs.data }}' | jq \
+      #       -r '.repository.releases.nodes[].releaseAssets.nodes |
+      #       map(select(.name | endswith(".blockmap")).id | "\"" + . + "\"") | join(" ")'
+      #     )
+      #     echo "( ${blockmaps} )"
+      #     echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
   
-      - name: Remove the blockmap files
-        env:
-          HOST: "https://api.github.com"
-          ENDPOINT: "/repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases/assets/"
-        run: |
-          assets_array="${{ steps.jq_filter.outputs.blockmap_list }}"
-          assets_array="${assets_array#(}"
-          assets_array="${assets_array%)}"
+      # - name: Remove the blockmap files
+      #   env:
+      #     HOST: "https://api.github.com"
+      #     ENDPOINT: "/repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases/assets/"
+      #   run: |
+      #     assets_array="${{ steps.jq_filter.outputs.blockmap_list }}"
+      #     assets_array="${assets_array#(}"
+      #     assets_array="${assets_array%)}"
 
-          # Convert the array string to an actual array
-          IFS=', ' read -ra assets <<< "$assets_array"
+      #     # Convert the array string to an actual array
+      #     IFS=', ' read -ra assets <<< "$assets_array"
           
-          # Iterate over the array elements
-          echo "Iterating over the assets:"
-          for asset_id in "${assets[@]}"; do
-            echo "Deleting asset with ID: $asset_id"
-            curl -X DELETE -s \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "${HOST}${ENDPOINT}$asset_id"
-          done
+      #     # Iterate over the array elements
+      #     echo "Iterating over the assets:"
+      #     for asset_id in "${assets[@]}"; do
+      #       echo "Deleting asset with ID: $asset_id"
+      #       curl -X DELETE -s \
+      #       -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+      #       "${HOST}${ENDPOINT}$asset_id"
+      #     done
 
         
 
