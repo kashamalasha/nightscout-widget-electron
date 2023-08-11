@@ -54,11 +54,9 @@ jobs:
         run: |
           echo ${{ steps.jq_filter.outputs.blockmap_list }}
 
-      - name: Trigger the delete assets workflow
-        uses: actions/checkout@v2
-      
-      - name: Run the delete assets workflow
-        uses: .github/actions/remove_blockmap
+      - uses: actions/checkout@v2
+      - name: My first step
+        uses: ./.github/actions/remove_blockmap
         with:
           asset_ids: ${{ steps.jq_filter.outputs.blockmap_list }}
       
