@@ -59,14 +59,14 @@ jobs:
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "${HOST}${ENDPOINT}"
           )
-          echo "data=${data}" >> $GITHUB_OUTPUT
+          echo "release_data=${data}" >> $GITHUB_OUTPUT
 
 
       - name: Filter requested data
         id: jq_filter
         run: |
           blockmaps=$(
-            echo '${{ steps.releases_data.outputs.data }}' | jq \
+            echo '${{ steps.releases_data.outputs.release_data }}' | jq \
             .[0] | .assets | map(select(.name | endswith(".blockmap")).id) | "\"" + . + "\"") | join(" ")' 
           )
           echo "( ${blockmaps} )"
