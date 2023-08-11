@@ -69,7 +69,12 @@ jobs:
           data="${data//$'\r'/'%0D'}"
           # end of optional handling for multi line json
 
-          echo "$data"
+          echo "release_data=${data}" >> $GITHUB_OUTPUT
+      
+      - name: Read the output
+        run: |
+          echo "${{ steps.releases_data.outputs.release_data }}"
+
 
       # - name: Filter requested data
       #   id: jq_filter
