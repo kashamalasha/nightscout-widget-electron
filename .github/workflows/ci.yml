@@ -1,4 +1,4 @@
-name: Build artifacts
+name: Clean release assets 
 
 on:
   push:
@@ -10,12 +10,13 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Get some infor from repo-
+      - name: Get latest release info
+        id: get_latest_release
         uses: octokit/graphql-action@v2.x
         with:
           query: |
-            query release($OWNER:String!,$REPO:String!) {
-              repository(owner:$OWNER,name:$REPO) {
+            query release($owner:String!,$repor:String!) {
+              repository(owner:$owner,name:$repo) {
                 releases(first:1) {
                   nodes {
                     name
@@ -27,7 +28,9 @@ jobs:
               }
             }
           variables: |
-            OWNER: ${{ github.event.repository.owner.name }}
-            REPO: ${{ github.event.repository.name }}
+            owner: ${{ github.event.repository.owner.name }}
+            repo: ${{ github.event.repository.name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: "echo 'latest release: ${{ steps.get_latest_release.outputs.data }}"
+
