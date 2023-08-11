@@ -66,7 +66,7 @@ jobs:
       
       - name: Read the output
         run: |
-          echo "${{ steps.releases_data.outputs.release_data }}"
+          echo "${{ steps.releases_data.outputs.release_data }}" | jq -r fromjson
 
 
       # - name: Filter requested data
