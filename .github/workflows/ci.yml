@@ -42,7 +42,7 @@ jobs:
       - name: Filter requested data
         id: jq_filter
         run: |
-          echo ${{ steps.get_latest_release.outputs.data }} | jq \
+          echo '${{ steps.get_latest_release.outputs.data }}' | jq \
           '.repository.releases.nodes[].releaseAssets.nodes[] | select(.name | endswith('.blockmap'))'
       
       - name: Get the result
