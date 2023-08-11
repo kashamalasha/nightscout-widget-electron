@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Get latest release info
         id: get_latest_release
         uses: octokit/graphql-action@v2.x
@@ -52,15 +53,14 @@ jobs:
       - name: Get the result
         run: |
           echo ${{ steps.jq_filter.outputs.blockmap_list }}
+
+      - name: Trigger the delete assets workflow
+        uses: actions/checkout@v2
       
-      - name: Delete release assets
-        id: delete_assets
-        run: |
-          for asset_id in ${{ steps.jq_filter.outputs.blockmap_list }}; do
-            echo "Deleting asset with ID: $asset_id"
-            curl -X DELETE -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              "https://api.github.com/repos/${{ github.repository }}/releases/assets/$asset_id"
-          done
+      - name: Run the delete assets workflow
+        uses: ./.github/workflows/blockmap_remover.yml
+        with:
+          asset_ids: ${{ steps.jq_filter.outputs.blockmap_list }}
       
       
 
