@@ -39,10 +39,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get the request data
-        run: |
-          echo 'latest release: ${{ steps.get_latest_release.outputs.data }}'
-
       - name: Filter requested data
         id: jq_filter
         run: |
@@ -54,19 +50,25 @@ jobs:
           echo "( ${blockmaps} )"
           echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
   
-      - name: Get the result
+      - name: Remove the blockmap files
+        env:
+          HOST: "https://api.github.com"
+          ENDPOINT: "/repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases/assets/"
         run: |
-          array_string="${{ steps.jq_filter.outputs.blockmap_list }}"
-          array_string="${array_string#(}"
-          array_string="${array_string%)}"
+          assets_array="${{ steps.jq_filter.outputs.blockmap_list }}"
+          assets_array="${assets_array#(}"
+          assets_array="${assets_array%)}"
 
           # Convert the array string to an actual array
-          IFS=', ' read -ra elements <<< "$array_string"
+          IFS=', ' read -ra assets <<< "$assets_array"
           
           # Iterate over the array elements
-          echo "Iterating over the elements:"
-          for el in "${elements[@]}"; do
-            echo "$el"
+          echo "Iterating over the assets:"
+          for asset_id in "${assets[@]}"; do
+            echo "Deleting asset with ID: $asset_id"
+            curl -X DELETE -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "${HOST}${ENDPOINT}$asset_id"
           done
 
         
