@@ -57,10 +57,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: My first step
+      - name: Remove Blockmap
         uses: .github/actions/remove_blockmap
         with:
           asset_ids: ${{ steps.jq_filter.outputs.blockmap_list }}
+          
       
       
 
