@@ -28,6 +28,6 @@ jobs:
             }
           variables: |
             OWNER: ${{ github.event.repository.owner.name }}
-            REPOR: ${{ github.event.repository.name }}
+            REPO: ${{ github.event.repository.name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
