@@ -43,8 +43,7 @@ jobs:
         id: jq_filter
         run: |
           echo '${{ steps.get_latest_release.outputs.data }}' | jq \
-          '.repository.releases.nodes[].releaseAssets.nodes[] | map(select(.name | endswith(".blockmap")).id) \
-          .[]'
+          '.repository.releases.nodes[].releaseAssets.nodes[] | map(select(.name | endswith(".blockmap")).id) .[]'
       
       - name: Get the result
         run: |
