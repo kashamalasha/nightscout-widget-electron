@@ -24,8 +24,9 @@ jobs:
                     tagName
                     description
                     id
-                    assets(first:20) {
+                    releaseAssets(first:20) {
                       nodes {
+                        id
                         name
                       }
                     }
@@ -39,5 +40,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Get the request data
-        run: "echo 'latest release: ${{ steps.get_latest_release.outputs }}"
+        run: "echo 'latest release: ${{ steps.get_latest_release.outputs.data }}"
 
