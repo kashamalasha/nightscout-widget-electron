@@ -42,8 +42,16 @@ jobs:
       - name: Filter requested data
         id: jq_filter
         run: |
+          # echo '${{ steps.get_latest_release.outputs.data }}' | jq \
+          # '.repository.releases.nodes[].releaseAssets.nodes[] | select(.name | endswith(".blockmap")).id'
+
           echo '${{ steps.get_latest_release.outputs.data }}' | jq \
-          '.repository.releases.nodes[].releaseAssets.nodes[] | select(.name | endswith(".blockmap")).id | jq -s '.''
+          'reduce .repository.releases.nodes[].releaseAssets.nodes[] as $asset ([]; 
+            if ($asset.name | endswith(".blockmap"))
+              then . + [$asset.id]
+              else .
+            end
+          )'
       
       - name: Get the result
         run: |
