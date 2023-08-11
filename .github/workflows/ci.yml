@@ -51,7 +51,7 @@ jobs:
             end
             )'
           )
-          echo "{blockmap_ids}={blockmap_ids}" >> GITHUB_OUTPUTS
+          echo "::set-output name=blockmap_ids::$blockmap_ids"
 
       - name: Get the result
         run: |
