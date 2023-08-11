@@ -39,14 +39,27 @@ jobs:
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: octokit/request-action@v2.x
-        id: get_latest_release
-        with:
-          route: GET /repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases/latest
+      # - uses: octokit/request-action@v2.x
+      #   id: get_latest_release
+      #   with:
+      #     route: GET /repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases/latest
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - run: |
+      #     echo '${{ steps.get_latest_release.outputs.data }}' | jq '.[0] | .assets | map(select(.name | endswith(".blockmap")).id)'
+        
+      - name: Get the release data
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: |
-          echo '${{ steps.get_latest_release.outputs.data }}' | jq '.[0] | .assets | map(select(.name | endswith(".blockmap")).id)'
+          HOST: "https://api.github.com"
+          ENDPOINT: "/repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases"
+        run: |
+            data=$(
+              curl -X GET -s \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              "${HOST}${ENDPOINT}"
+            )
+            echo "${data}"
+
 
       # - name: Filter requested data
       #   id: jq_filter
