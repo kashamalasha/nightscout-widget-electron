@@ -44,12 +44,7 @@ jobs:
         run: |
           blockmap_ids=$(
             echo '${{ steps.get_latest_release.outputs.data }}' | jq \
-            'reduce .repository.releases.nodes[].releaseAssets.nodes[] as $asset ([];
-            if ($asset.name | endswith(".blockmap"))
-              then . + [$asset.id]
-              else .
-            end
-            )'
+            -r '.repository.releases.nodes[].releaseAssets.nodes | map(select(.name | endswith(".blockmap")).id)'
           )
           echo "::set-output name=blockmap_ids::$blockmap_ids"
 
