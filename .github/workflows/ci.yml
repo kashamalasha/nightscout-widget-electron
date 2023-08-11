@@ -52,5 +52,5 @@ jobs:
   
       - name: Get the result
         run: |
-          echo ${{ steps.jq_filter.outputs.blockmap_list }}
+          echo "${{ steps.jq_filter.outputs.blockmap_list }}"
 
