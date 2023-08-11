@@ -64,9 +64,9 @@ jobs:
           data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))} | tostring')
           echo "release_data=${data}" >> $GITHUB_OUTPUT
       
-      # - name: Read the output
-      #   run: |
-      #     echo ${{ steps.releases_data.outputs.release_data }} | jq '.'
+      - name: Read the output
+        run: |
+          echo ${{ steps.releases_data.outputs.release_data }} | jq '.'
 
 
       - name: Filter requested data
