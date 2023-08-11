@@ -62,7 +62,7 @@ jobs:
           data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))}')
           echo "${data}"
           echo "release_data=${data}" >> $GITHUB_OUTPUT
-        shell: /usr/bin/bash -e
+        shell: bash
 
 
 
