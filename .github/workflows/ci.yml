@@ -39,15 +39,16 @@ jobs:
         run: |
           echo 'latest release: ${{ steps.get_latest_release.outputs.data }}'
 
-      - name: Install the jq util
+      - name: Filter requested data
+        id: jq_filter
+        uses: sergeysova/jq-action@v2
+        with: 
+          cmd: |
+            jq '.repository.releases.nodes[].releaseAssets.nodes[] | select(.name | endswith('.blockmap'))' \
+            ${{ steps.get_latest_release.outputs.data }} -r
+      
+      - name: Get the result
         run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
-
-      - name: Get all blockmaps ids
-        run: |
-          echo ${{ steps.get_latest_release.outputs.data }} \
-          | jq '.repository.releases.nodes[].releaseAssets.nodes[] \
-          | select(.name | endswith(".blockmap"))'
+          echo ${{ steps.jq_filter.outputs.data }}
 
 
