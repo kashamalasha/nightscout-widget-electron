@@ -23,7 +23,7 @@ const alert = (type, title, message, parentWindow = null) => {
     type,
     title,
     message,
-    buttons: ['OK'],
+    buttons: [`OK`],
     defaultId: 0,
     icon: type,
   };

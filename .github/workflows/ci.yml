@@ -1,16 +1,26 @@
-name: Test action
+name: Build release
 
 on:
-  push:
-    branches:
-      - "develop"
+  pull_request:
+    types:
+      - closed
 
 jobs:
-  build:
-    runs-on: ${{matrix.os}}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+
+  build-macos:
+    runs-on: macos-latest
+    if: github.event.pull_request.merged == true
+    env:
+      CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
+      CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
+      CERTIFICATE_CHECKSUM: ${{ secrets.PROD_MACOS_CERTIFICATE_CHECKSUM }}
+      KEYCHAIN_NAME: "build.keychain"
+      KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
+      KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
+      APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
+      APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
+      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
+      NOTARYTOOL_PROFILE: "notarytool-profile"
 
     steps:
       - name: Checkout code
@@ -24,10 +34,138 @@ jobs:
       - name: Install dependencies
         run: npm install
       
-      - name: Set GH_TOKEN
-        env: 
-          PROD_GITHUB_TOKEN: ${{ secrets.PROD_GITHUB_TOKEN }}
-        run: export GH_TOKEN=$PROD_GITHUB_TOKEN
+      - name: Test ubuntu
+        if: ${{ matrix.os }} == 'ubuntu-latest'
+        run: |
+          echo "I am running only on ${{ matrix.os }}"
 
-      - name: Build package
-        run: npm run ship
+      - name: Decode Apple Developer certificate
+        run: |
+          echo ${{ env.CERTIFICATE }} | base64 --decode > certificate.p12
+          ls -la certificate*
+          diff <( printf '%s\n' "${{ env.CERTIFICATE_CHECKSUM }}" ) <( printf '%s\n' "$(md5 -q certificate.p12)")
+          [ $? -eq 0 ] && (echo "File is identical" && exit 0) || (echo "File is different" && exit 1) 
+
+      - name: Create keychain storage
+        run: |
+          security create-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{env.KEYCHAIN_NAME}}
+          security default-keychain -s ${{ env.KEYCHAIN_NAME }}
+          security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
+          security import certificate.p12 -k ${{ env.KEYCHAIN_NAME }} -P "${{ env.CERTIFICATE_PWD }}" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
+      
+      - name: Create keychain profile for notarytool
+        run: |
+          security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
+          xcrun notarytool store-credentials ${{ env.NOTARYTOOL_PROFILE }} \
+          --apple-id ${{ env.APPLE_ID }} \
+          --team-id ${{ env.APPLE_TEAM_ID }} \
+          --password "${{ env.APPLE_APP_SPECIFIC_PASSWORD }}" \
+          --keychain "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db"
+      
+      - name: Build the artifacts and upload them on Github
+        env: 
+          KEYCHAIN: "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db" 
+          KEYCHAIN_PROFILE: ${{ env.NOTARYTOOL_PROFILE }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm run ship -- --mac --universal
+
+  build-windows:
+    runs-on: windows-latest
+    if: github.event.pull_request.merged == true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.14.0'
+        
+      - name: Install dependencies
+        run: npm install 
+
+      - name: Build the artifacts and upload them on Github
+        env: 
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm run ship -- --windows
+
+  build-linux:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.14.0'
+        
+      - name: Install dependencies
+        run: npm install 
+
+      - name: Build the artifacts and upload them on Github
+        env: 
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm run ship -- --linux
+
+  clean-release:
+    needs: [build-macos, build-windows, build-linux]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get the release data
+        id: releases_data
+        env:
+          HOST: "https://api.github.com"
+          ENDPOINT: "/repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases"
+        run: |
+          data=$(
+            curl -X GET -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "${HOST}${ENDPOINT}"
+          )
+          data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))} | tostring')
+          echo "release_data=${data}" >> $GITHUB_OUTPUT
+      
+      - name: Read the output
+        run: |
+          echo ${{ steps.releases_data.outputs.release_data }} | jq '.'
+
+
+      - name: Filter requested data
+        id: jq_filter
+        run: |
+          blockmaps=$(
+            echo '${{ steps.releases_data.outputs.release_data }}' | jq -r \
+            'fromjson | .assets | map(select(.name | endswith(".blockmap"))) | map(.id | tostring) | join(" ")' 
+          ) 
+          echo "( ${blockmaps} )"
+          echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
+  
+      - name: Remove the blockmap files
+        env:
+          HOST: "https://api.github.com"
+          ENDPOINT: "/repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases/assets/"
+        run: |
+          assets_array="${{ steps.jq_filter.outputs.blockmap_list }}"
+          assets_array="${assets_array#(}"
+          assets_array="${assets_array%)}"
+
+          # Convert the array string to an actual array
+          IFS=', ' read -ra assets <<< "$assets_array"
+          
+          # Iterate over the array elements
+          echo "Iterating over the assets:"
+          for asset_id in "${assets[@]}"; do
+            echo "Deleting asset with ID: $asset_id"
+            curl -X DELETE -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "${HOST}${ENDPOINT}$asset_id"
+          done
