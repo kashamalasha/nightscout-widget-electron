@@ -1,4 +1,4 @@
-name: Clean release assets 
+name: Build release
 
 on:
   push:
