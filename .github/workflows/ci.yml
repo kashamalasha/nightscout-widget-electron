@@ -1,11 +1,12 @@
-name: Build artifacts
+name: Build release
 
 on:
   push:
     branches:
-      - "actions"
+      - "post-actions"
 
 jobs:
+
   build-macos:
     runs-on: macos-latest
     env:
@@ -69,44 +70,102 @@ jobs:
         run: |
           npm run ship -- --mac --universal
 
-  # build-windows:
-  #   runs-on: windows-latest
+  build-windows:
+    runs-on: windows-latest
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
         
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '18.14.0'
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.14.0'
         
-  #     - name: Install dependencies
-  #       run: npm install 
+      - name: Install dependencies
+        run: npm install 
 
-  #     - name: Build the artifacts and upload them on Github
-  #       env: 
-  #         GH_TOKEN: ${{ github.token }}
-  #       run: |
-  #         npm run ship -- --windows
+      - name: Build the artifacts and upload them on Github
+        env: 
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm run ship -- --windows
 
-  # build-linux:
-  #   runs-on: ubuntu-latest
+  build-linux:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
         
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '18.14.0'
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.14.0'
         
-  #     - name: Install dependencies
-  #       run: npm install 
+      - name: Install dependencies
+        run: npm install 
 
-  #     - name: Build the artifacts and upload them on Github
-  #       env: 
-  #         GH_TOKEN: ${{ github.token }}
-  #       run: |
-  #         npm run ship -- --linux
+      - name: Build the artifacts and upload them on Github
+        env: 
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm run ship -- --linux
+
+  clean-release:
+    needs: [build-macos, build-windows, build-linux]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get the release data
+        id: releases_data
+        env:
+          HOST: "https://api.github.com"
+          ENDPOINT: "/repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases"
+        run: |
+          data=$(
+            curl -X GET -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "${HOST}${ENDPOINT}"
+          )
+          data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))} | tostring')
+          echo "release_data=${data}" >> $GITHUB_OUTPUT
+      
+      - name: Read the output
+        run: |
+          echo ${{ steps.releases_data.outputs.release_data }} | jq '.'
+
+
+      - name: Filter requested data
+        id: jq_filter
+        run: |
+          blockmaps=$(
+            echo '${{ steps.releases_data.outputs.release_data }}' | jq -r \
+            'fromjson | .assets | map(select(.name | endswith(".blockmap"))) | map(.id | tostring) | join(" ")' 
+          ) 
+          echo "( ${blockmaps} )"
+          echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
+  
+      - name: Remove the blockmap files
+        env:
+          HOST: "https://api.github.com"
+          ENDPOINT: "/repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases/assets/"
+        run: |
+          assets_array="${{ steps.jq_filter.outputs.blockmap_list }}"
+          assets_array="${assets_array#(}"
+          assets_array="${assets_array%)}"
+
+          # Convert the array string to an actual array
+          IFS=', ' read -ra assets <<< "$assets_array"
+          
+          # Iterate over the array elements
+          echo "Iterating over the assets:"
+          for asset_id in "${assets[@]}"; do
+            echo "Deleting asset with ID: $asset_id"
+            curl -X DELETE -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "${HOST}${ENDPOINT}$asset_id"
+          done
+
+        
+
