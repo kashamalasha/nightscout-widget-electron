@@ -1,14 +1,15 @@
 name: Build release
 
 on:
-  push:
-    branches:
-      - "post-actions"
+  pull_request:
+    types:
+      - closed
 
 jobs:
 
   build-macos:
     runs-on: macos-latest
+    if: github.event.pull_request.merged == true
     env:
       CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
       CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
@@ -72,6 +73,7 @@ jobs:
 
   build-windows:
     runs-on: windows-latest
+    if: github.event.pull_request.merged == true
 
     steps:
       - name: Checkout code
@@ -93,6 +95,7 @@ jobs:
 
   build-linux:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
 
     steps:
       - name: Checkout code
@@ -166,6 +169,3 @@ jobs:
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "${HOST}${ENDPOINT}$asset_id"
           done
-
-        
-
