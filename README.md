@@ -16,7 +16,9 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 [![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.1-beta/Owlet-0.4.1-beta-win.exe)
 
-[![Download for macOS](https://img.shields.io/badge/Download-macOS%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.1-beta/Owlet-0.4.1-beta-mac.dmg)
+[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.1-beta/Owlet-0.4.1-beta-mac-arm64.dmg)
+
+[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.1-beta/Owlet-0.4.1-beta-mac-x64.dmg)
 
 [![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.1-beta/Owlet-0.4.1-beta-linux.AppImage)
 
