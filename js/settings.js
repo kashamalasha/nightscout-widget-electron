@@ -5,6 +5,7 @@ import { getStatus } from "./backend.js";
 
 const CONFIG = await window.electronAPI.getSettings();
 const VERSION = await window.electronAPI.getVersion();
+const TRANSLATE = await window.electronAPI.getTranslate();
 
 const log = window.electronAPI.logger;
 
@@ -36,7 +37,34 @@ const FormButtons = {
   CLOSE: document.querySelector(`#button-close`),
 };
 
+const FormLabels = {
+  TITLE: document.querySelector(`h1.settings__title`),
+  NIGHTSCOUT: {
+    TITLE: document.querySelector(`.settings-fields__nightscout > h2.settings-field__title`),
+    URL: document.querySelector(`label[for="nightscout-url"]`),
+    TOKEN: document.querySelector(`label[for="nightscout-token"]`),
+    INTERVAL: document.querySelector(`label[for="nightscout-interval"]`)
+  },
+  WIDGET: {
+    TITLE: document.querySelector(`.settings-fields__widget > h2.settings-field__title`),
+    OPACITY: document.querySelector(`label[for="widget-opacity"]`),
+    AGE_LIMIT: document.querySelector(`label[for="age-limit"]`),
+    SHOW_AGE: document.querySelector(`label[for="show-age"] > .settings-input__label`),
+    CALC_TREND: document.querySelector(`label[for="calc-trend"] > .settings-input__label`)
+  },
+  BG: {
+    TITLE: document.querySelector(`.settings-fields__bg > h2.settings-field__title`),
+    HIGH: document.querySelector(`label[for="bg-high"`),
+    LOW: document.querySelector(`label[for="bg-low"]`),
+    TARGET: {
+      TOP: document.querySelector(`label[for="bg-target-top"]`),
+      BOTTOM: document.querySelector(`label[for="bg-target-bottom"]`),
+    }
+  },
+};
+
 customAssign(FormFields, CONFIG);
+customAssign(FormLabels, TRANSLATE.settings, `textContent`);
 
 document.querySelector(`#app-version`).textContent = VERSION;
 
@@ -71,14 +99,14 @@ const testConnection = (evt) => {
         alert(`info`, `OK`, `It looks good!\n${msg}`);
         log.info(msg);
       }
-  
+
       resolve(result);
     };
 
     const onError = (errorMessage) => {
       log.error(errorMessage);
       const msg = `Connection failed: ${errorMessage}.`;
-      
+
       reject(new Error(msg));
     };
 

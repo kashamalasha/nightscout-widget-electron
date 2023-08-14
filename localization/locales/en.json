@@ -1,0 +1,27 @@
+{
+  "settings": {
+    "TITLE": "Widget settings",
+    "NIGHTSCOUT": {
+      "TITLE": "Nightscout API settings",
+      "URL": "Nightscout URL",
+      "TOKEN": "Nightscout token",
+      "INTERVAL": "Nightscout request interval (sec.)"
+    },
+    "WIDGET": {
+      "TITLE": "Widget preferences",
+      "OPACITY": "Widget opacity (%)",
+      "AGE_LIMIT": "Age limit (min.)",
+      "SHOW_AGE": "Show age",
+      "CALC_TREND": "Calc trend"
+    },
+    "BG": {
+      "TITLE": "Blood sugar levels preferences",
+      "HIGH": "High level threshold",
+      "LOW": "Low level threshold",
+      "TARGET": {
+        "TOP": "Target top level",
+        "BOTTOM": "Target bottom level"
+      }
+    }
+  }
+}

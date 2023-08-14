@@ -22,4 +22,5 @@ contextBridge.exposeInMainWorld(`electronAPI`, {
     showMessageBoxSync: (options) => ipcRenderer.invoke(`show-message-box-sync`, options),
   },
   checkFormValidation: () => ipcRenderer.send(`check-validation`),
+  getTranslate: () => ipcRenderer.invoke(`get-translate`),
 });

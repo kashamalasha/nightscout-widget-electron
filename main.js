@@ -151,18 +151,18 @@ const createWindow = () => {
     const checkDependencies = (() => {
       let missingCounter = 0;
       const missingDependencies = [];
-    
+
       Object.entries(linuxDependencies).forEach(([package, command]) => {
         exec(`which ${command}`, (error) => {
           if (error) {
             log.error(`${package} is not installed on your system.`);
-            missingDependencies.push(package); 
+            missingDependencies.push(package);
           } else {
             log.info(`${package} is installed.`);
           }
-	
-          missingCounter++; 
-    
+
+          missingCounter++;
+
           if (missingCounter === Object.keys(linuxDependencies).length) {
             if (missingDependencies.length > 0) {
               const errorMessage = `Please install the following dependencies:\n - ${missingDependencies.join(`\n - `)}`;
@@ -275,7 +275,7 @@ app.whenReady().then(() => {
   ipcMain.handle(`show-message-box-sync`, async (evt, options) => {
     const result = await dialog.showMessageBoxSync(BrowserWindow.getFocusedWindow(), options);
     return result.response;
-  }); 
+  });
 
   ipcMain.on(`close-window`, (evt) => {
     if (evt.sender.getTitle() === `Owlet`) {
@@ -304,6 +304,20 @@ app.whenReady().then(() => {
 
   ipcMain.handle(`get-version`, async () => {
     return app.getVersion();
+  });
+
+  ipcMain.handle(`get-translate`, async () => {
+
+    let systemLanguages = app.getPreferredSystemLanguages();
+    let systemLanguage = systemLanguages[0];
+
+    const countryCodeRegex = /^[a-z]{2}-[A-Z]{2}$/;
+    if (countryCodeRegex.test(systemLanguage)) {
+      systemLanguage = systemLanguage.split('-')[0];
+    }
+
+    const translate = JSON.parse(readFileSync(path.join(__dirname, `localization/locales/${systemLanguage}.json`)));
+    return translate;
   });
 
   ipcMain.on(`set-settings`, (evt, data) => {
@@ -362,7 +376,7 @@ if (isMac) {
       log.info(`App was restarted after resume from sleep`);
     }
   });
-  
+
   nativeTheme.on(`updated`, () => {
     if (app.isHidden()) {
       app.show();
