@@ -306,18 +306,39 @@ app.whenReady().then(() => {
     return app.getVersion();
   });
 
-  ipcMain.handle(`get-translate`, async () => {
+  ipcMain.handle(`get-language`, async () => {
 
-    let systemLanguages = app.getPreferredSystemLanguages();
+    const configLanguage = config.get(`LANGUAGE`);
+
+    if (configLanguage) {
+      return configLanguage;
+    }
+
+    const systemLanguages = app.getPreferredSystemLanguages();
     let systemLanguage = systemLanguages[0];
 
     const countryCodeRegex = /^[a-z]{2}-[A-Z]{2}$/;
     if (countryCodeRegex.test(systemLanguage)) {
-      systemLanguage = systemLanguage.split('-')[0];
+      systemLanguage = systemLanguage.split(`-`)[0];
     }
 
-    const translate = JSON.parse(readFileSync(path.join(__dirname, `localization/locales/${systemLanguage}.json`)));
-    return translate;
+    return systemLanguage;
+  });
+
+  ipcMain.on(`set-language`, (evt, language) => {
+    evt.preventDefault();
+
+    try {
+      config.set(`LANGUAGE`, language);
+    } catch (error) {
+      log.error(error, language);
+    }
+  });
+
+  ipcMain.handle(`get-translate`, async (evt, language) => {
+
+    const translation = JSON.parse(readFileSync(path.join(__dirname, `localization/locales/${language}.json`)));
+    return translation;
   });
 
   ipcMain.on(`set-settings`, (evt, data) => {

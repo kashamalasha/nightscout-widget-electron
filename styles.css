@@ -306,7 +306,7 @@ a:focus-visible {
       background-size: 100% 100%;
     }
     .settings-input__field--number {
-      width: 80px;
+      width: 70px;
     }
     .settings-input__check-wrapper {
       width: 100%;
@@ -328,7 +328,7 @@ a:focus-visible {
       width: 30px;
       height: 30px;
 
-      margin-right: 50px;
+      margin-right: 40px;
     }
     .settings-input__check {
       appearance: none;
@@ -413,5 +413,71 @@ a:focus-visible {
     opacity: 1;
   }
   .settings-button-close:active {
+    opacity: 1;
+  }
+  .settings-button-close:focus,
+  .settings-button-close:focus-visible {
     background-color: var(--color_cgv_button-active);
+  }
+
+.settings-language {
+  -webkit-app-region: no-drag;
+  user-select: none;
+
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.settings-language__button {
+  height: 25px;
+  width: 25px;
+
+  background-color: transparent;
+  color: #FFFFFF;
+  opacity: 0.6;
+  border: none;
+  border-radius: 15%;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 0px;
+}
+  .settings-language__button:hover {
+    opacity: 1;
+  }
+  .settings-language__button--active {
+    opacity: 1;
+  }
+  .settings-language__button:focus,
+  .settings-language__button:focus-visible {
+    background-color: var(--color_cgv_button-active);
+  }
+
+.language-list {
+  display: none;
+  min-width: 100px;
+
+  margin-top: 5px;
+  margin-left: 3px;
+  padding: 5px;
+
+  background-color: var(--color_settings_darken);
+  box-shadow: 0.5px 0.5px 2px var(--color_settings_light);
+  border-radius: 5px;
+}
+
+.language-list__item {
+  display: block;
+  padding: 5px;
+
+  color: var(--color_settings_light);
+}
+  .language-list__item:hover,
+  .language-list__item:focus,
+  .language-list__item:focus-visible {
+    outline: none;
+    border-radius: 5px;
+    color: var(--color_settings_dark);
+    background-color: var(--color_settings_light);
   }

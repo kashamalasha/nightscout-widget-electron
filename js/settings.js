@@ -2,10 +2,14 @@
 
 import { customAssign, alert } from "./util.js";
 import { getStatus } from "./backend.js";
+import { Translator } from "./translator.js";
 
+const LANGUAGE = await window.electronAPI.getLanguage();
 const CONFIG = await window.electronAPI.getSettings();
 const VERSION = await window.electronAPI.getVersion();
-const TRANSLATE = await window.electronAPI.getTranslate();
+
+const translator = new Translator();
+translator.load(LANGUAGE);
 
 const log = window.electronAPI.logger;
 
@@ -37,34 +41,14 @@ const FormButtons = {
   CLOSE: document.querySelector(`#button-close`),
 };
 
-const FormLabels = {
-  TITLE: document.querySelector(`h1.settings__title`),
-  NIGHTSCOUT: {
-    TITLE: document.querySelector(`.settings-fields__nightscout > h2.settings-field__title`),
-    URL: document.querySelector(`label[for="nightscout-url"]`),
-    TOKEN: document.querySelector(`label[for="nightscout-token"]`),
-    INTERVAL: document.querySelector(`label[for="nightscout-interval"]`)
-  },
-  WIDGET: {
-    TITLE: document.querySelector(`.settings-fields__widget > h2.settings-field__title`),
-    OPACITY: document.querySelector(`label[for="widget-opacity"]`),
-    AGE_LIMIT: document.querySelector(`label[for="age-limit"]`),
-    SHOW_AGE: document.querySelector(`label[for="show-age"] > .settings-input__label`),
-    CALC_TREND: document.querySelector(`label[for="calc-trend"] > .settings-input__label`)
-  },
-  BG: {
-    TITLE: document.querySelector(`.settings-fields__bg > h2.settings-field__title`),
-    HIGH: document.querySelector(`label[for="bg-high"`),
-    LOW: document.querySelector(`label[for="bg-low"]`),
-    TARGET: {
-      TOP: document.querySelector(`label[for="bg-target-top"]`),
-      BOTTOM: document.querySelector(`label[for="bg-target-bottom"]`),
-    }
-  },
+const Language = {
+  BUTTON : document.querySelector(`.settings-language__button`),
+  LIST : document.querySelector(`.language-list`),
 };
 
+Language.BUTTON.textContent = translator.getLanguage();
+
 customAssign(FormFields, CONFIG);
-customAssign(FormLabels, TRANSLATE.settings, `textContent`);
 
 document.querySelector(`#app-version`).textContent = VERSION;
 
@@ -174,3 +158,96 @@ FormButtons.CLOSE.addEventListener(`click`, () => {
 });
 
 setTimeout(window.electronAPI.checkFormValidation, 100);
+
+const languages = Language.LIST.querySelectorAll(`.language-list__item`);
+const languageArray = Array.from(languages);
+
+let menuIsOpen = false;
+
+const openLanguageList = () => {
+  Language.LIST.style.display = `block`;
+  Language.BUTTON.classList.add(`settings-language__button--active`);
+  menuIsOpen = true;
+};
+
+const closeLanguageList = () => {
+  Language.LIST.style.display = `none`;
+  Language.BUTTON.classList.remove(`settings-language__button--active`);
+  menuIsOpen = false;
+};
+
+const setLanguage = (language) => {
+  const selectedLanguage = language.getAttribute(`data-value`);
+
+  window.electronAPI.setLanguage(selectedLanguage);
+  Language.BUTTON.textContent = selectedLanguage;
+
+  translator.load(selectedLanguage);
+  closeLanguageList();
+};
+
+Language.BUTTON.addEventListener(`click`, () => {
+  if (menuIsOpen) {
+    closeLanguageList();
+  } else {
+    openLanguageList();
+  }
+});
+
+Language.BUTTON.addEventListener(`blur`, (evt) => {
+  if (menuIsOpen) {
+    evt.preventDefault();
+    setTimeout(() => {
+      Language.LIST.focus();
+    });
+  }
+});
+
+Language.BUTTON.addEventListener(`keydown`, (evt) => {
+  if (menuIsOpen) {
+    if (evt.code === `Escape`) {
+      closeLanguageList();
+    } else if (evt.code === `ArrowDown`) {
+      languageArray[0].focus();
+    }
+  }
+});
+
+document.addEventListener(`focusin`, (evt) => {
+  if (menuIsOpen) {
+    if (!Language.LIST.contains(evt.target) && evt.target !== Language.BUTTON) {
+      closeLanguageList();
+    }
+  }
+});
+
+document.addEventListener(`pointerdown`, (evt) => {
+  if (menuIsOpen) {
+    if (!Language.LIST.contains(evt.target) && evt.target !== Language.BUTTON) {
+      closeLanguageList();
+    }
+  }
+});
+
+languageArray.forEach((language) => {
+  language.addEventListener(`pointerdown`, (evt) => {
+    evt.preventDefault();
+    setLanguage(language);
+  });
+
+  language.addEventListener(`keydown`, (evt) => {
+    let currentIndex = languageArray.indexOf(language);
+
+    if (evt.code === `ArrowDown`) {
+      currentIndex = (currentIndex + 1) % languageArray.length;
+    } else if (evt.code === `ArrowUp`) {
+      currentIndex = (currentIndex - 1 + languageArray.length) % languageArray.length;
+    } else if (evt.code === `Enter` || evt.code === `Space`) {
+      setLanguage(language);
+    } else if (evt.code === `Escape`) {
+      closeLanguageList();
+    }
+
+    languageArray[currentIndex].focus();
+  });
+});

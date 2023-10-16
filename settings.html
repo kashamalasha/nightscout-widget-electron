@@ -8,7 +8,14 @@
 <body>
   <main class="settings">
     <header class="settings-header">
-      <h1 class="settings__title">{{ 'settings.title' | t }}</h1>
+      <h1 class="settings__title" data-i18n="settings.title" tabindex="-1">Widget settings</h1>
+      <div class="settings-language">
+        <button class="settings-language__button">en</button>
+        <ul class="language-list">
+          <li class="language-list__item" data-value="en" tabindex="0">English</li>
+          <li class="language-list__item" data-value="ru" tabindex="0">Русский</li>
+        </ul>
+      </div>
       <button class="settings-button-close" type="button" id="button-close">
         <img src="asset/icons8-check.png" alt="close" width="25px" height="25px">
       </button>
@@ -16,75 +23,75 @@
     <form>
       <div class="settings-fields">
         <section class="settings-field settings-fields__nightscout">
-          <h2 class="settings-field__title">Nightscout API settings</h2>
+          <h2 class="settings-field__title" data-i18n="settings.nightscout.title">Nightscout API settings</h2>
           <div class="settings-input">
             <input class="settings-input__field" type="text" name="nightscout-url" id="nightscout-url" spellcheck="false" required>
-            <label class="settings-input__label" for="nightscout-url">Nightscout URL</label>
+            <label class="settings-input__label" for="nightscout-url" data-i18n="settings.nightscout.url">Nightscout URL</label>
           </div>
           <div class="settings-input">
             <input class="settings-input__field" type="text" name="nightscout-token" id="nightscout-token" spellcheck="false" required>
-            <label class="settings-input__label" for="nightscout-token">Nightscout token</label>
+            <label class="settings-input__label" for="nightscout-token" data-i18n="settings.nightscout.token">Nightscout token</label>
           </div>
           <div class="settings-input">
             <input class="settings-input__field settings-input__field--number" type="number" name="nightscout-interval" id="nightscout-interval" required>
-            <label class="settings-input__label" for="nightscout-interval">Nightscout request interval (sec.)</label>
+            <label class="settings-input__label" for="nightscout-interval" data-i18n="settings.nightscout.interval">Nightscout request interval (sec.)</label>
           </div>
         </section>
         <section class="settings-field settings-fields__widget">
-          <h2 class="settings-field__title">Widget preferences</h2>
+          <h2 class="settings-field__title" data-i18n="settings.widget.title">Widget preferences</h2>
           <div class="settings-input">
             <input class="settings-input__field settings-input__field--number" type="number" step="10" min="10" max= "100" name="widget-opacity" id="widget-opacity" value="100" disabled>
-            <label class="settings-input__label" for="widget-opacity">Widget opacity (%)</label>
-            <div class="settings-input__disabled-tooltip">Feature temporary disabled</div>
+            <label class="settings-input__label" for="widget-opacity" data-i18n="settings.widget.opacity">Widget opacity (%)</label>
+            <div class="settings-input__disabled-tooltip" data-i18n="settings.feature-disabled">Feature temporary disabled</div>
           </div>
           <div class="settings-input">
             <input class="settings-input__field settings-input__field--number" type="number" step="1" min="0" name="age-limit" id="age-limit" required>
-            <label class="settings-input__label" for="age-limit">Age limit (min.)</label>
+            <label class="settings-input__label" for="age-limit" data-i18n="settings.widget.age_limit">Age limit (min.)</label>
           </div>
           <div class="settings-input">
             <input class="settings-input__check" type="checkbox" name="show-age" id="show-age">
             <label class="settings-input__check-wrapper" for="show-age">
               <span class="settings-input__field settings-input__field--checkbox"></span>
-              <span class="settings-input__label">Show age</span>
+              <span class="settings-input__label" data-i18n="settings.widget.show_age">Show age</span>
             </label>
           </div>
           <div class="settings-input">
             <input class="settings-input__check" type="checkbox" name="calc-trend" id="calc-trend" checked disabled>
             <label class="settings-input__check-wrapper" for="calc-trend">
               <span class="settings-input__field settings-input__field--checkbox"></span>
-              <span class="settings-input__label">Calc trend</span>
+              <span class="settings-input__label" data-i18n="settings.widget.calc_trend">Calc trend</span>
             </label>
-            <div class="settings-input__disabled-tooltip">Feature temporary disabled</div>
+            <div class="settings-input__disabled-tooltip" data-i18n="settings.feature-disabled">Feature temporary disabled</div>
           </div>
         </section>
         <section class="settings-field settings-fields__bg">
-          <h2 class="settings-field__title">Blood sugar levels preferences</h2>
+          <h2 class="settings-field__title" data-i18n="settings.bg.title">Blood sugar levels preferences</h2>
           <div class="settings-input">
             <input class="settings-input__field settings-input__field--number" type="number" step="0.1" name="bg-high" id="bg-high" required>
-            <label class="settings-input__label" for="bg-high">High level threshold</label>
+            <label class="settings-input__label" for="bg-high" data-i18n="settings.bg.high"">High level threshold</label>
           </div>
           <div class="settings-input">
             <input class="settings-input__field settings-input__field--number" type="number" step="0.1" name="bg-target-top" id="bg-target-top" required>
-            <label class="settings-input__label" for="bg-target-top">Target top level</label>
+            <label class="settings-input__label" for="bg-target-top" data-i18n="settings.bg.target.top">Target top level</label>
           </div>
           <div class="settings-input">
             <input class="settings-input__field settings-input__field--number" type="number" step="0.1" name="bg-target-bottom" id="bg-target-bottom" required>
-            <label class="settings-input__label" for="bg-target-bottom">Target bottom level</label>
+            <label class="settings-input__label" for="bg-target-bottom" data-i18n="settings.bg.target.bottom">Target bottom level</label>
           </div>
           <div class="settings-input">
             <input class="settings-input__field settings-input__field--number" type="number" step="0.1" name="bg-low" id="bg-low" required>
-            <label class="settings-input__label" for="bg-low">Low level threshold</label>
+            <label class="settings-input__label" for="bg-low" data-i18n="settings.bg.low">Low level threshold</label>
           </div>
         </section>
       </div>
       <footer class="settings-footer">
         <div class="settings-footer__buttons">
-          <button class="settings-button" type="submit" id="button-submit">Save</button>
-          <button class="settings-button" type="button" id="button-test">Test</button>
+          <button class="settings-button" type="submit" id="button-submit" data-i18n="settings.button-save">Save</button>
+          <button class="settings-button" type="button" id="button-test" data-i18n="settings.button-test">Test</button>
         </div>
         <div class="settings-footer__meta">
           <p class="settings__app-version">v<span id="app-version">0.0.0</span></p>
-          <a class="settings__log-link" href="#">Log ...</a>
+          <a class="settings__log-link" href="#" data-i18n="settings.show-logs">Logs ...</a>
         </div>
       </footer>
     </form>
