@@ -265,7 +265,7 @@ a:focus-visible {
   }
   .settings-input__label {
     user-select: none;
-    min-width: 42%;
+    min-width: 30%;
 
     padding-top: 5px;
     padding-bottom: 5px;
