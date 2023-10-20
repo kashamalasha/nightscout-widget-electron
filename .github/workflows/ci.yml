@@ -25,26 +25,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '18.14.0'
-        
+
       - name: Install dependencies
         run: npm install
-      
-      - name: Test ubuntu
-        if: ${{ matrix.os }} == 'ubuntu-latest'
-        run: |
-          echo "I am running only on ${{ matrix.os }}"
 
       - name: Decode Apple Developer certificate
         run: |
           echo ${{ env.CERTIFICATE }} | base64 --decode > certificate.p12
           ls -la certificate*
           diff <( printf '%s\n' "${{ env.CERTIFICATE_CHECKSUM }}" ) <( printf '%s\n' "$(md5 -q certificate.p12)")
-          [ $? -eq 0 ] && (echo "File is identical" && exit 0) || (echo "File is different" && exit 1) 
+          [ $? -eq 0 ] && (echo "File is identical" && exit 0) || (echo "File is different" && exit 1)
 
       - name: Create keychain storage
         run: |
@@ -53,7 +48,7 @@ jobs:
           security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
           security import certificate.p12 -k ${{ env.KEYCHAIN_NAME }} -P "${{ env.CERTIFICATE_PWD }}" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
-      
+
       - name: Create keychain profile for notarytool
         run: |
           security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
@@ -62,10 +57,10 @@ jobs:
           --team-id ${{ env.APPLE_TEAM_ID }} \
           --password "${{ env.APPLE_APP_SPECIFIC_PASSWORD }}" \
           --keychain "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db"
-      
+
       - name: Build the artifacts and upload them on Github
-        env: 
-          KEYCHAIN: "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db" 
+        env:
+          KEYCHAIN: "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db"
           KEYCHAIN_PROFILE: ${{ env.NOTARYTOOL_PROFILE }}
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -78,17 +73,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '18.14.0'
-        
+
       - name: Install dependencies
-        run: npm install 
+        run: npm install
 
       - name: Build the artifacts and upload them on Github
-        env: 
+        env:
           GH_TOKEN: ${{ github.token }}
         run: |
           npm run ship -- --windows
@@ -100,17 +95,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '18.14.0'
-        
+
       - name: Install dependencies
-        run: npm install 
+        run: npm install
 
       - name: Build the artifacts and upload them on Github
-        env: 
+        env:
           GH_TOKEN: ${{ github.token }}
         run: |
           npm run ship -- --linux
@@ -124,7 +119,7 @@ jobs:
         id: releases_data
         env:
           HOST: "https://api.github.com"
-          ENDPOINT: "/repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases"
+          ENDPOINT: "/repos/${{ github.repository.owner }}/${{ github.event.repository.name }}/releases"
         run: |
           data=$(
             curl -X GET -s \
@@ -133,7 +128,7 @@ jobs:
           )
           data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))} | tostring')
           echo "release_data=${data}" >> $GITHUB_OUTPUT
-      
+
       - name: Read the output
         run: |
           echo ${{ steps.releases_data.outputs.release_data }} | jq '.'
@@ -144,11 +139,11 @@ jobs:
         run: |
           blockmaps=$(
             echo '${{ steps.releases_data.outputs.release_data }}' | jq -r \
-            'fromjson | .assets | map(select(.name | endswith(".blockmap"))) | map(.id | tostring) | join(" ")' 
-          ) 
+            'fromjson | .assets | map(select(.name | endswith(".blockmap"))) | map(.id | tostring) | join(" ")'
+          )
           echo "( ${blockmaps} )"
           echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
-  
+
       - name: Remove the blockmap files
         env:
           HOST: "https://api.github.com"
@@ -160,7 +155,7 @@ jobs:
 
           # Convert the array string to an actual array
           IFS=', ' read -ra assets <<< "$assets_array"
-          
+
           # Iterate over the array elements
           echo "Iterating over the assets:"
           for asset_id in "${assets[@]}"; do
