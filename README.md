@@ -1,5 +1,7 @@
 # 🦉 Hello, I am Owlet!
 
+[![RU](https://img.shields.io/badge/Language-RU-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.ru.md)
+
 The app's name is "Owlet", which means baby owl and is chosen because of the Nightscout project logo.
 
 ## 👋 Project Description
@@ -14,15 +16,15 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 ## 📦 Installation packages
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.1-beta/Owlet-0.4.1-beta-win-x64.exe)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.0-beta/Owlet-0.5.0-beta-win-x64.exe)
 
-[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.1-beta/Owlet-0.4.1-beta-mac-arm64.dmg)
+[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.0-beta/Owlet-0.5.0-beta-mac-arm64.dmg)
 
-[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.1-beta/Owlet-0.4.1-beta-mac-x64.dmg)
+[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.0-beta/Owlet-0.5.0-beta-mac-x64.dmg)
 
-[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.4.1-beta/Owlet-0.4.1-beta-linux-x86_64.AppImage)
+[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.0-beta/Owlet-0.5.0-beta-linux-x86_64.AppImage)
 
-[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.4.1-beta.tar.gz)
+[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.5.0-beta.tar.gz)
 
 [![Download Souces](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
@@ -42,11 +44,13 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
   - wmctrl
   - xdg-utils
 
-  Without these listed dependencies, the widget will still work, but it might be difficult to manage the window states properly (wmctrl is used to hide the app from the application panel and tray) and to open other applications (xdg-open is used to open the browser for redirecting to the Nightscout site and open the file manager to navigate to the logs folder).
+  Without these listed dependencies, the widget will still work, but it might be difficult to manage the window states properly (`wmctrl` is used to hide the app from the application panel and tray) and to open other applications (`xdg-open` is used to open the browser for redirecting to the Nightscout site and open the file manager to navigate to the logs folder).
 
   Without these packages, the widget will alert you about the missing dependencies once a day on every launch.
 
   <b>Auto-update may cause freezing</b>. The application starts checking for updates right after the launch, but only once a day. If it finds a new version in the latest releases, it will begin downloading and replacing the AppImage on your drive, which usually takes about 1-2 minutes. If the application freezes, you need to wait until it awakens, or alternatively, you can kill the process using the `ps` command and restart it.
+
+  The issue is related to the lack of usability of the `notification-daemon`. Sometimes, the D-Bus service doesn't configure properly, and as a result, the `notify-send` command cannot be executed. If the `notify-send` command works fine on your distribution, then it is not your issue, and everything should function properly.
 
   Please note that the AppImage doesn't have yet a built-in mechanism to notify about the updates. If you are knowledgeable about how to implement this feature, you are welcome to contribute by submitting a pull request; I would sincerely appreciate it.
 
@@ -67,7 +71,7 @@ On the first launch, the app will prompt you to fill in the following settings
 
 <figure>
   <p>
-    <img src="docs/screenshot-settings-default.png" alt="Screenshot-widget"/>
+    <img src="docs/screenshot-settings-default-en.png" alt="Screenshot-widget"/>
   </p>
 </figure>
 
@@ -105,6 +109,22 @@ Set the blood sugar tracking parameters using the following guides:
 - You may test the entered connection parameters by clicking the **TEST** button to verify the Nightscout site is accessible and the token is correct
 - If everything is ok, press the **SAVE** button to save settings and restart the application
 
+
+### 4. Settings language and localization 
+
+
+- You can choose the settings language by clicking on the top left **EN** icon and selecting your preferred language.
+
+<figure>
+  <p>
+    <img src="docs/screenshot-settings-language-en.png" alt="Screenshot-widget"/>
+  </p>
+</figure>
+
+- Currently, the application offers only two language options: **English** and **Russian**.
+
+- If you feel confident and have a good grasp of a foreign language, you can contribute to the translation of the application by becoming a project contributor on [POEditor](https://poeditor.com/projects/view?id=640131).
+
 ## 🧭 Using the widget
 
 - After restarting, the widget will always stay on top of the screen until you close it by clicking the top left corner with the X sign.
@@ -123,11 +143,9 @@ Set the blood sugar tracking parameters using the following guides:
 
 - Feature of selecting mmol/l <-> mg/dl measurement units
 - Feature of calculating trend indicator when this data is absent on Nightscout
-- Localization
 - Github-page landing using Jakil
 
-If you feel desire to improve it or help. You can suggest any ideas or detected bugs to the project board:
-https://github.com/users/kashamalasha/projects/2/views/1 
+If you feel desire to improve it or help. You can suggest any ideas or detected bugs to the [project board](https://github.com/users/kashamalasha/projects/2/views/1).
 
 ## 🗜️ Content
 
@@ -145,9 +163,13 @@ The current application includes these files:
 - `js/backend.js` - The code to obtain data from Nightscout API using AJAX.
 - `js/util.js` - The JS code to adapt collected data to a human-readable view.
 - `js/auto-update.js` - The app's auto-updater JS implementation.
+- `js/translator.js` - This file contains the implementation of the localization JS class.
+- `js/localization/{lang}.json` - These files contain key sets for localization, with {lang} being a placeholder for the specific language code.
 - `js/config-schema.json` - The app's config json schema validation file.
 - `js/config-sample.json` - The app's config.json example
 - `js/config-default.json` - The default values for the config.json
+- `build/` - The build directory contains the necessary files for building the application on your host from the source code.
+- `docs/` - Screenshots for this README.
 
 ## 🛠️ To build it from source code
 
@@ -186,6 +208,7 @@ You can build a native application for your operating system's preferences from 
 - [electron.build](https://electron.build) - electron-builder documentationn
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - Nightscout API v3 documentation
 - [Icons8.com](https://icons8.com/) - Great icons and assets collection that I used in this project
+- [POEditor](https://poeditor.com/projects/view?id=640131) - localization of the application
 
 ## ⚖️ License
 
