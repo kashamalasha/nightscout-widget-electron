@@ -64,6 +64,7 @@ jobs:
           KEYCHAIN_PROFILE: ${{ env.NOTARYTOOL_PROFILE }}
           GH_TOKEN: ${{ github.token }}
           PUBLISH_FOR_PULL_REQUEST: true
+          CSC_FOR_PULL_REQUEST: true
         run: |
           npm run ship -- --mac --x64 --arm64
 
