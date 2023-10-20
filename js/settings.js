@@ -186,7 +186,7 @@ const setLanguage = (language) => {
   closeLanguageList();
 };
 
-Language.BUTTON.addEventListener(`click`, () => {
+Language.BUTTON.addEventListener(`pointerdown`, () => {
   if (menuIsOpen) {
     closeLanguageList();
   } else {
