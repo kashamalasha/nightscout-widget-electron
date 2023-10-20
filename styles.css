@@ -438,7 +438,7 @@ a:focus-visible {
   opacity: 0.6;
   border: none;
   border-radius: 15%;
-  cursor: pointer;
+
   text-transform: uppercase;
   text-align: center;
   line-height: 0px;
@@ -455,11 +455,13 @@ a:focus-visible {
   }
 
 .language-list {
+  position: absolute;
+  z-index: 2;
+
   display: none;
-  min-width: 100px;
+  min-width: 130px;
 
   margin-top: 5px;
-  margin-left: 3px;
   padding: 5px;
 
   background-color: var(--color_settings_darken);
