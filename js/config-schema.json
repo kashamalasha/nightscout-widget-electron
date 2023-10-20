@@ -112,6 +112,9 @@
     "IS_FIRST_RUN": {
       "type": "boolean",
       "default": true
+    },
+    "LANGUAGE": {
+      "type": "string"
     }
   },
   "required": [

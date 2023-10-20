@@ -22,5 +22,6 @@
         }
     },
     "LAST_UPDATE_REQUEST": "1/1/2000",
-    "IS_FIRST_RUN": false
+    "IS_FIRST_RUN": false,
+    "LANGUAGE": "en"
 }

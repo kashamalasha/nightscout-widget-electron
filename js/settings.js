@@ -2,9 +2,14 @@
 
 import { customAssign, alert } from "./util.js";
 import { getStatus } from "./backend.js";
+import { Translator } from "./translator.js";
 
+const LANGUAGE = await window.electronAPI.getLanguage();
 const CONFIG = await window.electronAPI.getSettings();
 const VERSION = await window.electronAPI.getVersion();
+
+const translator = new Translator();
+translator.load(LANGUAGE);
 
 const log = window.electronAPI.logger;
 
@@ -35,6 +40,13 @@ const FormButtons = {
   LOG: document.querySelector(`.settings__log-link`),
   CLOSE: document.querySelector(`#button-close`),
 };
+
+const Language = {
+  BUTTON : document.querySelector(`.settings-language__button`),
+  LIST : document.querySelector(`.language-list`),
+};
+
+Language.BUTTON.textContent = translator.getLanguage();
 
 customAssign(FormFields, CONFIG);
 
@@ -71,14 +83,14 @@ const testConnection = (evt) => {
         alert(`info`, `OK`, `It looks good!\n${msg}`);
         log.info(msg);
       }
-  
+
       resolve(result);
     };
 
     const onError = (errorMessage) => {
       log.error(errorMessage);
       const msg = `Connection failed: ${errorMessage}.`;
-      
+
       reject(new Error(msg));
     };
 
@@ -146,3 +158,96 @@ FormButtons.CLOSE.addEventListener(`click`, () => {
 });
 
 setTimeout(window.electronAPI.checkFormValidation, 100);
+
+const languages = Language.LIST.querySelectorAll(`.language-list__item`);
+const languageArray = Array.from(languages);
+
+let menuIsOpen = false;
+
+const openLanguageList = () => {
+  Language.LIST.style.display = `block`;
+  Language.BUTTON.classList.add(`settings-language__button--active`);
+  menuIsOpen = true;
+};
+
+const closeLanguageList = () => {
+  Language.LIST.style.display = `none`;
+  Language.BUTTON.classList.remove(`settings-language__button--active`);
+  menuIsOpen = false;
+};
+
+const setLanguage = (language) => {
+  const selectedLanguage = language.getAttribute(`data-value`);
+
+  window.electronAPI.setLanguage(selectedLanguage);
+  Language.BUTTON.textContent = selectedLanguage;
+
+  translator.load(selectedLanguage);
+  closeLanguageList();
+};
+
+Language.BUTTON.addEventListener(`click`, () => {
+  if (menuIsOpen) {
+    closeLanguageList();
+  } else {
+    openLanguageList();
+  }
+});
+
+Language.BUTTON.addEventListener(`blur`, (evt) => {
+  if (menuIsOpen) {
+    evt.preventDefault();
+    setTimeout(() => {
+      Language.LIST.focus();
+    });
+  }
+});
+
+Language.BUTTON.addEventListener(`keydown`, (evt) => {
+  if (menuIsOpen) {
+    if (evt.code === `Escape`) {
+      closeLanguageList();
+    } else if (evt.code === `ArrowDown`) {
+      languageArray[0].focus();
+    }
+  }
+});
+
+document.addEventListener(`focusin`, (evt) => {
+  if (menuIsOpen) {
+    if (!Language.LIST.contains(evt.target) && evt.target !== Language.BUTTON) {
+      closeLanguageList();
+    }
+  }
+});
+
+document.addEventListener(`pointerdown`, (evt) => {
+  if (menuIsOpen) {
+    if (!Language.LIST.contains(evt.target) && evt.target !== Language.BUTTON) {
+      closeLanguageList();
+    }
+  }
+});
+
+languageArray.forEach((language) => {
+  language.addEventListener(`pointerdown`, (evt) => {
+    evt.preventDefault();
+    setLanguage(language);
+  });
+
+  language.addEventListener(`keydown`, (evt) => {
+    let currentIndex = languageArray.indexOf(language);
+
+    if (evt.code === `ArrowDown`) {
+      currentIndex = (currentIndex + 1) % languageArray.length;
+    } else if (evt.code === `ArrowUp`) {
+      currentIndex = (currentIndex - 1 + languageArray.length) % languageArray.length;
+    } else if (evt.code === `Enter` || evt.code === `Space`) {
+      setLanguage(language);
+    } else if (evt.code === `Escape`) {
+      closeLanguageList();
+    }
+
+    languageArray[currentIndex].focus();
+  });
+});

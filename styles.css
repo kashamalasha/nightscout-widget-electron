@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Exo+2&display=swap');
 
 @keyframes flicker {
   0% { opacity: 1; }
@@ -183,15 +184,20 @@ a:focus-visible {
     margin-top: 15px;
     margin-bottom: 15px;
     text-align: center;
+
+    font-weight: normal;
   }
 
   .settings__app-version {
     padding-right: 10px;
+
+    font-family: 'Exo 2', Tahoma, sans-serif;
     text-align: right;
     color: var(--color_settings_darken);
   }
 
   .settings__log-link {
+    font-family: 'Exo 2', Tahoma, sans-serif;
     color: var(--color_settings_light);
     text-transform: capitalize;
   }
@@ -229,7 +235,7 @@ a:focus-visible {
     user-select: none;
     margin-bottom: 15px;
 
-    font-weight: 500;
+    font-weight: normal;
   }
 
 .settings-input {
@@ -264,7 +270,7 @@ a:focus-visible {
     padding-top: 5px;
     padding-bottom: 5px;
 
-    font-weight: 800;
+    font-weight: normal;
     text-transform: uppercase;
     color: var(--color_settings_lighten);
   }
@@ -300,7 +306,7 @@ a:focus-visible {
       background-size: 100% 100%;
     }
     .settings-input__field--number {
-      width: 80px;
+      width: 70px;
     }
     .settings-input__check-wrapper {
       width: 100%;
@@ -322,7 +328,7 @@ a:focus-visible {
       width: 30px;
       height: 30px;
 
-      margin-right: 50px;
+      margin-right: 40px;
     }
     .settings-input__check {
       appearance: none;
@@ -343,7 +349,9 @@ a:focus-visible {
 }
 .settings-footer__buttons {
   margin-top: 5px;
+  margin-left: 5px;
   display: flex;
+  justify-content: flex-start;
 }
 .settings-footer__meta {
   display: flex;
@@ -353,10 +361,14 @@ a:focus-visible {
 }
 
 .settings-button {
-  min-width: 100px;
+  min-width: 130px;
 
   margin: 5px;
+  margin-left: 0px;
+  margin-right: 15px;
   padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 
   background-color: var(--color_settings_darken);
   border: none;
@@ -401,5 +413,73 @@ a:focus-visible {
     opacity: 1;
   }
   .settings-button-close:active {
+    opacity: 1;
+  }
+  .settings-button-close:focus,
+  .settings-button-close:focus-visible {
     background-color: var(--color_cgv_button-active);
+  }
+
+.settings-language {
+  -webkit-app-region: no-drag;
+  user-select: none;
+
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.settings-language__button {
+  height: 25px;
+  width: 25px;
+
+  background-color: transparent;
+  color: #FFFFFF;
+  opacity: 0.6;
+  border: none;
+  border-radius: 15%;
+
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 0px;
+}
+  .settings-language__button:hover {
+    opacity: 1;
+  }
+  .settings-language__button--active {
+    opacity: 1;
+  }
+  .settings-language__button:focus,
+  .settings-language__button:focus-visible {
+    background-color: var(--color_cgv_button-active);
+  }
+
+.language-list {
+  position: absolute;
+  z-index: 2;
+
+  display: none;
+  min-width: 130px;
+
+  margin-top: 5px;
+  padding: 5px;
+
+  background-color: var(--color_settings_darken);
+  box-shadow: 0.5px 0.5px 2px var(--color_settings_light);
+  border-radius: 5px;
+}
+
+.language-list__item {
+  display: block;
+  padding: 5px;
+
+  color: var(--color_settings_light);
+}
+  .language-list__item:hover,
+  .language-list__item:focus,
+  .language-list__item:focus-visible {
+    outline: none;
+    border-radius: 5px;
+    color: var(--color_settings_dark);
+    background-color: var(--color_settings_light);
   }

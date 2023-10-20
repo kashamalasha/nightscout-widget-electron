@@ -1,0 +1,31 @@
+{
+  "settings": {
+    "title": "Widget settings",
+    "nightscout": {
+      "title": "Nightscout API settings",
+      "url": "Nightscout URL",
+      "token": "Nightscout token",
+      "interval": "Nightscout request interval (sec.)"
+    },
+    "widget": {
+      "title": "Widget preferences",
+      "opacity": "Widget opacity (%)",
+      "age_limit": "Info: Stale data (min.)",
+      "show_age": "Show data age",
+      "calc_trend": "Calc trend"
+    },
+    "bg": {
+      "title": "Blood sugar levels preferences",
+      "high": "High level threshold",
+      "low": "Low level threshold",
+      "target": {
+        "top": "Target top level",
+        "bottom": "Target bottom level"
+      }
+    },
+    "feature-disabled": "Feature temporary disabled",
+    "show-logs": "Logs ...",
+    "button-save": "Save",
+    "button-test": "Test"
+  }
+}
