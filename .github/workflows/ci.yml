@@ -21,13 +21,9 @@ jobs:
       APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
       APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
       NOTARYTOOL_PROFILE: "notarytool-profile"
+      PUBLISH_FOR_PULL_REQUEST: true
 
     steps:
-      - name: Allow publication on pull request
-        env:
-          PUBLISH_FOR_PULL_REQUEST: true
-        run: echo "PUBLISH_FOR_PULL_REQUEST=true" >> $GITHUB_ENV
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -69,18 +65,15 @@ jobs:
           KEYCHAIN_PROFILE: ${{ env.NOTARYTOOL_PROFILE }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          npm run ship -- --mac --universal
+          npm run ship -- --mac --x64 --arm64
 
   build-windows:
     runs-on: windows-latest
     if: github.event.pull_request.merged == true
+    env:
+      PUBLISH_FOR_PULL_REQUEST: true
 
     steps:
-      - name: Allow publication on pull request
-        env:
-          PUBLISH_FOR_PULL_REQUEST: true
-        run: echo "PUBLISH_FOR_PULL_REQUEST=true" >> $GITHUB_ENV
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -101,6 +94,8 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
+    env:
+      PUBLISH_FOR_PULL_REQUEST: true
 
     steps:
       - name: Allow publication on pull request
