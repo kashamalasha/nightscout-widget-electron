@@ -119,7 +119,7 @@ jobs:
         id: releases_data
         env:
           HOST: "https://api.github.com"
-          ENDPOINT: "/repos/${{ github.repository.owner }}/${{ github.event.repository.name }}/releases"
+          ENDPOINT: "/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases"
         run: |
           data=$(
             curl -X GET -s \
@@ -147,7 +147,7 @@ jobs:
       - name: Remove the blockmap files
         env:
           HOST: "https://api.github.com"
-          ENDPOINT: "/repos/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}/releases/assets/"
+          ENDPOINT: "/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases/assets/"
         run: |
           assets_array="${{ steps.jq_filter.outputs.blockmap_list }}"
           assets_array="${assets_array#(}"
