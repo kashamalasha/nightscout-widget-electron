@@ -218,7 +218,7 @@ a:focus-visible {
 
 .settings-fields {
   display: grid;
-  grid-template-columns: 40% auto;
+  grid-template-columns: 42% auto;
 }
   .settings-fields__nightscout {
     grid-column: span 2;
@@ -265,7 +265,7 @@ a:focus-visible {
   }
   .settings-input__label {
     user-select: none;
-    min-width: 40%;
+    min-width: 42%;
 
     padding-top: 5px;
     padding-bottom: 5px;
