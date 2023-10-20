@@ -23,8 +23,13 @@ jobs:
       NOTARYTOOL_PROFILE: "notarytool-profile"
 
     steps:
+      - name: Allow publication on pull request
+        env:
+          PUBLISH_FOR_PULL_REQUEST: true
+        run: echo "PUBLISH_FOR_PULL_REQUEST=true" >> $GITHUB_ENV
+
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -71,8 +76,13 @@ jobs:
     if: github.event.pull_request.merged == true
 
     steps:
+      - name: Allow publication on pull request
+        env:
+          PUBLISH_FOR_PULL_REQUEST: true
+        run: echo "PUBLISH_FOR_PULL_REQUEST=true" >> $GITHUB_ENV
+
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -93,8 +103,13 @@ jobs:
     if: github.event.pull_request.merged == true
 
     steps:
+      - name: Allow publication on pull request
+        env:
+          PUBLISH_FOR_PULL_REQUEST: true
+        run: echo "PUBLISH_FOR_PULL_REQUEST=true" >> $GITHUB_ENV
+
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
