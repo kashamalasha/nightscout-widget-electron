@@ -66,7 +66,7 @@ jobs:
           PUBLISH_FOR_PULL_REQUEST: true
           CSC_FOR_PULL_REQUEST: true
         run: |
-          npm run ship -- --mac --x64 --arm64
+          npm run ship -- --mac --universal
 
   build-windows:
     runs-on: windows-latest
