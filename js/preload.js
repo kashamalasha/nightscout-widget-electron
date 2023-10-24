@@ -9,7 +9,7 @@ contextBridge.exposeInMainWorld(`electronAPI`, {
   setWidgetOpacity: (opacity) => ipcRenderer.send(`set-widget-opacity`, opacity),
   testAgeVisisblity: (show) => ipcRenderer.send(`test-age-visibility`, show),
   setAgeVisibility: (show) => ipcRenderer.on(`set-age-visibility`, show),
-  openNightscout: () => ipcRenderer.send(`open-nightscout`),
+  openSite: (siteName) => ipcRenderer.send(`open-site`, siteName),
   openLogFile: () => ipcRenderer.send(`open-logfile`),
   restart: () => ipcRenderer.send(`restart`),
   logger : {

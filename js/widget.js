@@ -44,7 +44,7 @@ Buttons.browse.addEventListener(`pointerdown`, () => {
   Fields.last.classList.toggle(`cgv__last--accented`);
 
   log.info(`Open nightscout site was triggered`);
-  window.electronAPI.openNightscout();
+  window.electronAPI.openSite(`nightscout`);
 });
 
 Buttons.browse.addEventListener(`pointerup`, () => {
@@ -64,7 +64,7 @@ const render = (data) => {
 
   if (CONFIG.WIDGET.SHOW_AGE) {
     Fields.age.style.display = `block`;
-  } 
+  }
 
   if (!Fields.last.className.includes(ModMap.default)) {
     Fields.last.classList.add(ModMap.default);
@@ -74,7 +74,7 @@ const render = (data) => {
   if (data.age > CONFIG.WIDGET.AGE_LIMIT) {
     Fields.cgv.classList.add(`cgv--frozen`);
     classMod = ModMap.default;
-  } else { 
+  } else {
     if (Fields.cgv.classList.contains(`cgv--frozen`)) {
       Fields.cgv.classList.remove(`cgv--frozen`);
     }
@@ -84,7 +84,7 @@ const render = (data) => {
       classMod = ModMap.critical;
     } else if (lastResult >= CONFIG.BG.TARGET.TOP || lastResult <= CONFIG.BG.TARGET.BOTTOM) {
       classMod = ModMap.warning;
-    } else {  
+    } else {
       classMod = ModMap.ok;
     }
   }

@@ -26,6 +26,7 @@
     "feature-disabled": "Функционал временно отключен",
     "show-logs": "Логи ...",
     "button-save": "Сохранить",
-    "button-test": "Тест"
+    "button-test": "Тест",
+    "help-translate": "Помочь с переводом"
   }
 }
