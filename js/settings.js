@@ -176,15 +176,22 @@ const closeLanguageList = () => {
   menuIsOpen = false;
 };
 
-const setLanguage = (language) => {
-  const selectedLanguage = language.getAttribute(`data-value`);
-
+const setLanguage = (selectedLanguage) => {
   window.electronAPI.setLanguage(selectedLanguage);
   Language.BUTTON.textContent = selectedLanguage;
 
   translator.load(selectedLanguage);
   closeLanguageList();
 };
+
+const languageMenuHandler = (element) => {
+  if (element.dataset.value) {
+    setLanguage(element.dataset.value);
+  } else {
+    window.electronAPI.openSite(`poeditor`);
+    closeLanguageList();
+  }
+}
 
 Language.BUTTON.addEventListener(`pointerdown`, () => {
   if (menuIsOpen) {
@@ -229,21 +236,21 @@ document.addEventListener(`pointerdown`, (evt) => {
   }
 });
 
-languageArray.forEach((language) => {
-  language.addEventListener(`pointerdown`, (evt) => {
+languageArray.forEach((element) => {
+  element.addEventListener(`pointerdown`, (evt) => {
     evt.preventDefault();
-    setLanguage(language);
+    languageMenuHandler(element);
   });
 
-  language.addEventListener(`keydown`, (evt) => {
-    let currentIndex = languageArray.indexOf(language);
+  element.addEventListener(`keydown`, (evt) => {
+    let currentIndex = languageArray.indexOf(element);
 
     if (evt.code === `ArrowDown`) {
       currentIndex = (currentIndex + 1) % languageArray.length;
     } else if (evt.code === `ArrowUp`) {
       currentIndex = (currentIndex - 1 + languageArray.length) % languageArray.length;
     } else if (evt.code === `Enter` || evt.code === `Space`) {
-      setLanguage(language);
+      languageMenuHandler(element);
     } else if (evt.code === `Escape`) {
       closeLanguageList();
     }

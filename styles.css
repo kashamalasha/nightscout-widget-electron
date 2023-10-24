@@ -469,6 +469,13 @@ a:focus-visible {
   border-radius: 5px;
 }
 
+.language-list__separator {
+    border: 0;
+    height: 1px;
+    margin: 5px;
+    background-image: linear-gradient(to right, var(--color_settings_darken), var(--color_settings_light), var(--color_settings_darken));
+}
+
 .language-list__item {
   display: block;
   padding: 5px;

@@ -187,10 +187,20 @@ const createWindow = () => {
     requestToUpdate();
   });
 
-  ipcMain.on(`open-nightscout`, (evt) => {
+  ipcMain.on(`open-site`, (evt, siteName) => {
     evt.preventDefault();
+    let url;
 
-    const url = config.get(`NIGHTSCOUT.URL`);
+    switch (siteName) {
+      case `nightscout`:
+        url = config.get(`NIGHTSCOUT.URL`);
+        break;
+      case `poeditor`:
+        url = `https://poeditor.com/projects/view?id=640131n`
+        break;
+      default:
+        break;
+    }
 
     try {
       shell.openExternal(url);

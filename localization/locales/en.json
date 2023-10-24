@@ -26,6 +26,7 @@
     "feature-disabled": "Feature temporary disabled",
     "show-logs": "Logs ...",
     "button-save": "Save",
-    "button-test": "Test"
+    "button-test": "Test",
+    "help-translate": "Help to translate"
   }
 }
