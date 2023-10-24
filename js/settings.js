@@ -191,7 +191,7 @@ const languageMenuHandler = (element) => {
     window.electronAPI.openSite(`poeditor`);
     closeLanguageList();
   }
-}
+};
 
 Language.BUTTON.addEventListener(`pointerdown`, () => {
   if (menuIsOpen) {

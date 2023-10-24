@@ -192,14 +192,14 @@ const createWindow = () => {
     let url;
 
     switch (siteName) {
-      case `nightscout`:
-        url = config.get(`NIGHTSCOUT.URL`);
-        break;
-      case `poeditor`:
-        url = `https://poeditor.com/projects/view?id=640131n`
-        break;
-      default:
-        break;
+    case `nightscout`:
+      url = config.get(`NIGHTSCOUT.URL`);
+      break;
+    case `poeditor`:
+      url = `https://poeditor.com/projects/view?id=640131n`;
+      break;
+    default:
+      break;
     }
 
     try {
