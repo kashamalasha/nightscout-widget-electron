@@ -20,7 +20,6 @@ const FormFields = {
     INTERVAL: document.querySelector(`#nightscout-interval`),
   },
   WIDGET: {
-    OPACITY: document.querySelector(`#widget-opacity`),
     AGE_LIMIT: document.querySelector(`#age-limit`),
     SHOW_AGE: document.querySelector(`#show-age`),
   },
@@ -51,15 +50,6 @@ Language.BUTTON.textContent = translator.getLanguage();
 customAssign(FormFields, CONFIG);
 
 document.querySelector(`#app-version`).textContent = VERSION;
-
-FormFields.WIDGET.OPACITY.addEventListener(`change`, (evt) => {
-  const opacity = evt.target.valueAsNumber;
-  try {
-    window.electronAPI.setWidgetOpacity(opacity);
-  } catch(error) {
-    log.error(error);
-  }
-});
 
 FormFields.WIDGET.SHOW_AGE.addEventListener(`change`, (evt) => {
   const show = evt.target.checked;

@@ -361,7 +361,6 @@ app.whenReady().then(() => {
       config.set(`NIGHTSCOUT.URL`, data[`nightscout-url`]);
       config.set(`NIGHTSCOUT.TOKEN`, data[`nightscout-token`]);
       config.set(`NIGHTSCOUT.INTERVAL`, parseInt(data[`nightscout-interval`], 10));
-      config.set(`WIDGET.OPACITY`, 100);
       config.set(`WIDGET.AGE_LIMIT`, parseInt(data[`age-limit`], 10));
       config.set(`WIDGET.SHOW_AGE`, data[`show-age`]);
       config.set(`BG.HIGH`, parseFloat(data[`bg-high`]));
@@ -374,10 +373,6 @@ app.whenReady().then(() => {
       log.error(error, data);
     }
 
-  });
-
-  ipcMain.on(`set-widget-opacity`, (_evt, opacity) => {
-    widget.mainWindow.setBackgroundColor(`rgba(96, 96, 96, ${opacity / 100})`);
   });
 
   ipcMain.on(`test-age-visibility`, (_evt, show) => {

@@ -6,7 +6,6 @@ contextBridge.exposeInMainWorld(`electronAPI`, {
   getVersion: () => ipcRenderer.invoke(`get-version`),
   getSettings: () => ipcRenderer.invoke(`get-settings`),
   setSettings: (data) => ipcRenderer.send(`set-settings`, data),
-  setWidgetOpacity: (opacity) => ipcRenderer.send(`set-widget-opacity`, opacity),
   testAgeVisisblity: (show) => ipcRenderer.send(`test-age-visibility`, show),
   setAgeVisibility: (show) => ipcRenderer.on(`set-age-visibility`, show),
   openSite: (siteName) => ipcRenderer.send(`open-site`, siteName),

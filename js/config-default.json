@@ -1,6 +1,6 @@
 {
     "NIGHTSCOUT": {
-        "INTERVAL": 60 
+        "INTERVAL": 60
     },
     "BG": {
         "HIGH": 10,
@@ -13,7 +13,6 @@
     "WIDGET": {
         "SHOW_AGE": true,
         "AGE_LIMIT": 20,
-        "OPACITY": 100,
         "POSITION": {
             "x": 1000,
             "y": 100

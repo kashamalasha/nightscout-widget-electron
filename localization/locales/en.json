@@ -9,7 +9,6 @@
     },
     "widget": {
       "title": "Widget preferences",
-      "opacity": "Widget opacity (%)",
       "age_limit": "Info: Stale data (min.)",
       "show_age": "Show data age",
       "calc_trend": "Calc trend"
