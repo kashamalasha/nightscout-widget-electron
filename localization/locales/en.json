@@ -11,7 +11,8 @@
       "title": "Widget preferences",
       "age_limit": "Info: Stale data (min.)",
       "show_age": "Show data age",
-      "calc_trend": "Calc trend"
+      "calc_trend": "Calc trend",
+      "measurement_units": "Units in mmol/l"
     },
     "bg": {
       "title": "Blood sugar levels preferences",
