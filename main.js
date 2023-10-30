@@ -121,9 +121,8 @@ const createWindow = () => {
     ipcMain.on(`check-validation`, () => {
       if (!configValid) {
         const errorPath = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
-        const errorValue = config.get(errorPath);
-        const errorReason = validate.errors[0].keyword;
-        const errorMessage = `Config invalid on:\n${errorPath}\nValue: ${errorValue}\nReason: ${errorReason}`;
+        const errorReason = validate.errors[0].message;
+        const errorMessage = `Config invalid on: ${errorPath}\nReason: ${errorReason}`;
 
         log.error(errorMessage.replaceAll(`\n`, ` `));
         log.error(`Schema reference: `, validate.errors[0]);
