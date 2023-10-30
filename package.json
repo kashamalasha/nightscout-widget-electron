@@ -1,7 +1,7 @@
 {
   "name": "nightscout-widget-electron",
   "productName": "Owlet",
-  "description": "An Electron widget application to show on a desktop cgv value is getting from Nightscout API",
+  "description": "An Electron widget application to show on a desktop sgv (sensor glucose value) is getting from Nightscout API",
   "author": {
     "name": "Dmitry Burnyshev",
     "email": "dmitry.burnyshev@gmail.com"
