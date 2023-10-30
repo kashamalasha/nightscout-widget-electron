@@ -90,7 +90,8 @@ a:focus-visible {
 
 .cgv__last {
   grid-row: span 2;
-  margin-bottom: 2.5%;
+  margin-right: 10px;
+  margin-bottom: 2px;
 
   font-size: 3.3em;
   font-weight: 800;
@@ -110,6 +111,10 @@ a:focus-visible {
   .cgv__last--accented {
     color: var(--color_cgv_accent);
   }
+
+.cgv__last-converted {
+  margin-right: 0;
+}
 
 .cgv__age {
   position: absolute;

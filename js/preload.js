@@ -24,4 +24,6 @@ contextBridge.exposeInMainWorld(`electronAPI`, {
   getTranslate: (language) => ipcRenderer.invoke(`get-translate`, language),
   getLanguage: () => ipcRenderer.invoke(`get-language`),
   setLanguage: (language) => ipcRenderer.send(`set-language`, language),
+  testUnits: (isMMOL) => ipcRenderer.send(`test-units`, isMMOL),
+  setUnits: (isMMOL) => ipcRenderer.on(`set-units`, isMMOL),
 });

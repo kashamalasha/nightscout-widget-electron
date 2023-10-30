@@ -22,6 +22,7 @@ const FormFields = {
   WIDGET: {
     AGE_LIMIT: document.querySelector(`#age-limit`),
     SHOW_AGE: document.querySelector(`#show-age`),
+    UNITS_IN_MMOL: document.querySelector(`#units-in-mmol`)
   },
   BG: {
     HIGH: document.querySelector(`#bg-high`),
@@ -55,6 +56,16 @@ FormFields.WIDGET.SHOW_AGE.addEventListener(`change`, (evt) => {
   const show = evt.target.checked;
   try {
     window.electronAPI.testAgeVisisblity(show);
+  } catch(error) {
+    log.error(error);
+  }
+});
+
+FormFields.WIDGET.UNITS_IN_MMOL.addEventListener(`change`, (evt) => {
+  const isMMOL = evt.target.checked;
+
+  try {
+    window.electronAPI.testUnits(isMMOL);
   } catch(error) {
     log.error(error);
   }
@@ -122,6 +133,7 @@ FormButtons.SUBMIT.addEventListener(`submit`, async (evt) => {
   const formDataObj = Object.fromEntries(formData.entries());
 
   formDataObj[`show-age`] = (formDataObj[`show-age`]) ? true : false;
+  formDataObj[`units-in-mmol`] = (formDataObj[`units-in-mmol`]) ? true : false;
 
   try {
     await testConnection(evt);

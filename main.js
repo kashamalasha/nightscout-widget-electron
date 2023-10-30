@@ -16,6 +16,14 @@ const defaults = JSON.parse(readFileSync(path.join(__dirname, `js/config-default
 
 const config = new Store({ defaults });
 
+if (config.has(`WIDGET.OPACITY`)) {
+  config.delete(`WIDGET.OPACITY`);
+}
+
+if (!config.has(`WIDGET.UNITS_IN_MMOL`)) {
+  config.set(`WIDGET.UNITS_IN_MMOL`, defaults.WIDGET.UNITS_IN_MMOL);
+}
+
 const ajv = new Ajv();
 
 const alert = (type, title, message, parentWindow = null) => {
@@ -256,7 +264,9 @@ app.whenReady().then(() => {
   log.info(`App was started successfully`);
 
   app.on(`activate`, () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
   });
 
   ipcMain.on(`log-message`, (evt, msg, level) => {
@@ -362,6 +372,7 @@ app.whenReady().then(() => {
       config.set(`NIGHTSCOUT.INTERVAL`, parseInt(data[`nightscout-interval`], 10));
       config.set(`WIDGET.AGE_LIMIT`, parseInt(data[`age-limit`], 10));
       config.set(`WIDGET.SHOW_AGE`, data[`show-age`]);
+      config.set(`WIDGET.UNITS_IN_MMOL`, data[`units-in-mmol`]);
       config.set(`BG.HIGH`, parseFloat(data[`bg-high`]));
       config.set(`BG.LOW`, parseFloat(data[`bg-low`]));
       config.set(`BG.TARGET.TOP`, parseFloat(data[`bg-target-top`]));
@@ -376,6 +387,11 @@ app.whenReady().then(() => {
 
   ipcMain.on(`test-age-visibility`, (_evt, show) => {
     widget.mainWindow.webContents.send(`set-age-visibility`, show);
+  });
+
+  ipcMain.on(`test-units`, (_evt, isMMOL) => {
+    config.set(`WIDGET.UNITS_IN_MMOL`, isMMOL);
+    widget.mainWindow.webContents.send(`set-units`, isMMOL);
   });
 });
 
@@ -417,5 +433,7 @@ if (isMac) {
 }
 
 app.on(`window-all-closed`, () => {
-  if (!isMac) app.quit();
+  if (!isMac) {
+    app.quit();
+  }
 });

@@ -51,11 +51,11 @@ const directionToChar = (direction) => {
   return dir2Char[direction] || `-`;
 };
 
-const prepareData = (obj) => {
+const prepareData = (obj, convert) => {
   const result = {};
 
-  result.last = mgdlToMMOL(obj.result[0].sgv);
-  result.prev = mgdlToMMOL(obj.result[1].sgv);
+  result.last = convert ? mgdlToMMOL(obj.result[0].sgv) : obj.result[0].sgv;
+  result.prev = convert ? mgdlToMMOL(obj.result[1].sgv) : obj.result[1].sgv;
   result.direction = charToEntity(directionToChar(obj.result[0].direction));
 
   const currentTime = new Date();
@@ -66,7 +66,7 @@ const prepareData = (obj) => {
   if (delta > 0) {
     result.delta = `+` + delta;
   } else if (delta === 0) {
-    result.delta = `+0.0`;
+    result.delta = convert ? `+0.0` : `+0`;
   } else {
     result.delta = delta.toString();
   }

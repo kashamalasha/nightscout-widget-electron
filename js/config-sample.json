@@ -18,7 +18,8 @@
         "POSITION": {
             "x": 100,
             "y": 100
-        }
+        },
+        "UNITS_IN_MMOL": true
     },
     "LAST_UPDATE_REQUEST": "1/1/2000",
     "IS_FIRST_RUN": false,

@@ -55,7 +55,7 @@ Fields.last.addEventListener(`mouseup`, (evt) => {
   evt.target.classList.toggle(`cgv__last--accented`, false);
 });
 
-const render = (data) => {
+const render = (data, isTestMMOL=false) => {
 
   Fields.last.textContent = data.last;
   Fields.delta.textContent = data.delta;
@@ -66,30 +66,37 @@ const render = (data) => {
     Fields.age.style.display = `block`;
   }
 
+  if ((CONFIG.WIDGET.UNITS_IN_MMOL && !isTestMMOL) || (!CONFIG.WIDGET.UNITS_IN_MMOL && isTestMMOL)) {
+    Fields.last.classList.add('cgv__last-converted');
+  } else {
+    Fields.last.classList.remove('cgv__last-converted');
+  }
+
   if (!Fields.last.className.includes(ModMap.default)) {
     Fields.last.classList.add(ModMap.default);
   }
 
-  let classMod;
+  let classMod = ModMap.default;
   if (data.age > CONFIG.WIDGET.AGE_LIMIT) {
     Fields.cgv.classList.add(`cgv--frozen`);
-    classMod = ModMap.default;
   } else {
     if (Fields.cgv.classList.contains(`cgv--frozen`)) {
       Fields.cgv.classList.remove(`cgv--frozen`);
     }
 
-    const lastResult = parseFloat(data.last);
-    if (lastResult >= CONFIG.BG.HIGH || lastResult <= CONFIG.BG.LOW) {
-      classMod = ModMap.critical;
-    } else if (lastResult >= CONFIG.BG.TARGET.TOP || lastResult <= CONFIG.BG.TARGET.BOTTOM) {
-      classMod = ModMap.warning;
-    } else {
-      classMod = ModMap.ok;
+    if (!isTestMMOL) {
+      const lastResult = parseFloat(data.last);
+      if (lastResult >= CONFIG.BG.HIGH || lastResult <= CONFIG.BG.LOW) {
+        classMod = ModMap.critical;
+      } else if (lastResult >= CONFIG.BG.TARGET.TOP || lastResult <= CONFIG.BG.TARGET.BOTTOM) {
+        classMod = ModMap.warning;
+      } else {
+        classMod = ModMap.ok;
+      }
     }
   }
 
-  Fields.last.className = Fields.last.className.replace(/cgv__last--.*/, classMod);
+  Fields.last.className = Fields.last.className.replace(/cgv__last--\S*/, classMod);
 };
 
 window.electronAPI.setAgeVisibility((_evt, show) => {
@@ -111,7 +118,7 @@ const onSuccess = (result) => {
     element.classList.remove(`cgv--flicker`);
   });
 
-  render(prepareData(result));
+  render(prepareData(result, CONFIG.WIDGET.UNITS_IN_MMOL));
 };
 
 const onError = (errorMessage) => {
@@ -125,6 +132,18 @@ const onError = (errorMessage) => {
     isAlertShown = true;
   }
 };
+
+window.electronAPI.setUnits((_evt, isMMOL) => {
+  log.info(`Test of displaying units in mmol/l: ${isMMOL}`);
+  const isTestValue = (CONFIG.WIDGET.UNITS_IN_MMOL !== isMMOL);
+
+  const onSuccessSwitch = (result) => {
+    render(prepareData(result, isMMOL), isTestValue);
+  };
+
+  getData(onSuccessSwitch, onError);
+});
+
 
 document.addEventListener(`visibilitychange`, () => {
   if (document.visibilityState === `visible`) {

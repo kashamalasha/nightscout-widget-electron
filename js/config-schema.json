@@ -90,11 +90,16 @@
             "x",
             "y"
           ]
+        },
+        "UNITS_IN_MMOL": {
+          "type": "boolean",
+          "default": true
         }
       },
       "required": [
         "AGE_LIMIT",
-        "POSITION"
+        "POSITION",
+        "UNITS_IN_MMOL"
       ]
     },
     "LAST_UPDATE_REQUEST": {
