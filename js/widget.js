@@ -8,6 +8,11 @@ const CONFIG = await window.electronAPI.getSettings();
 
 const log = window.electronAPI.logger;
 
+const RenderParams = {
+  calc_trend: CONFIG.WIDGET.CALC_TREND,
+  units_in_mmol: CONFIG.WIDGET.UNITS_IN_MMOL
+};
+
 const Fields = {
   sgv: document.querySelector(`.sgv`),
   last: document.querySelector(`.sgv__last`),
@@ -66,12 +71,6 @@ const render = (data, isTestMMOL=false) => {
     Fields.age.style.display = `block`;
   }
 
-  if ((CONFIG.WIDGET.UNITS_IN_MMOL && !isTestMMOL) || (!CONFIG.WIDGET.UNITS_IN_MMOL && isTestMMOL)) {
-    Fields.last.classList.add('sgv__last-converted');
-  } else {
-    Fields.last.classList.remove('sgv__last-converted');
-  }
-
   if (!Fields.last.className.includes(ModMap.default)) {
     Fields.last.classList.add(ModMap.default);
   }
@@ -118,7 +117,7 @@ const onSuccess = (result) => {
     element.classList.remove(`sgv--flicker`);
   });
 
-  render(prepareData(result, CONFIG.WIDGET.UNITS_IN_MMOL));
+  render(prepareData(result, RenderParams));
 };
 
 const onError = (errorMessage) => {
@@ -133,17 +132,27 @@ const onError = (errorMessage) => {
   }
 };
 
-window.electronAPI.setUnits((_evt, isMMOL) => {
+window.electronAPI.setUnits((_evt, isMMOL, calcTrend) => {
   log.info(`Test of displaying units in mmol/l: ${isMMOL}`);
   const isTestValue = (CONFIG.WIDGET.UNITS_IN_MMOL !== isMMOL);
 
   const onSuccessSwitch = (result) => {
-    render(prepareData(result, isMMOL), isTestValue);
+    render(prepareData(result, {calc_trend: calcTrend, units_in_mmol: isMMOL}), isTestValue);
   };
 
   getData(onSuccessSwitch, onError);
 });
 
+window.electronAPI.setCalcTrend((_evt, calcTrend, isMMOL) => {
+  log.info(`Test trend calculation: ${calcTrend}`);
+  const isTestValue = (CONFIG.WIDGET.UNITS_IN_MMOL !== isMMOL);
+
+  const onSuccessSwitch = (result) => {
+    render(prepareData(result, {units_in_mmol: isMMOL, calc_trend: calcTrend}), isTestValue);
+  };
+
+  getData(onSuccessSwitch, onError);
+});
 
 document.addEventListener(`visibilitychange`, () => {
   if (document.visibilityState === `visible`) {

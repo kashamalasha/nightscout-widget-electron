@@ -16,15 +16,15 @@ Owlet - это кросс-платформенное приложение, ра�
 
 ## 📦 Установка приложения
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.1-beta/Owlet-0.5.1-beta-win-x64.exe)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.0-beta/Owlet-0.6.0-beta-win-x64.exe)
 
-[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.1-beta/Owlet-0.5.1-beta-mac-arm64.dmg)
+[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.0-beta/Owlet-0.6.0-beta-mac-arm64.dmg)
 
-[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.1-beta/Owlet-0.5.1-beta-mac-x64.dmg)
+[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.0-beta/Owlet-0.6.0-beta-mac-x64.dmg)
 
-[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.1-beta/Owlet-0.5.1-beta-linux-x86_64.AppImage)
+[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.0-beta/Owlet-0.6.0-beta-linux-x86_64.AppImage)
 
-[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.5.1-beta.tar.gz)
+[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.6.0-beta.tar.gz)
 
 [![Download Souces](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
@@ -65,7 +65,7 @@ Owlet - это кросс-платформенное приложение, ра�
 
 ## 🚀 Первый запуск
 
-При первом запуске приложение попросит вас заполнить следующие настройки
+При первом запуске приложение предложит вам определить следующие параметры:
 
 <figure>
   <p>
@@ -85,6 +85,23 @@ Owlet - это кросс-платформенное приложение, ра�
 <img src="docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
 
 - **ВРЕМЯ ПОСЛ. ЗАМЕРА** - (*по-умолчанию: включено*) эта опция позволяет отображать информацию о том, как давно было получено последнее измерение
+
+- **ЗНАЧЕНИЯ В MMOL/L** - (*по-умолчанию: включено*) эта опция позволяет установить единицы измерения mmol/l вместо mg/dl. Если вы решили изменить эту настройку, убедитесь, что вы привели в соответствие параметры настроек контроля уровня глюкозы в соответствии с выбранными единицами измерения. В момент переключения единиц измерения цветовая заливка последнего значения будет отключена до сохранения настроек. 
+
+- **РАСЧЕТ ТРЕНДА** - (*по-умолчанию: выключено*) эта опция включает расчет направление тренда, используя последние 6 полученных измерений (последние 30 минут). 
+Эта функция может пригодиться, если ваш сенсор не имеет встроенной функции расчета тренда (напр. Dexcom или Medtronic), и Nightscout не хранит эту информацию; в таких случаях вы всегда будете видеть символ ` - ` в правом нижнем углу виджета вместо стрелки с направлением тренда.
+
+Для определения направления тренда используется алгоритм, заложеннй в сенсорах Abbot™ FreeStyle Libre™:
+
+<figure>
+  <p>
+    <img src="docs/fs-libre-trend-arrows.jpeg" alt="Screenshot-widget"/>
+  </p>
+</figure>
+
+Рекомендации по работе с трендом и особенностями корректировки при различном направлении можно найти в опубликованной стате журнала **Journal of the Endocrine Society**: [Approach to Using Trend Arrows in the FreeStyle Libre Flash Glucose Monitoring Systems in Adults](https://academic.oup.com/jes/article/2/12/1320/5181247). 
+
+[PDF копия](docs/js.2018-00294.pdf) доступна для скачивания.
 
 
 ### 3. Настройки контроля уровня глюкозы
@@ -140,12 +157,12 @@ Owlet - это кросс-платформенное приложение, ра�
 
 ## 🚧 В работе
 
-- Функция выбора единиц отображения измерений: mmol/l <-> mg/dl 
-- Функция определения направления тренда для тех сенсоров, что не имеют встроенного определителя тренда
-- Перевод приложения
-- Github лэндинг страница (с использованием движка Jakil)
+- Покрытие кода приложения unit тестами с использованием [Jest](https://jestjs.io/)
+- Создание лэндинг страницы проекта с использованием [Jekyll](https://jekyllrb.com/)
+- Замена движка Electron на [Tauri app](https://beta.tauri.app/)
 
-Если вы чувствуете в себе силы что-то улучить или помочь, я буду рад. Вы можете предложить идею или сообщить об ошибке, создав заявку на [доске](https://github.com/users/kashamalasha/projects/2/views/1).
+Если вы чувствуете в себе силы что-то улучить или помочь, я буду рад. 
+Вы можете предложить идею или сообщить об ошибке, создав заявку на [доске](https://github.com/users/kashamalasha/projects/2/views/1).
 
 ## 🗜️ Содержимое
 

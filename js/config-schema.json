@@ -94,12 +94,15 @@
         "UNITS_IN_MMOL": {
           "type": "boolean",
           "default": true
+        },
+        "CALC_TREND": {
+          "type": "boolean",
+          "default": false
         }
       },
       "required": [
         "AGE_LIMIT",
-        "POSITION",
-        "UNITS_IN_MMOL"
+        "POSITION"
       ]
     },
     "LAST_UPDATE_REQUEST": {

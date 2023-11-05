@@ -196,7 +196,7 @@ const createWindow = () => {
 
   ipcMain.on(`open-site`, (evt, siteName) => {
     evt.preventDefault();
-    let url;
+    let url = ``;
 
     switch (siteName) {
     case `nightscout`:
@@ -373,6 +373,7 @@ app.whenReady().then(() => {
       config.set(`WIDGET.AGE_LIMIT`, parseInt(data[`age-limit`], 10));
       config.set(`WIDGET.SHOW_AGE`, data[`show-age`]);
       config.set(`WIDGET.UNITS_IN_MMOL`, data[`units-in-mmol`]);
+      config.set(`WIDGET.CALC_TREND`, data[`calc-trend`]);
       config.set(`BG.HIGH`, parseFloat(data[`bg-high`]));
       config.set(`BG.LOW`, parseFloat(data[`bg-low`]));
       config.set(`BG.TARGET.TOP`, parseFloat(data[`bg-target-top`]));
@@ -392,6 +393,11 @@ app.whenReady().then(() => {
   ipcMain.on(`test-units`, (_evt, isMMOL) => {
     config.set(`WIDGET.UNITS_IN_MMOL`, isMMOL);
     widget.mainWindow.webContents.send(`set-units`, isMMOL);
+  });
+
+  ipcMain.on(`test-calc-trend`, (_evt, calcTrend, isMMOL) => {
+    config.set(`WIDGET.CALC_TREND`, calcTrend);
+    widget.mainWindow.webContents.send(`set-calc-trend`, calcTrend, isMMOL);
   });
 });
 

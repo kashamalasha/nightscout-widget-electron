@@ -24,6 +24,8 @@ contextBridge.exposeInMainWorld(`electronAPI`, {
   getTranslate: (language) => ipcRenderer.invoke(`get-translate`, language),
   getLanguage: () => ipcRenderer.invoke(`get-language`),
   setLanguage: (language) => ipcRenderer.send(`set-language`, language),
-  testUnits: (isMMOL) => ipcRenderer.send(`test-units`, isMMOL),
-  setUnits: (isMMOL) => ipcRenderer.on(`set-units`, isMMOL),
+  testUnits: (isMMOL, calcTrend) => ipcRenderer.send(`test-units`, isMMOL, calcTrend),
+  setUnits: (isMMOL, calcTrend) => ipcRenderer.on(`set-units`, isMMOL, calcTrend),
+  testCalcTrend: (calcTrend, isMMOL) => ipcRenderer.send(`test-calc-trend`, calcTrend, isMMOL),
+  setCalcTrend: (calcTrend, isMMOL) => ipcRenderer.on(`set-calc-trend`, calcTrend, isMMOL),
 });

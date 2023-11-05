@@ -90,7 +90,6 @@ a:focus-visible {
 
 .sgv__last {
   grid-row: span 2;
-  margin-right: 10px;
   margin-bottom: 2px;
 
   font-size: 3.3em;
@@ -112,8 +111,9 @@ a:focus-visible {
     color: var(--color_sgv_accent);
   }
 
-.sgv__last-converted {
-  margin-right: 0;
+.sgv__delta {
+  min-width: 30px;
+  text-align: center;
 }
 
 .sgv__age {

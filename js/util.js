@@ -1,7 +1,5 @@
 "use strict";
 
-const MMOL_TO_MGDL = 18;
-
 const dir2Char = {
   NONE: `⇼`,
   TripleUp: `⤊`,
@@ -40,10 +38,15 @@ const customAssign = (targetObject, patchObject) => {
 };
 
 const mgdlToMMOL = (mgdl) => {
+  const MMOL_TO_MGDL = 18;
   return (Math.round((mgdl / MMOL_TO_MGDL) * 10) / 10).toFixed(1);
 };
 
 const charToEntity = (char) => {
+  if (char === undefined) {
+    return ``;
+  }
+
   return char && char.length && `&#` + char.charCodeAt(0) + `;`;
 };
 
@@ -51,32 +54,86 @@ const directionToChar = (direction) => {
   return dir2Char[direction] || `-`;
 };
 
-const prepareData = (obj, convert) => {
+const calcTrend = (data) => {
+
+  const MIN_DATA_LENGTH = 6;
+
+  if (!Array.isArray(data) ||
+      data.length < MIN_DATA_LENGTH ||
+      !data.every(isFinite)) {
+    return `NOT COMPUTABLE`;
+  }
+
+  const thresholds = {
+    Double: {MIN: 4, HALF: 90},
+    Single: {MIN: 2, HALF: 60},
+    FortyFive: {MIN: 1, HALF: 30},
+  };
+
+  const changes = [];
+  for (let i = 0; i < 5; i++) {
+    changes.push(data[i] - data[i + 1]);
+  }
+
+  const lastMinuteChange = changes[0] / 5;
+  const totalChangePerHalf = changes.reduce((sum, change) => sum + change, 0);
+
+  for (const trend in thresholds) {
+    if (
+      lastMinuteChange > thresholds[trend].MIN ||
+      totalChangePerHalf > thresholds[trend].HALF
+    ) {
+      return `${trend}Up`;
+    } else if (
+      lastMinuteChange < -thresholds[trend].MIN ||
+      totalChangePerHalf < -thresholds[trend].HALF
+    ) {
+      return `${trend}Down`;
+    }
+  }
+
+  return `Flat`;
+};
+
+const prepareData = (dataObj, paramsObj) => {
   const result = {};
 
-  result.last = convert ? mgdlToMMOL(obj.result[0].sgv) : obj.result[0].sgv;
-  result.prev = convert ? mgdlToMMOL(obj.result[1].sgv) : obj.result[1].sgv;
-  result.direction = charToEntity(directionToChar(obj.result[0].direction));
+  result.last = dataObj.result[0].sgv;
+  result.prev = dataObj.result[1].sgv;
 
   const currentTime = new Date();
-  result.age = Math.floor((currentTime.getTime() - obj.result[0].srvCreated) / 1000 / 60);
+  result.age = Math.floor((currentTime.getTime() - dataObj.result[0].srvCreated) / 1000 / 60);
 
-  const delta = Math.round((result.last - result.prev) * 100) / 100;
+  let delta = Math.round((result.last - result.prev) * 100) / 100;
+
+  if (paramsObj.units_in_mmol) {
+    delta = mgdlToMMOL(delta);
+  }
 
   if (delta > 0) {
-    result.delta = `+` + delta;
-  } else if (delta === 0) {
-    result.delta = convert ? `+0.0` : `+0`;
+    result.delta = `+${delta}`;
+  } else if (delta == 0) {
+    result.delta = `+${paramsObj.units_in_mmol ? `0.0` : `0`}`;
   } else {
     result.delta = delta.toString();
+  }
+
+  if (paramsObj.units_in_mmol) {
+    result.last = mgdlToMMOL(result.last);
+  }
+
+  if (paramsObj.calc_trend) {
+    result.direction = charToEntity(directionToChar(calcTrend(dataObj.result.map(obj => obj.sgv))));
+  } else {
+    result.direction = charToEntity(directionToChar(dataObj.result[0].direction));
   }
 
   return result;
 };
 
-const dialog = await window.electronAPI.dialog;
-
 const alert = (type, title, msg, sync = false) => {
+  const dialog = window.electronAPI.dialog;
+
   const data = {
     type: type,
     title: title,
@@ -86,10 +143,19 @@ const alert = (type, title, msg, sync = false) => {
   };
 
   if (sync) {
-    dialog.showMessageBoxSync(data);
+    return dialog.showMessageBoxSync(data);
   } else {
-    dialog.showMessageBox(data);
+    return dialog.showMessageBox(data);
   }
 };
 
-export { prepareData, customAssign, alert };
+export {
+  dir2Char,
+  mgdlToMMOL,
+  charToEntity,
+  directionToChar,
+  prepareData,
+  customAssign,
+  alert,
+  calcTrend
+};
