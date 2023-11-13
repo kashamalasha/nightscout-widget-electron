@@ -16,7 +16,7 @@ const Endpoints = {
 
 const GetParams = {
   SORT_BY: `date`,
-  LIMIT: 2,
+  LIMIT: 6,
   FIELDS: `sgv,direction,srvCreated`,
   TYPE: `sgv`,
 };
@@ -26,7 +26,7 @@ const createRequest = (method, url, onLoad, onError) => {
   xhr.responseType = `json`;
 
   xhr.addEventListener(`load`, () => {
-    let xhrStatusText;
+    let xhrStatusText = ``;
 
     switch (xhr.status) {
     case StatusCode.OK:

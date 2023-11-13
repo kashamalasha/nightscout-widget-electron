@@ -8,15 +8,15 @@
 }
 
 :root {
-  --color_cgv_ok: #209F20;
-  --color_cgv_ok_shadow: #FFFFFF;
-  --color_cgv_warning: #EAB147;
-  --color_cgv_warning_shadow: #8B0000;
-  --color_cgv_critical: #D82C68;
-  --color_cgv_critical_shadow: #D8C941;
-  --color_cgv_accent: #0EB5ED;
-  --color_cgv_gauges: #FFFFFF;
-  --color_cgv_button-active: #808080;
+  --color_sgv_ok: #209F20;
+  --color_sgv_ok_shadow: #FFFFFF;
+  --color_sgv_warning: #EAB147;
+  --color_sgv_warning_shadow: #8B0000;
+  --color_sgv_critical: #D82C68;
+  --color_sgv_critical_shadow: #D8C941;
+  --color_sgv_accent: #0EB5ED;
+  --color_sgv_gauges: #FFFFFF;
+  --color_sgv_button-active: #808080;
 
   --color_settings_dark: #2C3333;
   --color_settings_darken: #395B64;
@@ -60,7 +60,7 @@ a:focus-visible {
   outline: none;
 }
 
-.cgv {
+.sgv {
   -webkit-app-region: drag;
   user-select: none;
 
@@ -79,39 +79,44 @@ a:focus-visible {
 
   border-radius: 10px;
   background-color: rgb(96, 96, 96);
-  color: var(--color_cgv_gauges);
+  color: var(--color_sgv_gauges);
 }
-  .cgv--frozen {
-    box-shadow: inset 0 0 50px var(--color_cgv_accent);
+  .sgv--frozen {
+    box-shadow: inset 0 0 50px var(--color_sgv_accent);
   }
-  .cgv--flicker {
+  .sgv--flicker {
     animation: flicker 1s infinite;
   }
 
-.cgv__last {
+.sgv__last {
   grid-row: span 2;
-  margin-bottom: 2.5%;
+  margin-bottom: 2px;
 
   font-size: 3.3em;
   font-weight: 800;
 }
-  .cgv__last--ok {
-    color: var(--color_cgv_ok);
-    text-shadow: 1px 1px 0px var(--color_cgv_ok_shadow);
+  .sgv__last--ok {
+    color: var(--color_sgv_ok);
+    text-shadow: 1px 1px 0px var(--color_sgv_ok_shadow);
   }
-  .cgv__last--warning {
-    color: var(--color_cgv_warning);
-    text-shadow: 1px 1px 0px var(--color_cgv_warning_shadow);
+  .sgv__last--warning {
+    color: var(--color_sgv_warning);
+    text-shadow: 1px 1px 0px var(--color_sgv_warning_shadow);
   }
-  .cgv__last--critical {
-    color: var(--color_cgv_critical);
-    text-shadow: 1px 1px 0px var(--color_cgv_critical_shadow);
+  .sgv__last--critical {
+    color: var(--color_sgv_critical);
+    text-shadow: 1px 1px 0px var(--color_sgv_critical_shadow);
   }
-  .cgv__last--accented {
-    color: var(--color_cgv_accent);
+  .sgv__last--accented {
+    color: var(--color_sgv_accent);
   }
 
-.cgv__age {
+.sgv__delta {
+  min-width: 30px;
+  text-align: center;
+}
+
+.sgv__age {
   position: absolute;
   top: 33px;
   right: 5px;
@@ -121,7 +126,7 @@ a:focus-visible {
   text-align: center;
 }
 
-.cgv__trend {
+.sgv__trend {
   min-width: 20px;
   min-height: 20px;
   text-align: center;
@@ -157,7 +162,7 @@ a:focus-visible {
     opacity: 1;
   }
   .widget-button:active {
-    background-color: var(--color_cgv_button-active);
+    background-color: var(--color_sgv_button-active);
   }
 
 .settings {
@@ -417,7 +422,7 @@ a:focus-visible {
   }
   .settings-button-close:focus,
   .settings-button-close:focus-visible {
-    background-color: var(--color_cgv_button-active);
+    background-color: var(--color_sgv_button-active);
   }
 
 .settings-language {
@@ -451,7 +456,7 @@ a:focus-visible {
   }
   .settings-language__button:focus,
   .settings-language__button:focus-visible {
-    background-color: var(--color_cgv_button-active);
+    background-color: var(--color_sgv_button-active);
   }
 
 .language-list {

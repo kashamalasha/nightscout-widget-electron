@@ -8,16 +8,21 @@ const CONFIG = await window.electronAPI.getSettings();
 
 const log = window.electronAPI.logger;
 
-const Fields = {
-  cgv: document.querySelector(`.cgv`),
-  last: document.querySelector(`.cgv__last`),
-  delta: document.querySelector(`.cgv__delta`),
-  trend: document.querySelector(`.cgv__trend`),
-  age: document.querySelector(`.cgv__age`),
-  ageValue: document.querySelector(`.cgv__age-value`),
+const RenderParams = {
+  calc_trend: CONFIG.WIDGET.CALC_TREND,
+  units_in_mmol: CONFIG.WIDGET.UNITS_IN_MMOL
 };
 
-const flickerFields = document.querySelectorAll(`.cgv--flicker`);
+const Fields = {
+  sgv: document.querySelector(`.sgv`),
+  last: document.querySelector(`.sgv__last`),
+  delta: document.querySelector(`.sgv__delta`),
+  trend: document.querySelector(`.sgv__trend`),
+  age: document.querySelector(`.sgv__age`),
+  ageValue: document.querySelector(`.sgv__age-value`),
+};
+
+const flickerFields = document.querySelectorAll(`.sgv--flicker`);
 
 const Buttons = {
   close: document.querySelector(`#button-close`),
@@ -26,10 +31,10 @@ const Buttons = {
 };
 
 const ModMap = {
-  critical: `cgv__last--critical`,
-  warning: `cgv__last--warning`,
-  ok: `cgv__last--ok`,
-  default: `cgv__last--`,
+  critical: `sgv__last--critical`,
+  warning: `sgv__last--warning`,
+  ok: `sgv__last--ok`,
+  default: `sgv__last--`,
 };
 
 Buttons.close.addEventListener(`click`, () => {
@@ -41,21 +46,21 @@ Buttons.settings.addEventListener(`click`, () => {
 });
 
 Buttons.browse.addEventListener(`pointerdown`, () => {
-  Fields.last.classList.toggle(`cgv__last--accented`);
+  Fields.last.classList.toggle(`sgv__last--accented`);
 
   log.info(`Open nightscout site was triggered`);
   window.electronAPI.openSite(`nightscout`);
 });
 
 Buttons.browse.addEventListener(`pointerup`, () => {
-  Fields.last.classList.toggle(`cgv__last--accented`);
+  Fields.last.classList.toggle(`sgv__last--accented`);
 });
 
 Fields.last.addEventListener(`mouseup`, (evt) => {
-  evt.target.classList.toggle(`cgv__last--accented`, false);
+  evt.target.classList.toggle(`sgv__last--accented`, false);
 });
 
-const render = (data) => {
+const render = (data, isTestMMOL=false) => {
 
   Fields.last.textContent = data.last;
   Fields.delta.textContent = data.delta;
@@ -70,26 +75,27 @@ const render = (data) => {
     Fields.last.classList.add(ModMap.default);
   }
 
-  let classMod;
+  let classMod = ModMap.default;
   if (data.age > CONFIG.WIDGET.AGE_LIMIT) {
-    Fields.cgv.classList.add(`cgv--frozen`);
-    classMod = ModMap.default;
+    Fields.sgv.classList.add(`sgv--frozen`);
   } else {
-    if (Fields.cgv.classList.contains(`cgv--frozen`)) {
-      Fields.cgv.classList.remove(`cgv--frozen`);
+    if (Fields.sgv.classList.contains(`sgv--frozen`)) {
+      Fields.sgv.classList.remove(`sgv--frozen`);
     }
 
-    const lastResult = parseFloat(data.last);
-    if (lastResult >= CONFIG.BG.HIGH || lastResult <= CONFIG.BG.LOW) {
-      classMod = ModMap.critical;
-    } else if (lastResult >= CONFIG.BG.TARGET.TOP || lastResult <= CONFIG.BG.TARGET.BOTTOM) {
-      classMod = ModMap.warning;
-    } else {
-      classMod = ModMap.ok;
+    if (!isTestMMOL) {
+      const lastResult = parseFloat(data.last);
+      if (lastResult >= CONFIG.BG.HIGH || lastResult <= CONFIG.BG.LOW) {
+        classMod = ModMap.critical;
+      } else if (lastResult >= CONFIG.BG.TARGET.TOP || lastResult <= CONFIG.BG.TARGET.BOTTOM) {
+        classMod = ModMap.warning;
+      } else {
+        classMod = ModMap.ok;
+      }
     }
   }
 
-  Fields.last.className = Fields.last.className.replace(/cgv__last--.*/, classMod);
+  Fields.last.className = Fields.last.className.replace(/sgv__last--\S*/, classMod);
 };
 
 window.electronAPI.setAgeVisibility((_evt, show) => {
@@ -108,10 +114,10 @@ const onSuccess = (result) => {
   isAlertShown = false;
 
   flickerFields.forEach((element) => {
-    element.classList.remove(`cgv--flicker`);
+    element.classList.remove(`sgv--flicker`);
   });
 
-  render(prepareData(result));
+  render(prepareData(result, RenderParams));
 };
 
 const onError = (errorMessage) => {
@@ -119,12 +125,34 @@ const onError = (errorMessage) => {
 
   if (retry > CONNECTION_RETRY_LIMIT && !isAlertShown) {
     log.error(msg);
-    Fields.cgv.classList.add(`cgv--frozen`);
-    Fields.last.className = Fields.last.className.replace(/cgv__last--.*/, ModMap.default);
+    Fields.sgv.classList.add(`sgv--frozen`);
+    Fields.last.className = Fields.last.className.replace(/sgv__last--.*/, ModMap.default);
     alert(`error`, `Connection error`, msg);
     isAlertShown = true;
   }
 };
+
+window.electronAPI.setUnits((_evt, isMMOL, calcTrend) => {
+  log.info(`Test of displaying units in mmol/l: ${isMMOL}`);
+  const isTestValue = (CONFIG.WIDGET.UNITS_IN_MMOL !== isMMOL);
+
+  const onSuccessSwitch = (result) => {
+    render(prepareData(result, {calc_trend: calcTrend, units_in_mmol: isMMOL}), isTestValue);
+  };
+
+  getData(onSuccessSwitch, onError);
+});
+
+window.electronAPI.setCalcTrend((_evt, calcTrend, isMMOL) => {
+  log.info(`Test trend calculation: ${calcTrend}`);
+  const isTestValue = (CONFIG.WIDGET.UNITS_IN_MMOL !== isMMOL);
+
+  const onSuccessSwitch = (result) => {
+    render(prepareData(result, {units_in_mmol: isMMOL, calc_trend: calcTrend}), isTestValue);
+  };
+
+  getData(onSuccessSwitch, onError);
+});
 
 document.addEventListener(`visibilitychange`, () => {
   if (document.visibilityState === `visible`) {

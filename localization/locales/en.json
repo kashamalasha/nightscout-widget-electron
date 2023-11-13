@@ -9,10 +9,10 @@
     },
     "widget": {
       "title": "Widget preferences",
-      "opacity": "Widget opacity (%)",
       "age_limit": "Info: Stale data (min.)",
       "show_age": "Show data age",
-      "calc_trend": "Calc trend"
+      "calc_trend": "Calc trend",
+      "units_in_mmol": "Units in mmol/l"
     },
     "bg": {
       "title": "Blood sugar levels preferences",
@@ -23,7 +23,7 @@
         "bottom": "Target bottom level"
       }
     },
-    "feature-disabled": "Feature temporary disabled",
+    "disabled_feature": "Feature temporarily disabled",
     "show-logs": "Logs ...",
     "button-save": "Save",
     "button-test": "Test",

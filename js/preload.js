@@ -6,7 +6,6 @@ contextBridge.exposeInMainWorld(`electronAPI`, {
   getVersion: () => ipcRenderer.invoke(`get-version`),
   getSettings: () => ipcRenderer.invoke(`get-settings`),
   setSettings: (data) => ipcRenderer.send(`set-settings`, data),
-  setWidgetOpacity: (opacity) => ipcRenderer.send(`set-widget-opacity`, opacity),
   testAgeVisisblity: (show) => ipcRenderer.send(`test-age-visibility`, show),
   setAgeVisibility: (show) => ipcRenderer.on(`set-age-visibility`, show),
   openSite: (siteName) => ipcRenderer.send(`open-site`, siteName),
@@ -25,4 +24,8 @@ contextBridge.exposeInMainWorld(`electronAPI`, {
   getTranslate: (language) => ipcRenderer.invoke(`get-translate`, language),
   getLanguage: () => ipcRenderer.invoke(`get-language`),
   setLanguage: (language) => ipcRenderer.send(`set-language`, language),
+  testUnits: (isMMOL, calcTrend) => ipcRenderer.send(`test-units`, isMMOL, calcTrend),
+  setUnits: (isMMOL, calcTrend) => ipcRenderer.on(`set-units`, isMMOL, calcTrend),
+  testCalcTrend: (calcTrend, isMMOL) => ipcRenderer.send(`test-calc-trend`, calcTrend, isMMOL),
+  setCalcTrend: (calcTrend, isMMOL) => ipcRenderer.on(`set-calc-trend`, calcTrend, isMMOL),
 });

@@ -20,9 +20,10 @@ const FormFields = {
     INTERVAL: document.querySelector(`#nightscout-interval`),
   },
   WIDGET: {
-    OPACITY: document.querySelector(`#widget-opacity`),
     AGE_LIMIT: document.querySelector(`#age-limit`),
     SHOW_AGE: document.querySelector(`#show-age`),
+    UNITS_IN_MMOL: document.querySelector(`#units-in-mmol`),
+    CALC_TREND: document.querySelector(`#calc-trend`),
   },
   BG: {
     HIGH: document.querySelector(`#bg-high`),
@@ -52,19 +53,30 @@ customAssign(FormFields, CONFIG);
 
 document.querySelector(`#app-version`).textContent = VERSION;
 
-FormFields.WIDGET.OPACITY.addEventListener(`change`, (evt) => {
-  const opacity = evt.target.valueAsNumber;
+FormFields.WIDGET.SHOW_AGE.addEventListener(`change`, (evt) => {
+  const show = evt.target.checked;
   try {
-    window.electronAPI.setWidgetOpacity(opacity);
+    window.electronAPI.testAgeVisisblity(show);
   } catch(error) {
     log.error(error);
   }
 });
 
-FormFields.WIDGET.SHOW_AGE.addEventListener(`change`, (evt) => {
-  const show = evt.target.checked;
+FormFields.WIDGET.UNITS_IN_MMOL.addEventListener(`change`, (evt) => {
+  const isMMOL = evt.target.checked;
+
   try {
-    window.electronAPI.testAgeVisisblity(show);
+    window.electronAPI.testUnits(isMMOL, FormFields.WIDGET.CALC_TREND.checked);
+  } catch(error) {
+    log.error(error);
+  }
+});
+
+FormFields.WIDGET.CALC_TREND.addEventListener(`change`, (evt) => {
+  const calcTrend = evt.target.checked;
+
+  try {
+    window.electronAPI.testCalcTrend(calcTrend, FormFields.WIDGET.UNITS_IN_MMOL.checked);
   } catch(error) {
     log.error(error);
   }
@@ -131,7 +143,9 @@ FormButtons.SUBMIT.addEventListener(`submit`, async (evt) => {
   const formData = new FormData(evt.target);
   const formDataObj = Object.fromEntries(formData.entries());
 
-  formDataObj[`show-age`] = (formDataObj[`show-age`]) ? true : false;
+  formDataObj[`show-age`] = formDataObj[`show-age`] ? true : false;
+  formDataObj[`units-in-mmol`] = formDataObj[`units-in-mmol`] ? true : false;
+  formDataObj[`calc-trend`] = formDataObj[`calc-trend`] ? true : false;
 
   try {
     await testConnection(evt);

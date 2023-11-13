@@ -16,6 +16,14 @@ const defaults = JSON.parse(readFileSync(path.join(__dirname, `js/config-default
 
 const config = new Store({ defaults });
 
+if (config.has(`WIDGET.OPACITY`)) {
+  config.delete(`WIDGET.OPACITY`);
+}
+
+if (!config.has(`WIDGET.UNITS_IN_MMOL`)) {
+  config.set(`WIDGET.UNITS_IN_MMOL`, defaults.WIDGET.UNITS_IN_MMOL);
+}
+
 const ajv = new Ajv();
 
 const alert = (type, title, message, parentWindow = null) => {
@@ -121,9 +129,8 @@ const createWindow = () => {
     ipcMain.on(`check-validation`, () => {
       if (!configValid) {
         const errorPath = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
-        const errorValue = config.get(errorPath);
-        const errorReason = validate.errors[0].keyword;
-        const errorMessage = `Config invalid on:\n${errorPath}\nValue: ${errorValue}\nReason: ${errorReason}`;
+        const errorReason = validate.errors[0].message;
+        const errorMessage = `Config invalid on: ${errorPath}\nReason: ${errorReason}`;
 
         log.error(errorMessage.replaceAll(`\n`, ` `));
         log.error(`Schema reference: `, validate.errors[0]);
@@ -189,7 +196,7 @@ const createWindow = () => {
 
   ipcMain.on(`open-site`, (evt, siteName) => {
     evt.preventDefault();
-    let url;
+    let url = ``;
 
     switch (siteName) {
     case `nightscout`:
@@ -257,7 +264,9 @@ app.whenReady().then(() => {
   log.info(`App was started successfully`);
 
   app.on(`activate`, () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
   });
 
   ipcMain.on(`log-message`, (evt, msg, level) => {
@@ -361,9 +370,10 @@ app.whenReady().then(() => {
       config.set(`NIGHTSCOUT.URL`, data[`nightscout-url`]);
       config.set(`NIGHTSCOUT.TOKEN`, data[`nightscout-token`]);
       config.set(`NIGHTSCOUT.INTERVAL`, parseInt(data[`nightscout-interval`], 10));
-      config.set(`WIDGET.OPACITY`, 100);
       config.set(`WIDGET.AGE_LIMIT`, parseInt(data[`age-limit`], 10));
       config.set(`WIDGET.SHOW_AGE`, data[`show-age`]);
+      config.set(`WIDGET.UNITS_IN_MMOL`, data[`units-in-mmol`]);
+      config.set(`WIDGET.CALC_TREND`, data[`calc-trend`]);
       config.set(`BG.HIGH`, parseFloat(data[`bg-high`]));
       config.set(`BG.LOW`, parseFloat(data[`bg-low`]));
       config.set(`BG.TARGET.TOP`, parseFloat(data[`bg-target-top`]));
@@ -376,12 +386,18 @@ app.whenReady().then(() => {
 
   });
 
-  ipcMain.on(`set-widget-opacity`, (_evt, opacity) => {
-    widget.mainWindow.setBackgroundColor(`rgba(96, 96, 96, ${opacity / 100})`);
-  });
-
   ipcMain.on(`test-age-visibility`, (_evt, show) => {
     widget.mainWindow.webContents.send(`set-age-visibility`, show);
+  });
+
+  ipcMain.on(`test-units`, (_evt, isMMOL) => {
+    config.set(`WIDGET.UNITS_IN_MMOL`, isMMOL);
+    widget.mainWindow.webContents.send(`set-units`, isMMOL);
+  });
+
+  ipcMain.on(`test-calc-trend`, (_evt, calcTrend, isMMOL) => {
+    config.set(`WIDGET.CALC_TREND`, calcTrend);
+    widget.mainWindow.webContents.send(`set-calc-trend`, calcTrend, isMMOL);
   });
 });
 
@@ -423,5 +439,7 @@ if (isMac) {
 }
 
 app.on(`window-all-closed`, () => {
-  if (!isMac) app.quit();
+  if (!isMac) {
+    app.quit();
+  }
 });

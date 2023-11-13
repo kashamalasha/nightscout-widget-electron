@@ -16,15 +16,15 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 ## 📦 Installation packages
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.1-beta/Owlet-0.5.1-beta-win-x64.exe)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.0-beta/Owlet-0.6.0-beta-win-x64.exe)
 
-[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.1-beta/Owlet-0.5.1-beta-mac-arm64.dmg)
+[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.0-beta/Owlet-0.6.0-beta-mac-arm64.dmg)
 
-[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.1-beta/Owlet-0.5.1-beta-mac-x64.dmg)
+[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.0-beta/Owlet-0.6.0-beta-mac-x64.dmg)
 
-[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.5.1-beta/Owlet-0.5.1-beta-linux-x86_64.AppImage)
+[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.0-beta/Owlet-0.6.0-beta-linux-x86_64.AppImage)
 
-[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.5.1-beta.tar.gz)
+[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.6.0-beta.tar.gz)
 
 [![Download Souces](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
@@ -88,6 +88,22 @@ On the first launch, the app will prompt you to fill in the following settings
 
 - **SHOW AGE** - (*default: enabled*) that option displays additional information about how old the shown data is
 
+- **UNITS IN MMOL/L** - (*default: enabled*) that option allows to display sensor glucose values in mmol/l instead of mg/d. If you decide to modify this setting, ensure that you adjust all the blood sugar level preferences based on the selected units of measurement as well. When changing units of measurement, the color display of SGV values will be disabled until the settings are saved.
+
+- **CALC TREND** - (*default: disabled*) This option allows to calculate the direction of the trend using the last six received (for the last half an hour) SGV values. You may find it useful when your sensor doesn't have built-in option (e.g., Dexcom, Medtronic) and the Nightscout API doesn't store this value. In such cases, you will see a ` - ` symbol in the bottom right corner of the widget all the time instead of a trend arrow.
+
+The app uses the following Abbot™ FreeStyle Libre™ sensors algorithm to recognize the trend pattern.
+
+<figure>
+  <p>
+    <img src="docs/fs-libre-trend-arrows.png" alt="Screenshot-widget"/>
+  </p>
+</figure>
+
+You can find more information on the approach to using trend arrows to adjust insulin doses in the article of the **Journal of the Endocrine Society**: [Approach to Using Trend Arrows in the FreeStyle Libre Flash Glucose Monitoring Systems in Adults](https://academic.oup.com/jes/article/2/12/1320/5181247). 
+
+[PDF version](docs/js.2018-00294.pdf) available for downloading.
+
 
 ### 3. Blood sugar levels preferences
 
@@ -141,11 +157,12 @@ Set the blood sugar tracking parameters using the following guides:
 
 ## 🚧 In Progress 
 
-- Feature of selecting mmol/l <-> mg/dl measurement units
-- Feature of calculating trend indicator when this data is absent on Nightscout
-- Github-page landing using Jakil
+- Unit tests coverage using [Jest](https://jestjs.io/)
+- Create landing page of the project based on [Jekyll](https://jekyllrb.com/)
+- Replace the Electron engine for the [Tauri app](https://beta.tauri.app/)
 
-If you feel desire to improve it or help. You can suggest any ideas or detected bugs to the [project board](https://github.com/users/kashamalasha/projects/2/views/1).
+If you feel desire to improve it or help. 
+You can suggest any ideas or detected bugs to the [project board](https://github.com/users/kashamalasha/projects/2/views/1).
 
 ## 🗜️ Content
 
