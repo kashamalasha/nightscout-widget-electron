@@ -96,7 +96,7 @@ The app uses the following Abbot™ FreeStyle Libre™ sensors algorithm to reco
 
 <figure>
   <p>
-    <img src="doc/fs-libre-trend-arrows.png" alt="Screenshot-widget"/>
+    <img src="docs/fs-libre-trend-arrows.png" alt="Screenshot-widget"/>
   </p>
 </figure>
 
