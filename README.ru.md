@@ -95,7 +95,7 @@ Owlet - это кросс-платформенное приложение, ра�
 
 <figure>
   <p>
-    <img src="docs/fs-libre-trend-arrows.jpeg" alt="Screenshot-widget"/>
+    <img src="docs/fs-libre-trend-arrows.png" alt="Screenshot-widget"/>
   </p>
 </figure>
 
