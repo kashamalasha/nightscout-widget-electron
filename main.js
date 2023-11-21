@@ -399,6 +399,16 @@ app.whenReady().then(() => {
     config.set(`WIDGET.CALC_TREND`, calcTrend);
     widget.mainWindow.webContents.send(`set-calc-trend`, calcTrend, isMMOL);
   });
+
+  ipcMain.on(`set-jwt-expiration`, (evt, timestamp) => {
+    evt.preventDefault();
+
+    try {
+      config.set(`JWT_EXPIRATION`, timestamp);
+    } catch (error) {
+      log.error(error, timestamp);
+    }
+  });
 });
 
 if (isMac) {

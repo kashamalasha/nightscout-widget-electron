@@ -75,8 +75,12 @@ const render = (data, isTestMMOL=false) => {
     Fields.last.classList.add(ModMap.default);
   }
 
+  if (data.age.toString().length > 3) {
+    Fields.ageValue.textContent = `999`;
+  }
+
   let classMod = ModMap.default;
-  if (data.age > CONFIG.WIDGET.AGE_LIMIT) {
+  if (CONFIG.WIDGET.AGE_LIMIT !== 0 && data.age > CONFIG.WIDGET.AGE_LIMIT) {
     Fields.sgv.classList.add(`sgv--frozen`);
   } else {
     if (Fields.sgv.classList.contains(`sgv--frozen`)) {

@@ -25,9 +25,8 @@
   --color_settings_highlight: #CAA7A5;
 }
 
-body {
-  overflow-x: hidden;
-  overflow-y: hidden;
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 *, html, body {
@@ -40,11 +39,10 @@ html {
   height: 100%;
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
 body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+
   height: 100%;
 
   font-family: 'Lato', Tahoma, sans-serif;

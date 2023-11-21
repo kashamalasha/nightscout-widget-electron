@@ -82,7 +82,7 @@ On the first launch, the app will prompt you to fill in the following settings
 - **NIGHTSCOUT REQUEST INTERVAL (SEC.)** - (*default: 60*) the interval of the getting information from the Nightscout site to display in the widget
 
 ### 2. Widget preferences
-- **AGE LIMIT (MIN.)** - (*default: 20*) the timeout of data requesting interval, after that interval widget will change its appearance to "frozen" state. Usually, it means that the reader is offline or detached from the sensor, or the smartphone's battery is drained out
+- **AGE LIMIT (MIN.)** - (*default: 20*) the timeout of data requesting interval, after that interval widget will change its appearance to a "frozen" state. This typically indicates that the reader is offline, detached from the sensor, or the smartphone's battery is drained. If you prefer the widget not to freeze, you can set this property to 0. The maximum allowable value for this field, as well as the maximum value shown, is 999 minutes.
 
 <img src="docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
 
