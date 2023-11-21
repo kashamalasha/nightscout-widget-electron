@@ -3,6 +3,7 @@
 const CONFIG = await window.electronAPI.getSettings();
 
 const REQUEST_TIMEOUT = 10000;
+const log = window.electronAPI.logger;
 
 const StatusCode = {
   OK: 200,
@@ -10,6 +11,7 @@ const StatusCode = {
 };
 
 const Endpoints = {
+  AUTH: `/api/v2/authorization/request`,
   DATA: `/api/v3/entries`,
   TEST: `/api/v3/status`,
 };
@@ -19,11 +21,12 @@ const GetParams = {
   LIMIT: 6,
   FIELDS: `sgv,direction,srvCreated`,
   TYPE: `sgv`,
+  TOKEN: null,
 };
 
-const createRequest = (method, url, onLoad, onError) => {
+const createRequest = (method, url, onLoad, onError, async=true) => {
   const xhr = new XMLHttpRequest();
-  xhr.responseType = `json`;
+  xhr.responseType = async ? `json` : ``;
 
   xhr.addEventListener(`load`, () => {
     let xhrStatusText = ``;
@@ -64,31 +67,79 @@ const createRequest = (method, url, onLoad, onError) => {
     onError(`Request timeout reached: ${xhr.timeout} ms.`);
   });
 
-  xhr.timeout = REQUEST_TIMEOUT;
-  xhr.open(method, url);
+  xhr.timeout = async ? REQUEST_TIMEOUT : ``;
+  xhr.open(method, url, async);
 
   return xhr;
 };
 
-const getData = (onSuccess, onError) => {
-  const url = new URL(CONFIG.NIGHTSCOUT.URL + Endpoints.DATA);
+const hasTokenExpired = () => {
+  const now = Date.now();
 
-  url.searchParams.set(`token`, CONFIG.NIGHTSCOUT.TOKEN);
+  if (now > CONFIG.JWT_EXPIRATION) {
+    return true;
+  }
+
+  return false;
+};
+
+const obtainToken = (paramsObj) => {
+  log.info(`Requesting JWT token for the ${paramsObj.token}`);
+  const url = new URL(paramsObj.url + Endpoints.AUTH + `/` + paramsObj.token);
+  const xhr = createRequest(
+    `GET`,
+    url,
+    (responseText) => {
+      const response = JSON.parse(responseText);
+      const expirationInMillis = response.exp * 1000;
+
+      GetParams.TOKEN = response.token;
+      window.electronAPI.setJWTExpiration(expirationInMillis);
+
+      log.info(`JWT token obtained successfully`);
+    },
+    (error) => {
+      log.error(`Failed to obtain JWT token ${error} for the ${paramsObj.token}`);
+    },
+    false
+  );
+
+  xhr.send();
+};
+
+const getData = (onSuccess, onError) => {
+  const params = {
+    "url": CONFIG.NIGHTSCOUT.URL,
+    "token": CONFIG.NIGHTSCOUT.TOKEN
+  };
+
+  const url = new URL(params.url + Endpoints.DATA);
+
   url.searchParams.set(`sort$desc`, GetParams.SORT_BY);
   url.searchParams.set(`limit`, GetParams.LIMIT);
   url.searchParams.set(`fields`, GetParams.FIELDS);
   url.searchParams.set(`type$eq`, GetParams.TYPE);
 
   const xhr = createRequest(`GET`, url, onSuccess, onError);
+
+  if (!GetParams.TOKEN || hasTokenExpired()) {
+    obtainToken(params);
+  }
+
+  xhr.setRequestHeader(`Authorization`, `Bearer ${GetParams.TOKEN}`);
   xhr.send();
 };
 
 const getStatus = (testParams, onSuccess, onError) => {
   const url = new URL(testParams.url + Endpoints.TEST);
 
-  url.searchParams.set(`token`, testParams.token);
-
   const xhr = createRequest(`GET`, url, onSuccess, onError);
+
+  if (testParams.url !== CONFIG.NIGHTSCOUT.URL || !GetParams.TOKEN || hasTokenExpired()) {
+    obtainToken(testParams);
+  }
+
+  xhr.setRequestHeader(`Authorization`, `Bearer ${GetParams.TOKEN}`);
   xhr.send();
 };
 

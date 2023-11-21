@@ -28,4 +28,5 @@ contextBridge.exposeInMainWorld(`electronAPI`, {
   setUnits: (isMMOL, calcTrend) => ipcRenderer.on(`set-units`, isMMOL, calcTrend),
   testCalcTrend: (calcTrend, isMMOL) => ipcRenderer.send(`test-calc-trend`, calcTrend, isMMOL),
   setCalcTrend: (calcTrend, isMMOL) => ipcRenderer.on(`set-calc-trend`, calcTrend, isMMOL),
+  setJWTExpiration: (timestamp) => ipcRenderer.send(`set-jwt-expiration`, timestamp),
 });
