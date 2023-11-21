@@ -7,7 +7,7 @@
     "email": "dmitry.burnyshev@gmail.com"
   },
   "homepage": "https://github.com/kashamalasha/nightscout-widget-electron",
-  "version": "0.6.0-beta",
+  "version": "0.6.1-beta",
   "main": "main.js",
   "scripts": {
     "start": "NODE_ENV=production electron .",
@@ -104,19 +104,19 @@
   ],
   "license": "AGPL-3.0",
   "dependencies": {
-    "electron-log": "^4.4.8",
+    "electron-log": "^5.0.1",
     "electron-store": "^8.1.0",
-    "electron-updater": "^6.1.1"
+    "electron-updater": "^6.1.4"
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.23.0",
-    "@electron/notarize": "^2.1.0",
-    "ajv": "^8.11.2",
+    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
+    "@electron/notarize": "^2.2.0",
+    "ajv": "^8.12.0",
     "dotenv": "^16.3.1",
-    "electron": "^25.2.0",
-    "electron-builder": "^24.4.0",
-    "eslint": "^8.46.0",
-    "eslint-plugin-import": "^2.28.0",
+    "electron": "^27.1.0",
+    "electron-builder": "^24.6.4",
+    "eslint": "^8.54.0",
+    "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jest": "^27.6.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
