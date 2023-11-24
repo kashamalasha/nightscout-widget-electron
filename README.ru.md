@@ -1,6 +1,7 @@
 # 🦉 Привет, я Owlet (Алет)!
 
-[![EN](https://img.shields.io/badge/Language-EN-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.md)
+[![EN](https://img.shields.io/badge/Language-EN-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.md) [![IT](https://img.shields.io/badge/Language-IT-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.it.md)
+
 
 Название приложения - "Owlet", переводится как совёнок, оно было выбрано мной по схожести логотипа Nightscout со взрослой совой.
 
