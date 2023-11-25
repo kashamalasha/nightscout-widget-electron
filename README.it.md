@@ -81,18 +81,18 @@ Al primo avvio l'app ti proporrà di compilare le seguenti informazioni
 
 - **URL NIGHTSCOUT** - è l'indirizzo del tuo sito nightscout (e.g. https://some-cgm.fly.dev) 
 - **TOKEN NIGHTSCOUT** - il token di accesso che hai creato nei precedenti step
-- **NIGHTSCOUT REQUEST INTERVAL (SEC.)** - (*default: 60*) l'intervalli di tempo per l'aggiornamento dei dati da Nightscout da visualizzare nel widget
+- **INTERVALLO REQUEST NIGHTSCOUT (SEC.)** - (*default: 60*) l'intervalli di tempo per l'aggiornamento dei dati da Nightscout da visualizzare nel widget
 
 ### 2. Preferenze Widget
-- **AGE LIMIT (MIN.)** - (*default: 20*) intervallo di timeout della richiesta dati, dopo questo intervallo il widget cambierà e mostrerà uno stato "congelato". Ciò indica in genere che il lettore è offline, staccato dal sensore o che la batteria dello smartphone è scarica. Se preferisci che il widget non si blocchi, puoi impostare questa proprietà su 0. Il valore massimo consentito per questo campo, così come il valore massimo mostrato, è 999 minuti.
+- **INFO: LIMITE ETÀ (MIN.)** - (*default: 20*) intervallo di timeout della richiesta dati, dopo questo intervallo il widget cambierà e mostrerà uno stato "congelato". Ciò indica in genere che il lettore è offline, staccato dal sensore o che la batteria dello smartphone è scarica. Se preferisci che il widget non si blocchi, puoi impostare questa proprietà su 0. Il valore massimo consentito per questo campo, così come il valore massimo mostrato, è 999 minuti.
 
 <img src="docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
 
-- **SHOW AGE** - (*default: enabled*) questa opzione visualizza informazioni aggiuntive sull'età dei dati mostrati
+- **MOSTRA ETÀ DATI** - (*default: enabled*) questa opzione visualizza informazioni aggiuntive sull'età dei dati mostrati
 
-- **UNITS IN MMOL/L** - (*default: enabled*) questa opzione consente di visualizzare i valori glicemici del sensore in mmol/l anziché in mg/dl. Se decidi di modificare questa impostazione assicurati di regolare tutte le preferenze del livello di zucchero nel sangue anche in base alle unità di misura selezionate. Quando si modificano le unità di misura, la visualizzazione a colori dei valori SGV sarà disabilitata finché le impostazioni non verranno salvate.
-- 
-- **CALC TREND** - (*default: disabled*) Questa opzione consente di calcolare la direzione del trend utilizzando gli ultimi sei valori SGV ricevuti (nell'ultima mezz'ora). Potresti trovarlo utile quando il tuo sensore non dispone di un'opzione integrata (ad esempio, Dexcom, Medtronic) e l'API Nightscout non memorizza questo valore. In questi casi, vedrai sempre un simbolo ` - ` nell'angolo in basso a destra del widget invece di una freccia di tendenza.
+- **UNITÀ IN MMOL/L** - (*default: enabled*) questa opzione consente di visualizzare i valori glicemici del sensore in mmol/l anziché in mg/dl. Se decidi di modificare questa impostazione assicurati di regolare tutte le preferenze del livello di zucchero nel sangue anche in base alle unità di misura selezionate. Quando si modificano le unità di misura, la visualizzazione a colori dei valori SGV sarà disabilitata finché le impostazioni non verranno salvate.
+
+- **CALCOLA TREND** - (*default: disabled*) Questa opzione consente di calcolare la direzione del trend utilizzando gli ultimi sei valori SGV ricevuti (nell'ultima mezz'ora). Potresti trovarlo utile quando il tuo sensore non dispone di un'opzione integrata (ad esempio, Dexcom, Medtronic) e l'API Nightscout non memorizza questo valore. In questi casi, vedrai sempre un simbolo ` - ` nell'angolo in basso a destra del widget invece di una freccia di tendenza.
 
 L' app usa il seguente algoritmo dei sensori Abbot™ FreeStyle Libre™ per riconoscere la tendenza.
 
@@ -107,16 +107,16 @@ L' app usa il seguente algoritmo dei sensori Abbot™ FreeStyle Libre™ per ric
 [PDF version](docs/js.2018-00294.pdf) disponibile per il download.
 
 
-### 3. Preferenze del livello di zucchero del sangue
+### 3. Preferenze livello glicemia
 
 
 Imposta i parametri di monitoraggio della glicemia utilizzando le seguenti guide:
 
-- Oltre il **HIGH LEVEL TRESHOLD** (*default: 10*) e sotto il **LOW LEVEL THRESHOLD** (*default: 3.5*) l'ultimo valore verrà colorato di rosso
+- Oltre il **SOGLIA ALTO LIVELLO** (*default: 10*) e sotto il **SOGLIA BASSO LIVELLO** (*default: 3.5*) l'ultimo valore verrà colorato di rosso
 
 <img src="docs/screenshot-widget-critical.png" alt="Screenshot-widget" width="200"/>
 
-- Oltre il **TARGET TOP LEVEL** (*default: 8.5*) e sotto il **TARGET BOTTOM LEVEL** (*default: 4*) l'ultimo valore verrà colorato di arancione
+- Oltre il **LIVELLO TARGET ALTO** (*default: 8.5*) e sotto il **LIVELLO TARGET BASSO** (*default: 4*) l'ultimo valore verrà colorato di arancione
 
 <img src="docs/screenshot-widget-warning.png" alt="Screenshot-widget" width="200"/>
 
