@@ -31,8 +31,11 @@ const GetParams = {
 
 const fallbackTransform = (dataObj) => {
   const transformedData = {
-    status: StatusCode.OK,
-    result: dataObj.map(item => ({
+    status: StatusCode.OK
+  };
+
+  if (Array.isArray(dataObj)) {
+    transformedData.result = dataObj.map(item => ({
       direction: item.direction,
       sgv: item.sgv,
       srvCreated: item.mills
@@ -132,7 +135,9 @@ const obtainToken = (paramsObj) => {
 const fallbackGet = (params, onSuccess, onError, endpoint) => {
   const url = new URL(params.url + endpoint);
 
-  url.searchParams.set(`count`, GetParams.LIMIT);
+  if (!endpoint.includes(`status`)) {
+    url.searchParams.set(`count`, GetParams.LIMIT);
+  }
 
   const xhr = createRequest(`GET`, url, onSuccess, onError, true, true);
 
