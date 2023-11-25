@@ -79,8 +79,8 @@ Al primo avvio l'app ti proporrà di compilare le seguenti informazioni
 
 ### 1. Impostazioni API Nightscout
 
-- **NIGHTSCOUT URL** - è l'indirizzo del tuo sito nightscout (e.g. https://some-cgm.fly.dev) 
-- **NIGHTSCOUT TOKEN** - il token di accesso che hai creato nei precedenti step
+- **URL NIGHTSCOUT** - è l'indirizzo del tuo sito nightscout (e.g. https://some-cgm.fly.dev) 
+- **TOKEN NIGHTSCOUT** - il token di accesso che hai creato nei precedenti step
 - **NIGHTSCOUT REQUEST INTERVAL (SEC.)** - (*default: 60*) l'intervalli di tempo per l'aggiornamento dei dati da Nightscout da visualizzare nel widget
 
 ### 2. Preferenze Widget
