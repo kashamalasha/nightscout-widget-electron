@@ -16,6 +16,11 @@ const Endpoints = {
   TEST: `/api/v3/status`,
 };
 
+const Fallback = {
+  DATA: `/api/v2/entries/sgv`,
+  TEST: `/api/v2/status`,
+};
+
 const GetParams = {
   SORT_BY: `date`,
   LIMIT: 6,
@@ -24,7 +29,20 @@ const GetParams = {
   TOKEN: null,
 };
 
-const createRequest = (method, url, onLoad, onError, async=true) => {
+const fallbackTransform = (dataObj) => {
+  const transformedData = {
+    status: StatusCode.OK,
+    result: dataObj.map(item => ({
+      direction: item.direction,
+      sgv: item.sgv,
+      srvCreated: item.mills
+    }))
+  };
+
+  return transformedData;
+};
+
+const createRequest = (method, url, onLoad, onError, async=true, falback=false) => {
   const xhr = new XMLHttpRequest();
   xhr.responseType = async ? `json` : ``;
 
@@ -33,7 +51,11 @@ const createRequest = (method, url, onLoad, onError, async=true) => {
 
     switch (xhr.status) {
     case StatusCode.OK:
-      onLoad(xhr.response);
+      if (falback) {
+        onLoad(fallbackTransform(xhr.response));
+      } else {
+        onLoad(xhr.response);
+      }
       break;
     case StatusCode.NOT_FOUND:
       xhrStatusText = `The requested resource was not found on the server`;
@@ -107,6 +129,22 @@ const obtainToken = (paramsObj) => {
   xhr.send();
 };
 
+const fallbackGet = (params, onSuccess, onError, endpoint) => {
+  const url = new URL(params.url + endpoint);
+
+  url.searchParams.set(`count`, GetParams.LIMIT);
+
+  const xhr = createRequest(`GET`, url, onSuccess, onError, true, true);
+
+  if (!GetParams.TOKEN || hasTokenExpired()) {
+    obtainToken(params);
+  }
+
+  xhr.setRequestHeader(`Authorization`, `Bearer ${GetParams.TOKEN}`);
+  xhr.setRequestHeader(`Accept`, `application/json`);
+  xhr.send();
+};
+
 const getData = (onSuccess, onError) => {
   const params = {
     "url": CONFIG.NIGHTSCOUT.URL,
@@ -120,7 +158,14 @@ const getData = (onSuccess, onError) => {
   url.searchParams.set(`fields`, GetParams.FIELDS);
   url.searchParams.set(`type$eq`, GetParams.TYPE);
 
-  const xhr = createRequest(`GET`, url, onSuccess, onError);
+  const xhr = createRequest(`GET`, url, onSuccess, (error) => {
+    if (error.includes(`Request status: 403`)) {
+      log.warn(`Fallback to API v2 call due to 403 error`);
+      fallbackGet(params, onSuccess, onError, Fallback.DATA);
+    } else {
+      onError(error);
+    }
+  });
 
   if (!GetParams.TOKEN || hasTokenExpired()) {
     obtainToken(params);
@@ -133,7 +178,15 @@ const getData = (onSuccess, onError) => {
 const getStatus = (testParams, onSuccess, onError) => {
   const url = new URL(testParams.url + Endpoints.TEST);
 
-  const xhr = createRequest(`GET`, url, onSuccess, onError);
+  const xhr = createRequest(`GET`, url, onSuccess, (error) => {
+    if (error.includes(`Request status: 403`)) {
+      log.warn(`Fallback to API v2 call due to 403 error`);
+      fallbackGet(testParams, onSuccess, onError, Fallback.TEST);
+    } else {
+      onError(error);
+    }
+  },
+  );
 
   if (testParams.url !== CONFIG.NIGHTSCOUT.URL || !GetParams.TOKEN || hasTokenExpired()) {
     obtainToken(testParams);
