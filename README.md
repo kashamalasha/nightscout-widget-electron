@@ -1,6 +1,8 @@
 # 🦉 Hello, I am Owlet!
 
-[![RU](https://img.shields.io/badge/Language-RU-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.ru.md) [![IT](https://img.shields.io/badge/Language-IT-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.it.md)
+[![IT](https://img.shields.io/badge/Language-IT-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.it.md)
+[![PL](https://img.shields.io/badge/Language-PL-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.pl.md)
+[![RU](https://img.shields.io/badge/Language-RU-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.ru.md) 
 
 
 The app's name is "Owlet", which means baby owl and is chosen because of the Nightscout project logo.
@@ -138,7 +140,11 @@ Set the blood sugar tracking parameters using the following guides:
   </p>
 </figure>
 
-- Currently, the application offers only two language options: **English** and **Russian**.
+- Currently, the application offers the following languages:
+  - English 
+  - Italian
+  - Polish
+  - Russian
 
 - If you feel confident and have a good grasp of a foreign language, you can contribute to the translation of the application by becoming a project contributor on [POEditor](https://poeditor.com/projects/view?id=640131).
 

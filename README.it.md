@@ -1,5 +1,7 @@
 # 🦉 Ciao, sono Owlet!
 
+[![EN](https://img.shields.io/badge/Language-EN-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.md)
+[![PL](https://img.shields.io/badge/Language-PL-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.pl.md)
 [![RU](https://img.shields.io/badge/Language-RU-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.ru.md)
 
 Il nome dell'app è "Owlet", che significa piccolo gufo ed è scelto per via del logo del progetto Nightscout.
@@ -16,15 +18,15 @@ Sono stato inspirato dalla soluzione [mlukasek/M5_NightscoutMon](https://github.
 
 ## 📦 Pacchetti di installazione
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.1-beta/Owlet-0.6.1-beta-win-x64.exe)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.2-beta/Owlet-0.6.2-beta-win-x64.exe)
 
-[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.1-beta/Owlet-0.6.1-beta-mac-arm64.dmg)
+[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.2-beta/Owlet-0.6.2-beta-mac-arm64.dmg)
 
-[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.1-beta/Owlet-0.6.1-beta-mac-x64.dmg)
+[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.2-beta/Owlet-0.6.2-beta-mac-x64.dmg)
 
-[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.1-beta/Owlet-0.6.1-beta-linux-x86_64.AppImage)
+[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.2-beta/Owlet-0.6.2-beta-linux-x86_64.AppImage)
 
-[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.6.1-beta.tar.gz)
+[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.6.2-beta.tar.gz)
 
 [![Download Souces](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
@@ -71,7 +73,7 @@ Al primo avvio l'app ti proporrà di compilare le seguenti informazioni
 
 <figure>
   <p>
-    <img src="docs/screenshot-settings-default-en.png" alt="Screenshot-widget"/>
+    <img src="docs/screenshot-settings-default-it.png" alt="Screenshot-widget"/>
   </p>
 </figure>
 
@@ -137,7 +139,11 @@ Puoi scegliere la lingua delle impostazioni facendo clic sull'icona **EN** in al
   </p>
 </figure>
 
-- Attualmente l'applicazione offre solo due opzioni di lingua: **Inglese** e **Russo**.
+- Attualmente l'applicazione offre le seguenti lingue: 
+  - English 
+  - Italian
+  - Polish
+  - Russian
 
 - Se ti senti sicuro e hai una buona conoscenza di una lingua straniera, puoi contribuire alla traduzione dell'applicazione diventando collaboratore del progetto su [POEditor](https://poeditor.com/projects/view?id=640131).
 
