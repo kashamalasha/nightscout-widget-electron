@@ -1,0 +1,32 @@
+{
+  "settings": {
+    "title": "Widżet Sówka - Ustawienia",
+    "nightscout": {
+      "title": "Ustawienia Nightscout API",
+      "url": "Nightscout - adres (URL)",
+      "token": "Nightscout - token",
+      "interval": "Odstęp między odczytami Nightscout (sek.)"
+    },
+    "widget": {
+      "title": "Preferencje wyświetlania",
+      "age_limit": "Brak danych od (min.)",
+      "show_age": "Czas od odczytu",
+      "calc_trend": "Kalkuluj trend",
+      "units_in_mmol": "Użyj mmol/l"
+    },
+    "bg": {
+      "title": "Zakresy glikemii",
+      "high": "Wysoki próg",
+      "low": "Niski próg",
+      "target": {
+        "top": "W zakresie - góra",
+        "bottom": "W zakresie - dół"
+      }
+    },
+    "disabled_feature": "Moduł tymczasowo niedostępny",
+    "show_logs": "Logi...",
+    "button-save": "Zapisz",
+    "button-test": "Przetestuj",
+    "help_to_translate": "Pomóż przy tłumaczeniach"
+  }
+}
