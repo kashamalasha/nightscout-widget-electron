@@ -1,0 +1,32 @@
+{
+  "settings": {
+    "title": "Impostazioni Widget",
+    "nightscout": {
+      "title": "Impostazioni API Nightscout",
+      "url": "URL Nightscout",
+      "token": "Token Nightscout",
+      "interval": "Intervallo request Nightscout (sec.)"
+    },
+    "widget": {
+      "title": "Preferenze Widget",
+      "age_limit": "Info: Limite età (min.)",
+      "show_age": "Mostra età dati",
+      "calc_trend": "Calcola trend",
+      "units_in_mmol": "Unità in mmol/l"
+    },
+    "bg": {
+      "title": "Preferenze livello glicemia",
+      "high": "Soglia Alto livello",
+      "low": "Soglia Basso livello",
+      "target": {
+        "top": "Livello Target Alto",
+        "bottom": "Livello Target Basso"
+      }
+    },
+    "disabled_feature": "Opzione disabilitata per ora",
+    "show_logs": "Logs ...",
+    "button-save": "Salva",
+    "button-test": "Test",
+    "help_to_translate": "Aiuta nella traduzione"
+  }
+}

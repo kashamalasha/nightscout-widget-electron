@@ -3,7 +3,7 @@
 const log = window.electronAPI.logger;
 
 class Translator {
-  _availableLanguages = [`en`, `ru`];
+  _availableLanguages = [`en`, `it`, `pl`, `ru`];
   _language = `en`;
 
   constructor(language = null) {
