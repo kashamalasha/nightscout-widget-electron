@@ -39,8 +39,8 @@ const fallbackTransform = (dataObj) => {
       direction: item.direction,
       sgv: item.sgv,
       srvCreated: item.mills
-    }))
-  };
+    }));
+  }
 
   return transformedData;
 };
