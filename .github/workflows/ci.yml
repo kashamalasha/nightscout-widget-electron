@@ -137,9 +137,8 @@ jobs:
         run: |
           echo ${{ steps.releases_data.outputs.release_data }} | jq '.'
 
-
-      - name: Filter requested data
-        id: jq_filter
+      - name: Filter requested data for blockmaps
+        id: jq_filter_blockmap
         run: |
           blockmaps=$(
             echo '${{ steps.releases_data.outputs.release_data }}' | jq -r \
@@ -153,7 +152,38 @@ jobs:
           HOST: "https://api.github.com"
           ENDPOINT: "/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases/assets/"
         run: |
-          assets_array="${{ steps.jq_filter.outputs.blockmap_list }}"
+          assets_array="${{ steps.jq_filter_blockmap.outputs.blockmap_list }}"
+          assets_array="${assets_array#(}"
+          assets_array="${assets_array%)}"
+
+          # Convert the array string to an actual array
+          IFS=', ' read -ra assets <<< "$assets_array"
+
+          # Iterate over the array elements
+          echo "Iterating over the assets:"
+          for asset_id in "${assets[@]}"; do
+            echo "Deleting asset with ID: $asset_id"
+            curl -X DELETE -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "${HOST}${ENDPOINT}$asset_id"
+          done
+
+      - name: Filter requested data for mac universal distros
+        id: jq_filter_macuni
+        run: |
+          macuni=$(
+            echo '${{ steps.releases_data.outputs.release_data }}' | jq -r \
+            'fromjson | .assets | map(select(.name | contains("universal"))) | map(.id | tostring) | join(" ")'
+          )
+          echo "( ${macuni} )"
+          echo "macuni_list=( ${macuni} )" >> $GITHUB_OUTPUT
+
+      - name: Remove the mac universal files
+        env:
+          HOST: "https://api.github.com"
+          ENDPOINT: "/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases/assets/"
+        run: |
+          assets_array="${{ steps.jq_filter_macuni.outputs.macuni_list }}"
           assets_array="${assets_array#(}"
           assets_array="${assets_array%)}"
 
