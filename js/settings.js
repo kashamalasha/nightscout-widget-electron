@@ -204,6 +204,7 @@ const languageMenuHandler = (element) => {
   } else {
     window.electronAPI.openSite(`poeditor`);
     closeLanguageList();
+    window.electronAPI.closeWindow();
   }
 };
 
