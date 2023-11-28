@@ -18,15 +18,15 @@ Zainspirowałem się rozwiązaniem [mlukasek/M5_NightscoutMon](https://github.co
 
 ## 📦 Gotowe pakiety instalacyjne
 
-[![Pobierz dla systemu Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.2-beta/Owlet-0.6.2-beta-win-x64.exe)
+[![Pobierz dla systemu Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-win-x64.exe)
 
-[![Pobierz dla systemu macOS (procesory Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.2-beta/Owlet-0.6.2-beta-mac-arm64.dmg)
+[![Pobierz dla systemu macOS (procesory Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-mac-arm64.dmg)
 
-[![Pobierz dla systemu macOS (procesory Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.2-beta/Owlet-0.6.2-beta-mac-x64.dmg)
+[![Pobierz dla systemu macOS (procesory Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-mac-x64.dmg)
 
-[![Pobierz dla systemów Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.2-beta/Owlet-0.6.2-beta-linux-x86_64.AppImage)
+[![Pobierz dla systemów Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-linux-x86_64.AppImage)
 
-[![Pobierz źródła](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.6.2-beta.tar.gz)
+[![Pobierz źródła](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.6.3-beta.tar.gz)
 
 [![Pobierz źródła](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
@@ -146,7 +146,7 @@ Ustaw zakresy wyświetlania glikemii zgodnie z poniższymi wytycznymi, zgodnymi 
   - Polish
   - Russian
 
-- Jeśli czujesz się na siłach, chcesz pomóc w rozwoju aplikacji, to zapraszamy do zespołu w roli tłumacza. Wystarczy założyć konto w [POEditor](https://poeditor.com/projects/view?id=640131) i zgłosić się do mnie (metody kontaktu na dole tego pliku).
+- Jeśli czujesz się na siłach, chcesz pomóc w rozwoju aplikacji, to zapraszamy do zespołu w roli tłumacza. Wystarczy założyć konto w [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) i zgłosić się do mnie (metody kontaktu na dole tego pliku).
 
 ## 🧭 Użytkowanie widżetu
 
@@ -232,7 +232,7 @@ Możesz skompilować ze źródeł aplikację natywnie działającą w twoim syst
 - [electron.build](https://electron.build) - dokumentacja electron-builder
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - dokumentacja Nightscout API v3
 - [Icons8.com](https://icons8.com/) - Świetne ikonki i zasoby użyte przeze mnie w tym projekcie
-- [POEditor](https://poeditor.com/projects/view?id=640131) - lokalizacja aplikacji (tłumaczenia)
+- [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) - lokalizacja aplikacji (tłumaczenia)
 
 ## ⚖️ Licencja
 

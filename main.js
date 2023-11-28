@@ -88,6 +88,7 @@ const createWindow = () => {
     frame: false,
     skipTaskbar: true,
     transparent: true,
+    resizable: false,
   });
 
   const settingsBounds = {
@@ -120,6 +121,7 @@ const createWindow = () => {
     show: configValid ? false : true,
     parent: mainWindow,
     frame: false,
+    resizable: false,
   });
 
   mainWindow.loadFile(`widget.html`);
@@ -203,7 +205,7 @@ const createWindow = () => {
       url = config.get(`NIGHTSCOUT.URL`);
       break;
     case `poeditor`:
-      url = `https://poeditor.com/projects/view?id=640131n`;
+      url = `https://poeditor.com/join/project/PzcEMSOFc7`;
       break;
     default:
       break;

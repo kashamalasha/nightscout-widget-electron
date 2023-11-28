@@ -181,7 +181,6 @@ a:focus-visible {
   background-color: var(--color_settings_dark);
 }
   .settings__title {
-    -webkit-app-region: drag;
     user-select: none;
 
     margin-top: 15px;
@@ -213,6 +212,7 @@ a:focus-visible {
     }
 
 .settings-header {
+  -webkit-app-region: drag;
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
@@ -458,6 +458,7 @@ a:focus-visible {
   }
 
 .language-list {
+  -webkit-app-region: no-drag;
   position: absolute;
   z-index: 2;
 
