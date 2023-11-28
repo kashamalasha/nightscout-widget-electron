@@ -203,7 +203,7 @@ const createWindow = () => {
       url = config.get(`NIGHTSCOUT.URL`);
       break;
     case `poeditor`:
-      url = `https://poeditor.com/projects/view?id=640131n`;
+      url = `https://poeditor.com/join/project/PzcEMSOFc7`;
       break;
     default:
       break;

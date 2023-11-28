@@ -146,7 +146,7 @@ Set the blood sugar tracking parameters using the following guides:
   - Polish
   - Russian
 
-- If you feel confident and have a good grasp of a foreign language, you can contribute to the translation of the application by becoming a project contributor on [POEditor](https://poeditor.com/projects/view?id=640131).
+- If you feel confident and have a good grasp of a foreign language, you can contribute to the translation of the application by becoming a project contributor on [POEditor](https://poeditor.com/join/project/PzcEMSOFc7).
 
 ## 🧭 Using the widget
 
@@ -232,7 +232,7 @@ You can build a native application for your operating system's preferences from 
 - [electron.build](https://electron.build) - electron-builder documentationn
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - Nightscout API v3 documentation
 - [Icons8.com](https://icons8.com/) - Great icons and assets collection that I used in this project
-- [POEditor](https://poeditor.com/projects/view?id=640131) - localization of the application
+- [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) - localization of the application
 
 ## ⚖️ License
 

@@ -145,7 +145,7 @@ Puoi scegliere la lingua delle impostazioni facendo clic sull'icona **EN** in al
   - Polish
   - Russian
 
-- Se ti senti sicuro e hai una buona conoscenza di una lingua straniera, puoi contribuire alla traduzione dell'applicazione diventando collaboratore del progetto su [POEditor](https://poeditor.com/projects/view?id=640131).
+- Se ti senti sicuro e hai una buona conoscenza di una lingua straniera, puoi contribuire alla traduzione dell'applicazione diventando collaboratore del progetto su [POEditor](https://poeditor.com/join/project/PzcEMSOFc7).
 
 ## 🧭 Uso del widget
 
@@ -230,7 +230,7 @@ Puoi creare un'applicazione nativa per le preferenze del tuo sistema operativo d
 - [electron.build](https://electron.build) - documentazione electron-builder
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - documentazione Nightscout API v3
 - [Icons8.com](https://icons8.com/) - Fantastica raccolta di icone e risorse che ho utilizzato in questo progetto
-- [POEditor](https://poeditor.com/projects/view?id=640131) - localizzazione dell'applicazione
+- [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) - localizzazione dell'applicazione
 
 ## ⚖️ Licenze
 

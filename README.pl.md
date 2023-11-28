@@ -146,7 +146,7 @@ Ustaw zakresy wyświetlania glikemii zgodnie z poniższymi wytycznymi, zgodnymi 
   - Polish
   - Russian
 
-- Jeśli czujesz się na siłach, chcesz pomóc w rozwoju aplikacji, to zapraszamy do zespołu w roli tłumacza. Wystarczy założyć konto w [POEditor](https://poeditor.com/projects/view?id=640131) i zgłosić się do mnie (metody kontaktu na dole tego pliku).
+- Jeśli czujesz się na siłach, chcesz pomóc w rozwoju aplikacji, to zapraszamy do zespołu w roli tłumacza. Wystarczy założyć konto w [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) i zgłosić się do mnie (metody kontaktu na dole tego pliku).
 
 ## 🧭 Użytkowanie widżetu
 
@@ -232,7 +232,7 @@ Możesz skompilować ze źródeł aplikację natywnie działającą w twoim syst
 - [electron.build](https://electron.build) - dokumentacja electron-builder
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - dokumentacja Nightscout API v3
 - [Icons8.com](https://icons8.com/) - Świetne ikonki i zasoby użyte przeze mnie w tym projekcie
-- [POEditor](https://poeditor.com/projects/view?id=640131) - lokalizacja aplikacji (tłumaczenia)
+- [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) - lokalizacja aplikacji (tłumaczenia)
 
 ## ⚖️ Licencja
 
