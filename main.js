@@ -88,6 +88,7 @@ const createWindow = () => {
     frame: false,
     skipTaskbar: true,
     transparent: true,
+    resizable: false,
   });
 
   const settingsBounds = {
@@ -120,6 +121,7 @@ const createWindow = () => {
     show: configValid ? false : true,
     parent: mainWindow,
     frame: false,
+    resizable: false,
   });
 
   mainWindow.loadFile(`widget.html`);
