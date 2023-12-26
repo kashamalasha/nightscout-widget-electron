@@ -22,6 +22,5 @@
     },
     "LAST_UPDATE_REQUEST": "1/1/2000",
     "IS_FIRST_RUN": true,
-    "LANGUAGE": "en",
-    "JWT_EXPIRATION": 946684800
+    "LANGUAGE": "en"
 }

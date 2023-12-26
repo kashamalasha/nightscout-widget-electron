@@ -102,7 +102,9 @@
       },
       "required": [
         "AGE_LIMIT",
-        "POSITION"
+        "POSITION",
+        "UNITS_IN_MMOL",
+        "CALC_TREND"
       ]
     },
     "LAST_UPDATE_REQUEST": {
@@ -127,8 +129,7 @@
     "WIDGET",
     "LAST_UPDATE_REQUEST",
     "IS_FIRST_RUN",
-    "LANGUAGE",
-    "JWT_EXPIRATION"
+    "LANGUAGE"
   ],
   "additionalProperties": false
 }
