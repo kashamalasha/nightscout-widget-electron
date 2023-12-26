@@ -24,7 +24,7 @@
       }
     },
     "disabled_feature": "Feature temporarily disabled",
-    "show-logs": "Logs ...",
+    "show_logs": "Logs ...",
     "button-save": "Save",
     "button-test": "Test",
     "help_to_translate": "Help to translate"
