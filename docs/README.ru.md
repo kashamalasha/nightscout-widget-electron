@@ -146,7 +146,7 @@
 
 <figure>
   <p>
-    <img src="../docs/screenshot-settings-language-ru.png" alt="Screenshot-widget"/>
+    <img src="../docs/screenshot-settings-language-ru.png" alt="Screenshot-widget" width="400"/>
   </p>
 </figure>
 

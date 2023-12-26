@@ -146,7 +146,7 @@ Set the blood sugar tracking parameters using the following guides:
 
 <figure>
   <p>
-    <img src="docs/screenshot-settings-language-en.png" alt="Screenshot-widget"/>
+    <img src="docs/screenshot-settings-language-en.png" alt="Screenshot-widget" width="400"/>
   </p>
 </figure>
 

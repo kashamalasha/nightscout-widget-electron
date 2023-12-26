@@ -148,7 +148,7 @@ Ustaw zakresy wyświetlania glikemii zgodnie z poniższymi wytycznymi, zgodnymi 
 
 <figure>
   <p>
-    <img src="../docs/screenshot-settings-language-en.png" alt="Screenshot-widget"/>
+    <img src="../docs/screenshot-settings-language-en.png" alt="Screenshot-widget" width="400"/>
   </p>
 </figure>
 
