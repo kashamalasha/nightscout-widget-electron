@@ -1,32 +1,41 @@
-# 🦉 Cześć! Jestem Sówka!
+<a href="#"><img width="256" height="256" src="../asset/owlet_main_icon.png" align="left" /></a>
+
+# Owlet
+
+Owlet jest projektem międzyplatformowym zbudowanym przy wykorzystującego [API Nightscout](https://nightscout.github.io/). Celem było przygotowanie ultralekkiego interfejsu dla dyskretnej i ciągłej obserwacji odczytów glikemii z twojego systemu CGM.
+
+Aplikacja nosi nazwę „Owlet”, co oznacza małą sowę i została wybrana ze względu na logo projektu Nightscout.
+
+<div>
+  <a href="https://github.com/kashamalasha/nightscout-widget-electron/releases"><img src="https://img.shields.io/github/downloads/kashamalasha/nightscout-widget-electron/total?color=%2300834a" /></a>
+  <a href="https://github.com/kashamalahsa/nightscout-widget-electron/releases/latest"><img src="https://img.shields.io/github/downloads/kashamalasha/nightscout-widget-electron/latest/total?color=%2300834a&label=latest" /></a>
+  <a href="https://github.com/kashamalasha/nightscout-widget-electron/releases/latest"><img src="https://img.shields.io/github/v/release/kashamalasha/nightscout-widget-electron?color=%2300834a" /></a>
+</div>
 
 [![EN](https://img.shields.io/badge/Language-EN-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.md)
-[![IT](https://img.shields.io/badge/Language-IT-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.it.md)
-[![RU](https://img.shields.io/badge/Language-RU-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.ru.md)
+[![IT](https://img.shields.io/badge/Language-IT-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/docs/README.it.md)
+[![RU](https://img.shields.io/badge/Language-RU-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/docs/README.ru.md)
 
-W oryginale aplikacja nazywa się "Owlet", co oznacza małą sowę. Nazwa wzięła swój początek w logo Nightscout. Polska nazwa, Sówka, zdecydowanie jest zgrabniejsza :)
 
-## 👋 Opis Projektu
-
-Sówka jest projektem międzyplatformowym zbudowanym przy użyciu [frameworka Electron](https://www.electronjs.org/), wykorzystującego [API Nightscout](https://nightscout.github.io/). Celem było przygotowanie ultralekkiego interfejsu dla dyskretnej i ciągłej obserwacji odczytów glikemii z twojego systemu CGM.
+## Opis Projektu
 
 Widżet pozostaje ponad wszystkimi oknami, nie musisz już utrzymywać otwartej zakładki Nightscout w przeglądarce, aby na bieżąco śledzić zmiany poziomu glukozy u siebie lub swojego dziecka/podopieczniego.
 
 Zainspirowałem się rozwiązaniem [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5_NightscoutMon), zbudowanym na platformie sprzętowej [M5 Stack's](https://m5stack.com/).
 
-<img src="docs/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
+<img src="../docs/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
 
-## 📦 Gotowe pakiety instalacyjne
+## Gotowe pakiety instalacyjne
 
-[![Pobierz dla systemu Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-win-x64.exe)
+[![Pobierz dla systemu Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-win-x64.exe)
 
-[![Pobierz dla systemu macOS (procesory Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-mac-arm64.dmg)
+[![Pobierz dla systemu macOS (procesory Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-mac-arm64.dmg)
 
-[![Pobierz dla systemu macOS (procesory Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-mac-x64.dmg)
+[![Pobierz dla systemu macOS (procesory Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-mac-x64.dmg)
 
-[![Pobierz dla systemów Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-linux-x86_64.AppImage)
+[![Pobierz dla systemów Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-linux-x86_64.AppImage)
 
-[![Pobierz źródła](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.6.3-beta.tar.gz)
+[![Pobierz źródła](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.7.0-beta.tar.gz)
 
 [![Pobierz źródła](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
@@ -67,13 +76,13 @@ Zainspirowałem się rozwiązaniem [mlukasek/M5_NightscoutMon](https://github.co
 3. Po dodaniu obiektu kliknij niebieski link, strona otworzy się w nowej zakładce
 4. Wykopiuj pełny adres strony, razem z zawartym w nim tokenem - wystarczy skopiować do schowka, ale możesz także zapisać w pliku
 
-## 🚀 Pierwsze uruchomienie
+## Pierwsze uruchomienie
 
 Przy pierwszym uruchomieniu aplikacja poprosi o uzupełnienie danych i wybór odpowiednich ustawień. Zanim przejdziesz dalej, zerknij na lewy górny róg okna ustawień - znajduje się w nim przełącznik języka. Wybierz Polish.
 
 <figure>
   <p>
-    <img src="docs/screenshot-settings-default-pl.png" alt="Screenshot-widget"/>
+    <img src="../docs/screenshot-settings-default-pl.png" alt="Screenshot-widget"/>
   </p>
 </figure>
 
@@ -86,7 +95,7 @@ Przy pierwszym uruchomieniu aplikacja poprosi o uzupełnienie danych i wybór od
 ### 2. Preferencje wyświetlania
 - **BRAK DANYH OD (MIN.)** - (*domyślnie: 20*) parametr wskazuje czas w minutach, po którym aplikacja uzna połączenie z sensorem CGM za "zamrożone". Zwykle oznacza to brak połączenia z internetem aplikacji CGM, błąd/awarię/utratę sensora lub transmitera, albo po prostu wyczerpanie baterii smartfona obsługującego system CGM. Jeśli wolisz, by widżet nie oznaczał takiego stanu, po prostu wpisz tu 0. Maksymalna doswolona wartość to 999, co oznacza 999 minut przed oznaczeniem sensora jako offline/zamrożony.
 
-<img src="docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
+<img src="../docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
 
 - **CZAS OD ODCZYTU** - (*domyślnie: włączony*) pokazuje czas w minutach, jaki upłynął od odtatniego odczytu CGM
 
@@ -98,7 +107,7 @@ Aplikacja używa metody wyliczania trendu znanego z systemu FreeStyle Libre™ p
 
 <figure>
   <p>
-    <img src="docs/fs-libre-trend-arrows.png" alt="Screenshot-widget"/>
+    <img src="../docs/fs-libre-trend-arrows.png" alt="Screenshot-widget"/>
   </p>
 </figure>
 
@@ -114,15 +123,15 @@ Ustaw zakresy wyświetlania glikemii zgodnie z poniższymi wytycznymi, zgodnymi 
 
 - Powyżej znacznika **WYSOKI (250)** (*domyślnie: 10*) i poniżej znacznika **NISKI (55)** (*domyślnie: 3.5*) ostatni odczyt na widźecie będzie w kolorze czerwonym
 
-<img src="docs/screenshot-widget-critical.png" alt="Screenshot-widget" width="200"/>
+<img src="../docs/screenshot-widget-critical.png" alt="Screenshot-widget" width="200"/>
 
 - Powyżej **W ZAKRESIE - GÓRA (180)** (*domyślnie: 8.5*) i poniżej **W ZAKRESIE - DÓŁ (70)** (*domyślnie: 4*) ostatni odczyt na widźecie będzie w kolorze pomarańczowym
 
-<img src="docs/screenshot-widget-warning.png" alt="Screenshot-widget" width="200"/>
+<img src="../docs/screenshot-widget-warning.png" alt="Screenshot-widget" width="200"/>
 
 - Pomiędzy znacznikami **W ZAKRESIE - DÓŁ (70)** i **W ZAKRESIE - GÓRA (180)** ostatni odczyt na widźecie będzie w kolorze zielonym - i tego widoku wam życzymy jak najczęściej :)
 
-<img src="docs/screenshot-widget-ok.png" alt="Screenshot-widget" width="200"/>
+<img src="../docs/screenshot-widget-ok.png" alt="Screenshot-widget" width="200"/>
 
 - Możesz przetestować wpisane parametry połączenia z Nightscout klikając przycisk **PRZETESTUJ** aby upewnić się, czy wprowadzony URL i token są poprawne
 - 
@@ -136,25 +145,28 @@ Ustaw zakresy wyświetlania glikemii zgodnie z poniższymi wytycznymi, zgodnymi 
 
 <figure>
   <p>
-    <img src="docs/screenshot-settings-language-en.png" alt="Screenshot-widget"/>
+    <img src="../docs/screenshot-settings-language-en.png" alt="Screenshot-widget"/>
   </p>
 </figure>
 
 - Aktualnie aplikacja oferuje języki: 
-  - English 
+  - English
+  - Hebrew
   - Italian
   - Polish
   - Russian
+  - Slovak
+  - Spanish
 
 - Jeśli czujesz się na siłach, chcesz pomóc w rozwoju aplikacji, to zapraszamy do zespołu w roli tłumacza. Wystarczy założyć konto w [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) i zgłosić się do mnie (metody kontaktu na dole tego pliku).
 
-## 🧭 Użytkowanie widżetu
+## Użytkowanie widżetu
 
 - Po każdorazowym restarcie komputera widżet zostanie automatycznie uruchomiony i pozostanie na ekranie ponad wszelkimi widocznymi oknami innych aplikacji. Tak będzie do momentu wyłączenia aplikacji poprzez kliknięcie znaku X w lewym górnym rogu widżetu. 
 - Jeśli chcesz dokonać zmian w ustawieniach, kliknij ikonkę zębatki w dolnym lewym rogu widżetu.
 - Jeśli chcesz szybko otworzyć stronę Nightscout, kliknij środkową ikonkę (wykres) po lewej stronie widżetu. Twoja strona Nightscout otworzy się w domyślnej przeglądarce.
 
-## ⬇️ Automatyczne aktualizacje
+## Automatyczne aktualizacje
 
 - Aplikacja posiada wbudowany mechanizm automatycznych aktualizacji.
 - Aplikacja sprawdzi, czy pojawiła się nowsza wersja przy każdym starcie widżetu, jednakże nie częściej niż raz dziennie.
@@ -162,7 +174,7 @@ Ustaw zakresy wyświetlania glikemii zgodnie z poniższymi wytycznymi, zgodnymi 
 - Na platformach **macOS** i **Windows** użytkownik otrzyma stosowną informację o pobraniu nowszej wersji. 
 - Na komputerach z systemem **Linux**, takie powiadomienie nie działa jeszcze poprawnie.
 
-## 🚧 Aktualnie w przygotowaniu
+## Aktualnie w przygotowaniu
 
 - Unit tests coverage using [Jest](https://jestjs.io/)
 - Strona internetowa projektu bazująca na [Jekyll](https://jekyllrb.com/)
@@ -171,31 +183,8 @@ Ustaw zakresy wyświetlania glikemii zgodnie z poniższymi wytycznymi, zgodnymi 
 Jeśli masz ochotę pomóc lub znalazłeś jakieś pole do poprawek: 
 Możesz zgłosić błędy lub zaproponować rozwiązania/poprawki na [tablicy projektu](https://github.com/users/kashamalasha/projects/2/views/1).
 
-## 🗜️ Zawartość
 
-Aktualna wersja repozytorium aplikacji zawiera następujące pliki i katalogi (English):
-
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.js` - Starts the app and creates a widget. This is the app's **main process**.
-- `widget.html` - An HTML file for the main window. This is the app's **renderer process** starting point.
-- `settings.html` - An HTML file for the settings window. This is the app's settings.
-- `styles.css` - Styles for the renderer process
-- `js/widget.js` - The app's core **renderer process** JS code.
-- `js/settings.js` - The settings form **renderer process** JS code.
-- `js/logger.js` - Logger adapter for electron-log library.  
-- `js/preload.js` - The API interface for IPC messaging between **main process** and **renderer process**.
-- `js/backend.js` - The code to obtain data from Nightscout API using AJAX.
-- `js/util.js` - The JS code to adapt collected data to a human-readable view.
-- `js/auto-update.js` - The app's auto-updater JS implementation.
-- `js/translator.js` - This file contains the implementation of the localization JS class.
-- `js/localization/{lang}.json` - These files contain key sets for localization, with {lang} being a placeholder for the specific language code.
-- `js/config-schema.json` - The app's config json schema validation file.
-- `js/config-sample.json` - The app's config.json example
-- `js/config-default.json` - The default values for the config.json
-- `build/` - The build directory contains the necessary files for building the application on your host from the source code.
-- `docs/` - Screenshots for this README.
-
-## 🛠️ Kompilacja z plików źródłowych
+## Kompilacja z plików źródłowych
 
 Do sklonowania i uruchomienia aplikacji będziesz potrzebował/a [Git](https://git-scm.com) i [Node.js](https://nodejs.org/en/download/) (które są dostępne dzięki [npm](http://npmjs.com)) zainstalowanym na twoim komputerze. Z linii komend wykonaj:
 
@@ -215,30 +204,21 @@ npm run dev
 ### Systemy operacyjne
 
 Aplikacja jest kompatybilna z systemami operacyjnymi:
-* Apple macOS, 
-* Microsoft Windows, 
+* Apple MacOS (10.10+) 
+* Microsoft Windows (10+)
 * Linux (przetestowane na dystrybucjach: buntu, Fedora, CentOS, Alma/GNOME Desktop i XFCE)
-
-### Kompilacja aplikacji natywnej
-
-Możesz skompilować ze źródeł aplikację natywnie działającą w twoim systemie operacyjnym i według twoich ustawień systemowych korzystając z następujących narzędzi:
-
-- [electron-forge](https://www.electronforge.io/) 
-- [electron-builder](https://www.electron.build/) (aktualnie wykorzystywany przeze mnie)
 
 ### Dodatkowe zasoby
 
-- [electronjs.org/docs](https://electronjs.org/docs) - pełna dokumentacja Electon
-- [electron.build](https://electron.build) - dokumentacja electron-builder
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - dokumentacja Nightscout API v3
 - [Icons8.com](https://icons8.com/) - Świetne ikonki i zasoby użyte przeze mnie w tym projekcie
 - [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) - lokalizacja aplikacji (tłumaczenia)
 
-## ⚖️ Licencja
+## Licencja
 
 [GNU GPL v3](LICENSE.md)
 
-## ✉️ Kontakt
+## Kontakt
 Zachęcam do kontaktu ze mną za pośrednictwem preferowanej metody:
 - dmitry.burnyshev@gmail.com
 - https://linkedin.com/in/diburn

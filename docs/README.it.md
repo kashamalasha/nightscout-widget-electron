@@ -1,32 +1,41 @@
-# 🦉 Ciao, sono Owlet!
+<a href="#"><img width="256" height="256" src="../asset/owlet_main_icon.png" align="left" /></a>
 
-[![EN](https://img.shields.io/badge/Language-EN-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.md)
-[![PL](https://img.shields.io/badge/Language-PL-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.pl.md)
-[![RU](https://img.shields.io/badge/Language-RU-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.ru.md)
+# Owlet
+
+Questa è un'applicazione multipiattaforma, che utilizza le [API Nightscout](https://nightscout.github.io/). L'obiettivo è fornire un'interfaccia leggera per la visualizzazione della misurazione del livello di zucchero nel sangue per i T1D.
 
 Il nome dell'app è "Owlet", che significa piccolo gufo ed è scelto per via del logo del progetto Nightscout.
 
-## 👋 Descrizione del Progetto
+<div>
+  <a href="https://github.com/kashamalasha/nightscout-widget-electron/releases"><img src="https://img.shields.io/github/downloads/kashamalasha/nightscout-widget-electron/total?color=%2300834a" /></a>
+  <a href="https://github.com/kashamalahsa/nightscout-widget-electron/releases/latest"><img src="https://img.shields.io/github/downloads/kashamalasha/nightscout-widget-electron/latest/total?color=%2300834a&label=latest" /></a>
+  <a href="https://github.com/kashamalasha/nightscout-widget-electron/releases/latest"><img src="https://img.shields.io/github/v/release/kashamalasha/nightscout-widget-electron?color=%2300834a" /></a>
+</div>
 
-Questa è un'applicazione multipiattaforma, creata con [framework Electron](https://www.electronjs.org/), che utilizza le [API Nightscout](https://nightscout.github.io/). L'obiettivo è fornire un'interfaccia leggera per la visualizzazione della misurazione del livello di zucchero nel sangue per i T1D.
+[![EN](https://img.shields.io/badge/Language-EN-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.md)
+[![PL](https://img.shields.io/badge/Language-PL-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/docs/README.pl.md)
+[![RU](https://img.shields.io/badge/Language-RU-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/docs/README.ru.md)
+
+
+## Descrizione del Progetto
 
 Il widget rimarrà in primo piano sullo schermo, quindi non avrai più bisogno di tenere aperto il tuo sito Nightscout nel browser per vedere le tue misurazioni, di un tuo parente o di un bambino in tempo reale.
 
 Sono stato inspirato dalla soluzione [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5_NightscoutMon), creata per l'hardware [M5 Stack's](https://m5stack.com/).
 
-<img src="docs/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
+<img src="../docs/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
 
-## 📦 Pacchetti di installazione
+## Pacchetti di installazione
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-win-x64.exe)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-win-x64.exe)
 
-[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-mac-arm64.dmg)
+[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-mac-arm64.dmg)
 
-[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-mac-x64.dmg)
+[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-mac-x64.dmg)
 
-[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-linux-x86_64.AppImage)
+[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-linux-x86_64.AppImage)
 
-[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.6.3-beta.tar.gz)
+[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.7.0-beta.tar.gz)
 
 [![Download Souces](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
@@ -67,13 +76,13 @@ Sono stato inspirato dalla soluzione [mlukasek/M5_NightscoutMon](https://github.
 3. Crea un nuovo utente per la tua applicazione con il ruolo creato nello step 2, oppure usa un ruolo già esistente con il pattern di sola lettura `*:*:read`
 4. Copia il token di accesso di questo utente negli appunti oppure salvalo
 
-## 🚀 Primo avvio
+## Primo avvio
 
 Al primo avvio l'app ti proporrà di compilare le seguenti informazioni
 
 <figure>
   <p>
-    <img src="docs/screenshot-settings-default-it.png" alt="Screenshot-widget"/>
+    <img src="../docs/screenshot-settings-default-it.png" alt="Screenshot-widget"/>
   </p>
 </figure>
 
@@ -86,7 +95,7 @@ Al primo avvio l'app ti proporrà di compilare le seguenti informazioni
 ### 2. Preferenze Widget
 - **INFO: LIMITE ETÀ (MIN.)** - (*default: 20*) intervallo di timeout della richiesta dati, dopo questo intervallo il widget cambierà e mostrerà uno stato "congelato". Ciò indica in genere che il lettore è offline, staccato dal sensore o che la batteria dello smartphone è scarica. Se preferisci che il widget non si blocchi, puoi impostare questa proprietà su 0. Il valore massimo consentito per questo campo, così come il valore massimo mostrato, è 999 minuti.
 
-<img src="docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
+<img src="../docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
 
 - **MOSTRA ETÀ DATI** - (*default: enabled*) questa opzione visualizza informazioni aggiuntive sull'età dei dati mostrati
 
@@ -98,7 +107,7 @@ L' app usa il seguente algoritmo dei sensori Abbot™ FreeStyle Libre™ per ric
 
 <figure>
   <p>
-    <img src="docs/fs-libre-trend-arrows.png" alt="Screenshot-widget"/>
+    <img src="../docs/fs-libre-trend-arrows.png" alt="Screenshot-widget"/>
   </p>
 </figure>
 
@@ -114,15 +123,15 @@ Imposta i parametri di monitoraggio della glicemia utilizzando le seguenti guide
 
 - Oltre il **SOGLIA ALTO LIVELLO** (*default: 10*) e sotto il **SOGLIA BASSO LIVELLO** (*default: 3.5*) l'ultimo valore verrà colorato di rosso
 
-<img src="docs/screenshot-widget-critical.png" alt="Screenshot-widget" width="200"/>
+<img src="../docs/screenshot-widget-critical.png" alt="Screenshot-widget" width="200"/>
 
 - Oltre il **LIVELLO TARGET ALTO** (*default: 8.5*) e sotto il **LIVELLO TARGET BASSO** (*default: 4*) l'ultimo valore verrà colorato di arancione
 
-<img src="docs/screenshot-widget-warning.png" alt="Screenshot-widget" width="200"/>
+<img src="../docs/screenshot-widget-warning.png" alt="Screenshot-widget" width="200"/>
 
 - Di default, l'ultimo valore è colorato di verde
 
-<img src="docs/screenshot-widget-ok.png" alt="Screenshot-widget" width="200"/>
+<img src="../docs/screenshot-widget-ok.png" alt="Screenshot-widget" width="200"/>
 
 - Puoi testare i parametri di connessione inseriti facendo clic sul pulsante **TEST** per verificare che il sito Nightscout sia accessibile e che il token sia corretto
 - Se tutto è ok, premi il pulsante **SALVA** per salvare le impostazioni e riavviare l'applicazione
@@ -135,25 +144,28 @@ Puoi scegliere la lingua delle impostazioni facendo clic sull'icona **EN** in al
 
 <figure>
   <p>
-    <img src="docs/screenshot-settings-language-en.png" alt="Screenshot-widget"/>
+    <img src="../docs/screenshot-settings-language-en.png" alt="Screenshot-widget"/>
   </p>
 </figure>
 
 - Attualmente l'applicazione offre le seguenti lingue: 
-  - English 
+  - English
+  - Hebrew
   - Italian
   - Polish
   - Russian
+  - Slovak
+  - Spanish
 
 - Se ti senti sicuro e hai una buona conoscenza di una lingua straniera, puoi contribuire alla traduzione dell'applicazione diventando collaboratore del progetto su [POEditor](https://poeditor.com/join/project/PzcEMSOFc7).
 
-## 🧭 Uso del widget
+## Uso del widget
 
 - Dopo il riavvio il widget rimarrà sempre in primo piano sullo schermo finché non lo chiuderai facendo clic sull'angolo in alto a sinistra con il segno X.
 - Se è necessario modificare le impostazioni è possibile fare clic sul simbolo dell'ingranaggio nell'angolo in basso a sinistra.
 - Se vuoi navigare velocemente nel sito Nightscout puoi cliccare il pulsante centrale con il simbolo del grafico.
 
-## ⬇️ Auto aggiornamenti
+## Auto aggiornamenti
 
 - Il widget ha un sistema di aggiornamento del sistema integrato.
 - Il widget controllerà la disponibilità dell'ultima versione ogni volta che viene avviato, ma solo una volta al giorno.
@@ -161,7 +173,7 @@ Puoi scegliere la lingua delle impostazioni facendo clic sull'icona **EN** in al
 - Sui sistemi operativi **Mac** e **Windows**, gli utenti riceveranno una notifica sulla versione appena scaricata.
 - Su **Linux**, la notifica non funziona ancora correttamente.
 
-## 🚧 In Progress 
+## Lavori in corso
 
 - Unit tests coverage con [Jest](https://jestjs.io/)
 - Creazione di una pagina landing del progetto con [Jekyll](https://jekyllrb.com/)
@@ -169,31 +181,8 @@ Puoi scegliere la lingua delle impostazioni facendo clic sull'icona **EN** in al
 
 Se senti il desiderio di migliorarlo o di aiutare puoi suggerire qualsiasi idea o bug rilevato al [project board](https://github.com/users/kashamalasha/projects/2/views/1).
 
-## 🗜️ Contenuto
 
-La corrente applicazione include questi file:
-
-- `package.json`: punta al file principale dell'app ed ne elenca i dettagli e le dipendenze.
-- `main.js` - Avvia l'app e crea un widget. Questo è il **processo principale** dell'app.
-- `widget.html` - Un file HTML per la finestra principale. Questo è il punto di partenza del **processo di rendering** dell'app.
-- `settings.html` - Un file HTML per la finestra delle impostazioni. Queste sono le impostazioni dell'app.
-- `styles.css` - Stili per il processo di rendering
-- `js/widget.js` - Il codice JS principale del **processo di rendering** dell'app.
-- `js/settings.js` - Le impostazioni del modulo **processo di rendering** codice JS.
-- `js/logger.js` - Adattatore logger per libreria di log elettronici.
-- `js/preload.js` - L'interfaccia API per la messaggistica IPC tra il **processo principale** e il **processo di rendering**.
-- `js/backend.js` - Il codice per ottenere dati dall'API Nightscout utilizzando AJAX.
-- `js/util.js` - Il codice JS per adattare i dati raccolti a una visualizzazione leggibile dall'uomo.
-- `js/auto-update.js` - Implementazione JS dell'aggiornamento automatico dell'app.
-- `js/translator.js` - Questo file contiene l'implementazione della classe JS di localizzazione.
-- `js/localization/{lang}.json` - Questi file contengono set di chiavi per la localizzazione, dove {lang} è un segnaposto per il codice della lingua specifica.
-- `js/config-schema.json` - File di convalida dello schema json di configurazione dell'app.
-- `js/config-sample.json` - Esempio di config.json dell'app
-- `js/config-default.json` - I valori predefiniti per config.json
-- `build/` - La directory build contiene i file necessari per creare l'applicazione sul tuo host dal codice sorgente.
-- `docs/` - Screenshot per questo README.
-
-## 🛠️ Per costruirlo dal codice sorgente
+## Per costruirlo dal codice sorgente
 
 Per clonare ed eseguire questo repository, avrai bisogno di [Git](https://git-scm.com) e [Node.js](https://nodejs.org/en/download/) (che viene fornito con [ npm](http://npmjs.com)) installato sul tuo computer. Dalla riga di comando esegui:
 
@@ -213,30 +202,21 @@ npm run dev
 ### Sistemi Operativi
 
 Compatibile con:
-* MacOS, 
-* MS Windows, 
+* Apple MacOS (10.10+) 
+* Microsoft Windows (10+)
 * Linux (testato su Ubuntu, Fedora, CentOS, Alma su GNOME Desktop e XFCE)
-
-### Crea applicazioni native
-
-Puoi creare un'applicazione nativa per le preferenze del tuo sistema operativo dal codice sorgente utilizzando uno di questi strumenti:
-
-- [electron-forge](https://www.electronforge.io/) 
-- [electron-builder](https://www.electron.build/) (attualmente in uso)
 
 ### Risorse Aggiuntive
 
-- [electronjs.org/docs](https://electronjs.org/docs) - tutta la documentazione di Electron
-- [electron.build](https://electron.build) - documentazione electron-builder
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - documentazione Nightscout API v3
 - [Icons8.com](https://icons8.com/) - Fantastica raccolta di icone e risorse che ho utilizzato in questo progetto
 - [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) - localizzazione dell'applicazione
 
-## ⚖️ Licenze
+## Licenze
 
 [GNU GPL v3](LICENSE.md)
 
-## ✉️ Contatti
+## Contatti
 Sentitevi liberi di contattarmi in uno di questi modi:
 - dmitry.burnyshev@gmail.com
 - https://linkedin.com/in/diburn

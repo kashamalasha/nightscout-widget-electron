@@ -1,15 +1,22 @@
-# 🦉 Hello, I am Owlet!
+<a href="#"><img width="256" height="256" src="asset/owlet_main_icon.png" align="left" /></a>
 
-[![IT](https://img.shields.io/badge/Language-IT-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.it.md)
-[![PL](https://img.shields.io/badge/Language-PL-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.pl.md)
-[![RU](https://img.shields.io/badge/Language-RU-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/README.ru.md) 
+# Owlet
 
+The cross-platform application, that uses the [Nightscout API](https://nightscout.github.io/). The aim is to provide a lightweight interface for your `T1D` measurement visualization (blood sugar levels).
 
 The app's name is "Owlet", which means baby owl and is chosen because of the Nightscout project logo.
 
-## 👋 Project Description
+<div>
+  <a href="https://github.com/kashamalasha/nightscout-widget-electron/releases"><img src="https://img.shields.io/github/downloads/kashamalasha/nightscout-widget-electron/total?color=%2300834a" /></a>
+  <a href="https://github.com/kashamalahsa/nightscout-widget-electron/releases/latest"><img src="https://img.shields.io/github/downloads/kashamalasha/nightscout-widget-electron/latest/total?color=%2300834a&label=latest" /></a>
+  <a href="https://github.com/kashamalasha/nightscout-widget-electron/releases/latest"><img src="https://img.shields.io/github/v/release/kashamalasha/nightscout-widget-electron?color=%2300834a" /></a>
+</div>
 
-This is the cross-platform application, built with [Electron framework](https://www.electronjs.org/), that uses the [Nightscout API](https://nightscout.github.io/). The aim is to provide a lightweight interface for your `T1D` measurement visualization (blood sugar levels).
+[![IT](https://img.shields.io/badge/Language-IT-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/docs/README.it.md)
+[![PL](https://img.shields.io/badge/Language-PL-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/docs/README.pl.md)
+[![RU](https://img.shields.io/badge/Language-RU-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/docs/README.ru.md) 
+
+## Project Description
 
 The widget will stay on top of your screen, so you don't need to keep your Nightscout site in the browser opened to see your/your relative's or kid's measurements in real-time anymore.
 
@@ -17,17 +24,17 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 <img src="docs/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
 
-## 📦 Installation packages
+## Installation packages
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-win-x64.exe)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-win-x64.exe)
 
-[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-mac-arm64.dmg)
+[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-mac-arm64.dmg)
 
-[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-mac-x64.dmg)
+[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-mac-x64.dmg)
 
-[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.6.3-beta/Owlet-0.6.3-beta-linux-x86_64.AppImage)
+[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.0-beta/Owlet-0.7.0-beta-linux-x86_64.AppImage)
 
-[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.6.3-beta.tar.gz)
+[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.7.0-beta.tar.gz)
 
 [![Download Souces](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
@@ -68,7 +75,7 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 3. Create a new subject for the application with the role created in step 2, or use an existing role with the pattern to read data `*:*:read`
 4. Copy the access token for this subject to your clipboard or save it
 
-## 🚀 First start
+## First start
 
 On the first launch, the app will prompt you to fill in the following settings
 
@@ -141,20 +148,23 @@ Set the blood sugar tracking parameters using the following guides:
 </figure>
 
 - Currently, the application offers the following languages:
-  - English 
+  - English
+  - Hebrew
   - Italian
   - Polish
   - Russian
+  - Slovak
+  - Spanish
 
 - If you feel confident and have a good grasp of a foreign language, you can contribute to the translation of the application by becoming a project contributor on [POEditor](https://poeditor.com/join/project/PzcEMSOFc7).
 
-## 🧭 Using the widget
+## Using the widget
 
 - After restarting, the widget will always stay on top of the screen until you close it by clicking the top left corner with the X sign.
 - If you need to change the settings you can click by the gear symbol in the bottom left corner.
 - If you want to fast navigate to the Nightscout site, you can click the middle button with the graph symbol.
 
-## ⬇️ Auto updates
+## Auto updates
 
 - The widget has a built-in implementation of the update system.
 - The widget will check for the latest release availability every time it starts, but only once a day.
@@ -162,7 +172,7 @@ Set the blood sugar tracking parameters using the following guides:
 - On **Mac** and **Windows** operating systems, users will receive a notification about the newly downloaded version.
 - On **Linux**, the notification doesn't work properly yet.
 
-## 🚧 In Progress 
+## Work In Progress 
 
 - Unit tests coverage using [Jest](https://jestjs.io/)
 - Create landing page of the project based on [Jekyll](https://jekyllrb.com/)
@@ -171,31 +181,7 @@ Set the blood sugar tracking parameters using the following guides:
 If you feel desire to improve it or help. 
 You can suggest any ideas or detected bugs to the [project board](https://github.com/users/kashamalasha/projects/2/views/1).
 
-## 🗜️ Content
-
-The current application includes these files:
-
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.js` - Starts the app and creates a widget. This is the app's **main process**.
-- `widget.html` - An HTML file for the main window. This is the app's **renderer process** starting point.
-- `settings.html` - An HTML file for the settings window. This is the app's settings.
-- `styles.css` - Styles for the renderer process
-- `js/widget.js` - The app's core **renderer process** JS code.
-- `js/settings.js` - The settings form **renderer process** JS code.
-- `js/logger.js` - Logger adapter for electron-log library.  
-- `js/preload.js` - The API interface for IPC messaging between **main process** and **renderer process**.
-- `js/backend.js` - The code to obtain data from Nightscout API using AJAX.
-- `js/util.js` - The JS code to adapt collected data to a human-readable view.
-- `js/auto-update.js` - The app's auto-updater JS implementation.
-- `js/translator.js` - This file contains the implementation of the localization JS class.
-- `js/localization/{lang}.json` - These files contain key sets for localization, with {lang} being a placeholder for the specific language code.
-- `js/config-schema.json` - The app's config json schema validation file.
-- `js/config-sample.json` - The app's config.json example
-- `js/config-default.json` - The default values for the config.json
-- `build/` - The build directory contains the necessary files for building the application on your host from the source code.
-- `docs/` - Screenshots for this README.
-
-## 🛠️ To build it from source code
+## To build it from source code
 
 To clone and run this repository, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line do:
 
@@ -212,33 +198,24 @@ npm start
 npm run dev
 ```
 
-### Operating systems
+### Operating systems compatibility
 
 Compatible with:
-* MacOS, 
-* MS Windows, 
+* Apple MacOS (10.10+)
+* Microsoft Windows (10+)
 * Linux (tested on Ubuntu, Fedora, CentOS, Alma on GNOME Desktop and XFCE)
-
-### Build Native Applications
-
-You can build a native application for your operating system's preferences from the source code using one of these tools:
-
-- [electron-forge](https://www.electronforge.io/) 
-- [electron-builder](https://www.electron.build/) (currently using)
 
 ### Additional Resources
 
-- [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
-- [electron.build](https://electron.build) - electron-builder documentationn
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - Nightscout API v3 documentation
 - [Icons8.com](https://icons8.com/) - Great icons and assets collection that I used in this project
 - [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) - localization of the application
 
-## ⚖️ License
+## License
 
 [GNU GPL v3](LICENSE.md)
 
-## ✉️ Contacts
+## Contacts
 Feel free to contact me any of these ways:
 - dmitry.burnyshev@gmail.com
 - https://linkedin.com/in/diburn
