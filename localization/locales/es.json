@@ -1,0 +1,32 @@
+{
+  "settings": {
+    "title": "Ajustes widget",
+    "nightscout": {
+      "title": "Ajustes Nightscout API",
+      "url": "URL Nightscout",
+      "token": "Token Nightscout",
+      "interval": "Intervalo (seg.) entre solicitudes a Nightscout"
+    },
+    "widget": {
+      "title": "Preferencias widget",
+      "age_limit": "Datos obsoletos (min.)",
+      "show_age": "Mostrar edad de datos",
+      "calc_trend": "Calc. tendencia",
+      "units_in_mmol": "Unidades en mmol/l"
+    },
+    "bg": {
+      "title": "Niveles de glucosa en sangre",
+      "high": "Umbral nivel alto",
+      "low": "Umbral nivel bajo",
+      "target": {
+        "top": "Objetivo umbral superior",
+        "bottom": "Objetivo umbral inferior"
+      }
+    },
+    "disabled_feature": "Desactivar función temporalmente",
+    "show_logs": "Logs ...",
+    "button-save": "Guardar",
+    "button-test": "Probar",
+    "help_to_translate": "Ayuda a traducir"
+  }
+}

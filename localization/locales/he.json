@@ -1,0 +1,33 @@
+{
+  "direction": "rtl",
+  "settings": {
+    "title": "הגדרות היישומון",
+    "nightscout": {
+      "title": "הגדרות Nightscout",
+      "url": "Nightscout URL",
+      "token": "Nightscout token",
+      "interval": "זמן עדכון נתוני Nightscout (שניות)"
+    },
+    "widget": {
+      "title": "העדפות היישומון",
+      "age_limit": "הגבלת נתוני תצוגה (דקות)",
+      "show_age": "הצג זמן עדכון הנתונים",
+      "calc_trend": "חישוב מגמה",
+      "units_in_mmol": "יחידות ב-mmol/l"
+    },
+    "bg": {
+      "title": "העדפות תצוגת ערכי הסוכר",
+      "high": "סף סוכר גבוה",
+      "low": "סף סוכר נמוך",
+      "target": {
+        "top": "ערך מטרה - גבול עליון",
+        "bottom": "ערך מטרה - גבול תחתון"
+      }
+    },
+    "disabled_feature": "פיצ׳ר מושבת זמנית",
+    "show_logs": "לוגים…",
+    "button-save": "שמירה",
+    "button-test": "בדיקה",
+    "help_to_translate": "עזרו לתרגם"
+  }
+}

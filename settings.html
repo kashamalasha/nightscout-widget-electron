@@ -13,9 +13,12 @@
         <button class="settings-language__button">en</button>
         <ul class="language-list">
           <li class="language-list__item" data-value="en" tabindex="0">English</li>
+          <li class="language-list__item" data-value="he" tabindex="0">Hebrew</li>
           <li class="language-list__item" data-value="it" tabindex="0">Italian</li>
           <li class="language-list__item" data-value="pl" tabindex="0">Polish</li>
           <li class="language-list__item" data-value="ru" tabindex="0">Russian</li>
+          <li class="language-list__item" data-value="sk" tabindex="0">Slovak</li>
+          <li class="language-list__item" data-value="es" tabindex="0">Spanish</li>
           <hr class="language-list__separator">
           <li class="language-list__item" tabindex="0" data-i18n="settings.help_to_translate">Help us to translate</li>
         </ul>
@@ -29,11 +32,11 @@
         <section class="settings-field settings-fields__nightscout">
           <h2 class="settings-field__title" data-i18n="settings.nightscout.title">Nightscout API settings</h2>
           <div class="settings-input">
-            <input class="settings-input__field" type="text" name="nightscout-url" id="nightscout-url" spellcheck="false" required>
+            <input class="settings-input__field settings-input__field--text" type="text" name="nightscout-url" id="nightscout-url" spellcheck="false" required>
             <label class="settings-input__label" for="nightscout-url" data-i18n="settings.nightscout.url">Nightscout URL</label>
           </div>
           <div class="settings-input">
-            <input class="settings-input__field" type="text" name="nightscout-token" id="nightscout-token" spellcheck="false" required>
+            <input class="settings-input__field settings-input__field--text" type="text" name="nightscout-token" id="nightscout-token" spellcheck="false" required>
             <label class="settings-input__label" for="nightscout-token" data-i18n="settings.nightscout.token">Nightscout token</label>
           </div>
           <div class="settings-input">

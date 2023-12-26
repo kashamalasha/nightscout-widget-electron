@@ -119,7 +119,7 @@ const obtainToken = (paramsObj) => {
       const expirationInMillis = response.exp * 1000;
 
       GetParams.TOKEN = response.token;
-      window.electronAPI.setJWTExpiration(expirationInMillis);
+      CONFIG.JWT_EXPIRATION = expirationInMillis;
 
       log.info(`JWT token obtained successfully`);
     },

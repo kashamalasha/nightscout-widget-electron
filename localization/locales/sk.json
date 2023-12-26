@@ -1,0 +1,32 @@
+{
+  "settings": {
+    "title": "Nastavenia Widgetu",
+    "nightscout": {
+      "title": "Nastavenie Nighscout API",
+      "url": "Nightscout URL",
+      "token": "Nightscout token",
+      "interval": "Interval obnovenia glykémie (s)"
+    },
+    "widget": {
+      "title": "Predvoľby Widgetu",
+      "age_limit": "Info: Staré údaje (min.)",
+      "show_age": "Zobrazovať vek údajov",
+      "calc_trend": "Vypočítaný trend",
+      "units_in_mmol": "Jednotky v mmol/l"
+    },
+    "bg": {
+      "title": "Predvoľby zobrazovania glykémie",
+      "high": "Vysoká úroveň glykémie",
+      "low": "Nízka úroveň glukémie",
+      "target": {
+        "top": "Najvyššia cieľová úroveň",
+        "bottom": "Najnižšia cieľová úroveň"
+      }
+    },
+    "disabled_feature": "Dočasne zakázané",
+    "show_logs": "Logs ...",
+    "button-save": "Uložiť",
+    "button-test": "Test",
+    "help_to_translate": "Pomoc s prekladom"
+  }
+}

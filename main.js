@@ -16,12 +16,8 @@ const defaults = JSON.parse(readFileSync(path.join(__dirname, `js/config-default
 
 const config = new Store({ defaults });
 
-if (config.has(`WIDGET.OPACITY`)) {
-  config.delete(`WIDGET.OPACITY`);
-}
-
-if (!config.has(`WIDGET.UNITS_IN_MMOL`)) {
-  config.set(`WIDGET.UNITS_IN_MMOL`, defaults.WIDGET.UNITS_IN_MMOL);
+if (config.has(`JWT_EXPIRATION`)) {
+  config.delete(`JWT_EXPIRATION`);
 }
 
 const ajv = new Ajv();
@@ -402,15 +398,6 @@ app.whenReady().then(() => {
     widget.mainWindow.webContents.send(`set-calc-trend`, calcTrend, isMMOL);
   });
 
-  ipcMain.on(`set-jwt-expiration`, (evt, timestamp) => {
-    evt.preventDefault();
-
-    try {
-      config.set(`JWT_EXPIRATION`, timestamp);
-    } catch (error) {
-      log.error(error, timestamp);
-    }
-  });
 });
 
 if (isMac) {

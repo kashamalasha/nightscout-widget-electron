@@ -192,6 +192,7 @@ a:focus-visible {
 
   .settings__app-version {
     padding-right: 10px;
+    padding-left: 10px;
 
     font-family: 'Exo 2', Tahoma, sans-serif;
     text-align: right;
@@ -311,6 +312,14 @@ a:focus-visible {
     .settings-input__field--number {
       width: 70px;
     }
+    .settings-input__field--text-ltr {
+      direction: ltr;
+      text-align: left;
+    }
+    .settings-input__field--text-rtl {
+      direction: ltr;
+      text-align: right;
+    }
     .settings-input__check-wrapper {
       width: 100%;
 
@@ -347,7 +356,7 @@ a:focus-visible {
 
 .settings-footer {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 }
 .settings-footer__buttons {
@@ -359,7 +368,7 @@ a:focus-visible {
 .settings-footer__meta {
   display: flex;
   justify-content: space-between;
-  margin-left: auto;
+  margin-left: 10px;
   margin-right: 10px;
 }
 
@@ -426,6 +435,7 @@ a:focus-visible {
 .settings-language {
   -webkit-app-region: no-drag;
   user-select: none;
+  direction: ltr;
 
   position: absolute;
   top: 5px;
