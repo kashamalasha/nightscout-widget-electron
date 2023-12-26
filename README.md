@@ -1,5 +1,6 @@
 <a href="#"><img width="256" height="256" src="asset/owlet_main_icon.png" align="left" /></a>
 
+
 # Owlet
 
 The cross-platform application, that uses the [Nightscout API](https://nightscout.github.io/). The aim is to provide a lightweight interface for your `T1D` measurement visualization (blood sugar levels).
@@ -19,6 +20,7 @@ The app's name is "Owlet", which means baby owl and is chosen because of the Nig
 [![PL](https://img.shields.io/badge/Language-PL-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/docs/README.pl.md)
 [![RU](https://img.shields.io/badge/Language-RU-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/docs/README.ru.md) 
 
+
 ## Project Description
 
 The widget will stay on top of your screen, so you don't need to keep your Nightscout site in the browser opened to see your/your relative's or kid's measurements in real-time anymore.
@@ -26,6 +28,7 @@ The widget will stay on top of your screen, so you don't need to keep your Night
 I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5_NightscoutMon) solution, built on [M5 Stack's](https://m5stack.com/) hardware platform.
 
 <img src="docs/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
+
 
 ## Installation packages
 
@@ -69,6 +72,7 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 </details>
 
+
 ## ⚠️ Before start
 
 > ‼️ **THIS IS VERY IMPORTANT**: You have to be sure that all steps are done before you make the first launch!
@@ -77,6 +81,7 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 2. Create a new role with permission to read data using the pattern `*:*:read`
 3. Create a new subject for the application with the role created in step 2, or use an existing role with the pattern to read data `*:*:read`
 4. Copy the access token for this subject to your clipboard or save it
+
 
 ## First start
 
@@ -88,13 +93,16 @@ On the first launch, the app will prompt you to fill in the following settings
   </p>
 </figure>
 
+
 ### 1. Nightscout API Settings
 
 - **NIGHTSCOUT URL** - is the address of your nightscout (e.g. https://some-cgm.fly.dev) 
 - **NIGHTSCOUT TOKEN** - the access token you've created on the previous steps
 - **NIGHTSCOUT REQUEST INTERVAL (SEC.)** - (*default: 60*) the interval of the getting information from the Nightscout site to display in the widget
 
+
 ### 2. Widget preferences
+
 - **AGE LIMIT (MIN.)** - (*default: 20*) the timeout of data requesting interval, after that interval widget will change its appearance to a "frozen" state. This typically indicates that the reader is offline, detached from the sensor, or the smartphone's battery is drained. If you prefer the widget not to freeze, you can set this property to 0. The maximum allowable value for this field, as well as the maximum value shown, is 999 minutes.
 
 <img src="docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
@@ -120,7 +128,6 @@ You can find more information on the approach to using trend arrows to adjust in
 
 ### 3. Blood sugar levels preferences
 
-
 Set the blood sugar tracking parameters using the following guides:
 
 - Above the **HIGH LEVEL TRESHOLD** (*default: 10*) and below th **LOW LEVEL THRESHOLD** (*default: 3.5*) the last value will be colored in red
@@ -141,12 +148,11 @@ Set the blood sugar tracking parameters using the following guides:
 
 ### 4. Settings language and localization 
 
-
 - You can choose the settings language by clicking on the top left **EN** icon and selecting your preferred language.
 
 <figure>
   <p>
-    <img src="docs/screenshot-settings-language-en.png" alt="Screenshot-widget"/>
+    <img src="docs/screenshot-settings-language-en.png" alt="Screenshot-widget" width="400"/>
   </p>
 </figure>
 
@@ -161,11 +167,13 @@ Set the blood sugar tracking parameters using the following guides:
 
 - If you feel confident and have a good grasp of a foreign language, you can contribute to the translation of the application by becoming a project contributor on [POEditor](https://poeditor.com/join/project/PzcEMSOFc7).
 
+
 ## Using the widget
 
 - After restarting, the widget will always stay on top of the screen until you close it by clicking the top left corner with the X sign.
 - If you need to change the settings you can click by the gear symbol in the bottom left corner.
 - If you want to fast navigate to the Nightscout site, you can click the middle button with the graph symbol.
+
 
 ## Auto updates
 
@@ -175,6 +183,7 @@ Set the blood sugar tracking parameters using the following guides:
 - On **Mac** and **Windows** operating systems, users will receive a notification about the newly downloaded version.
 - On **Linux**, the notification doesn't work properly yet.
 
+
 ## Work In Progress 
 
 - Unit tests coverage using [Jest](https://jestjs.io/)
@@ -183,6 +192,7 @@ Set the blood sugar tracking parameters using the following guides:
 
 If you feel desire to improve it or help. 
 You can suggest any ideas or detected bugs to the [project board](https://github.com/users/kashamalasha/projects/2/views/1).
+
 
 ## To build it from source code
 
@@ -201,24 +211,28 @@ npm start
 npm run dev
 ```
 
-### Operating systems compatibility
+## Operating systems compatibility
 
 Compatible with:
 * Apple MacOS (10.10+)
 * Microsoft Windows (10+)
 * Linux (tested on Ubuntu, Fedora, CentOS, Alma on GNOME Desktop and XFCE)
 
-### Additional Resources
+
+## Additional Resources
 
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - Nightscout API v3 documentation
 - [Icons8.com](https://icons8.com/) - Great icons and assets collection that I used in this project
 - [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) - localization of the application
 
+
 ## License
 
 [GNU GPL v3](LICENSE.md)
 
+
 ## Contacts
+
 Feel free to contact me any of these ways:
 - dmitry.burnyshev@gmail.com
 - https://linkedin.com/in/diburn

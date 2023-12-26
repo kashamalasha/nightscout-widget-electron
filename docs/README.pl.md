@@ -1,5 +1,6 @@
 <a href="#"><img width="256" height="256" src="../asset/owlet_main_icon.png" align="left" /></a>
 
+
 # Owlet
 
 Owlet jest projektem międzyplatformowym zbudowanym przy wykorzystującego [API Nightscout](https://nightscout.github.io/). Celem było przygotowanie ultralekkiego interfejsu dla dyskretnej i ciągłej obserwacji odczytów glikemii z twojego systemu CGM.
@@ -27,6 +28,7 @@ Widżet pozostaje ponad wszystkimi oknami, nie musisz już utrzymywać otwartej 
 Zainspirowałem się rozwiązaniem [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5_NightscoutMon), zbudowanym na platformie sprzętowej [M5 Stack's](https://m5stack.com/).
 
 <img src="../docs/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
+
 
 ## Gotowe pakiety instalacyjne
 
@@ -70,6 +72,7 @@ Zainspirowałem się rozwiązaniem [mlukasek/M5_NightscoutMon](https://github.co
 
 </details>
 
+
 ## ⚠️ Zanim zaczniesz
 
 > ‼️ **TO JEST BARDZO WAŻNE**: Musisz się upewnić, że wykonałeś/aś wszystkie poniższe kroki jeszcze przed pierwszym uruchomieniem aplikacji!
@@ -78,6 +81,7 @@ Zainspirowałem się rozwiązaniem [mlukasek/M5_NightscoutMon](https://github.co
 2. Utwórz nowy obiekt o nazwie owlet i uprawnieniach readable `*:*:read`
 3. Po dodaniu obiektu kliknij niebieski link, strona otworzy się w nowej zakładce
 4. Wykopiuj pełny adres strony, razem z zawartym w nim tokenem - wystarczy skopiować do schowka, ale możesz także zapisać w pliku
+
 
 ## Pierwsze uruchomienie
 
@@ -89,13 +93,16 @@ Przy pierwszym uruchomieniu aplikacja poprosi o uzupełnienie danych i wybór od
   </p>
 </figure>
 
+
 ### 1. Ustawienia Nightscout API
 
 - **NIGHTSCOUT - ADRES (URL)** - to jest twój adres Nightscout (np. https://some-cgm.fly.dev) - wklej tu zawartość schowka, skasuj znaki /? jeśli zostały na końcu po przeniesieniu tokena do pola niżej
 - **NIGHTSCOUT - TOKEN** - token wykopiowany z pola powyżej, jeśli robiłeś/aś wszystko zgodnie z instrukcję, będzie się zaczynał od owlet-
 - **CZAS MIĘDZY ODCZYTAMI NIGHTSCOUT (SEK.)** - (*domyślnie: 60*) czas pomiędzy kolejnymi zapytaniami do strony Nightscout. Dla FreeStyle Libre z odczytami co minutę wybierz 60, dla pozostałych systemów CGM możesz wydłużyć czas do 300. Jeśli odczyty będą opóźnione, zmniejszaj ten parametr.
 
+
 ### 2. Preferencje wyświetlania
+
 - **BRAK DANYH OD (MIN.)** - (*domyślnie: 20*) parametr wskazuje czas w minutach, po którym aplikacja uzna połączenie z sensorem CGM za "zamrożone". Zwykle oznacza to brak połączenia z internetem aplikacji CGM, błąd/awarię/utratę sensora lub transmitera, albo po prostu wyczerpanie baterii smartfona obsługującego system CGM. Jeśli wolisz, by widżet nie oznaczał takiego stanu, po prostu wpisz tu 0. Maksymalna doswolona wartość to 999, co oznacza 999 minut przed oznaczeniem sensora jako offline/zamrożony.
 
 <img src="../docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
@@ -121,7 +128,6 @@ Więcej informacji o strzałkach trendu, ich interpretacji oraz zasadach dostoso
 
 ### 3. Zakresy wyświetlania glikemii
 
-
 Ustaw zakresy wyświetlania glikemii zgodnie z poniższymi wytycznymi, zgodnymi z consensusem ATTD 2019. Domyślne wartości w polach są wyrażone w mmol/L i dla polskich użytkowniów powinny być zmienione na wartości w mg/dL. Polskie tłumaczenie zawiera w nawiasach podpowiedź co do standardowych wartości wyświetlania. Znajdą one zastosowanie w większości przypadków, użyj innych jeśli jesteś kobietą w ciąży lub i/lub masz inne wytyczne od swojego diabetologa.
 
 - Powyżej znacznika **WYSOKI (250)** (*domyślnie: 10*) i poniżej znacznika **NISKI (55)** (*domyślnie: 3.5*) ostatni odczyt na widźecie będzie w kolorze czerwonym
@@ -143,12 +149,11 @@ Ustaw zakresy wyświetlania glikemii zgodnie z poniższymi wytycznymi, zgodnymi 
 
 ### 4. Zmiana języka i lokalizacji
 
-
 - Możesz zmienić wersję językową klikając znacznik **EN** w prawym górnym roku okna ustawień i wybierając preferowany język. Znacznik zmieni się na **PL** w przypadku języka polskiego.
 
 <figure>
   <p>
-    <img src="../docs/screenshot-settings-language-en.png" alt="Screenshot-widget"/>
+    <img src="../docs/screenshot-settings-language-en.png" alt="Screenshot-widget" width="400"/>
   </p>
 </figure>
 
@@ -163,11 +168,13 @@ Ustaw zakresy wyświetlania glikemii zgodnie z poniższymi wytycznymi, zgodnymi 
 
 - Jeśli czujesz się na siłach, chcesz pomóc w rozwoju aplikacji, to zapraszamy do zespołu w roli tłumacza. Wystarczy założyć konto w [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) i zgłosić się do mnie (metody kontaktu na dole tego pliku).
 
+
 ## Użytkowanie widżetu
 
 - Po każdorazowym restarcie komputera widżet zostanie automatycznie uruchomiony i pozostanie na ekranie ponad wszelkimi widocznymi oknami innych aplikacji. Tak będzie do momentu wyłączenia aplikacji poprzez kliknięcie znaku X w lewym górnym rogu widżetu. 
 - Jeśli chcesz dokonać zmian w ustawieniach, kliknij ikonkę zębatki w dolnym lewym rogu widżetu.
 - Jeśli chcesz szybko otworzyć stronę Nightscout, kliknij środkową ikonkę (wykres) po lewej stronie widżetu. Twoja strona Nightscout otworzy się w domyślnej przeglądarce.
+
 
 ## Automatyczne aktualizacje
 
@@ -176,6 +183,7 @@ Ustaw zakresy wyświetlania glikemii zgodnie z poniższymi wytycznymi, zgodnymi 
 - Jeśli na serwerze developera dostępna jest nowsza wersja, aplikacja ściągnie i zainstaluje ją przy kolejnym zamknięciu widżetu (ręcznym lub podczas zamykania systemu).
 - Na platformach **macOS** i **Windows** użytkownik otrzyma stosowną informację o pobraniu nowszej wersji. 
 - Na komputerach z systemem **Linux**, takie powiadomienie nie działa jeszcze poprawnie.
+
 
 ## Aktualnie w przygotowaniu
 
@@ -204,24 +212,28 @@ npm start
 npm run dev
 ```
 
-### Systemy operacyjne
+## Systemy operacyjne
 
 Aplikacja jest kompatybilna z systemami operacyjnymi:
 * Apple MacOS (10.10+) 
 * Microsoft Windows (10+)
 * Linux (przetestowane na dystrybucjach: buntu, Fedora, CentOS, Alma/GNOME Desktop i XFCE)
 
-### Dodatkowe zasoby
+
+## Dodatkowe zasoby
 
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - dokumentacja Nightscout API v3
 - [Icons8.com](https://icons8.com/) - Świetne ikonki i zasoby użyte przeze mnie w tym projekcie
 - [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) - lokalizacja aplikacji (tłumaczenia)
 
+
 ## Licencja
 
 [GNU GPL v3](LICENSE.md)
 
+
 ## Kontakt
+
 Zachęcam do kontaktu ze mną za pośrednictwem preferowanej metody:
 - dmitry.burnyshev@gmail.com
 - https://linkedin.com/in/diburn

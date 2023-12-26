@@ -1,5 +1,6 @@
 <a href="#"><img width="256" height="256" src="../asset/owlet_main_icon.png" align="left" /></a>
 
+
 # Owlet
 
 Questa è un'applicazione multipiattaforma, che utilizza le [API Nightscout](https://nightscout.github.io/). L'obiettivo è fornire un'interfaccia leggera per la visualizzazione della misurazione del livello di zucchero nel sangue per i T1D.
@@ -27,6 +28,7 @@ Il widget rimarrà in primo piano sullo schermo, quindi non avrai più bisogno d
 Sono stato inspirato dalla soluzione [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5_NightscoutMon), creata per l'hardware [M5 Stack's](https://m5stack.com/).
 
 <img src="../docs/screenshot-widget.png" alt="Screenshot-widget" width="300"/>
+
 
 ## Pacchetti di installazione
 
@@ -70,6 +72,7 @@ Sono stato inspirato dalla soluzione [mlukasek/M5_NightscoutMon](https://github.
 
 </details>
 
+
 ## ⚠️ Prima di cominciare
 
 > ‼️ **MOLTO IMPORTANTE**: Devi essere sicuro che tutti i passaggi siano stati eseguiti prima di effettuare il primo lancio!
@@ -78,6 +81,7 @@ Sono stato inspirato dalla soluzione [mlukasek/M5_NightscoutMon](https://github.
 2. Crea un nuovo ruolo con i permessi di lettura usando questo pattern `*:*:read`
 3. Crea un nuovo utente per la tua applicazione con il ruolo creato nello step 2, oppure usa un ruolo già esistente con il pattern di sola lettura `*:*:read`
 4. Copia il token di accesso di questo utente negli appunti oppure salvalo
+
 
 ## Primo avvio
 
@@ -89,13 +93,16 @@ Al primo avvio l'app ti proporrà di compilare le seguenti informazioni
   </p>
 </figure>
 
+
 ### 1. Impostazioni API Nightscout
 
 - **URL NIGHTSCOUT** - è l'indirizzo del tuo sito nightscout (e.g. https://some-cgm.fly.dev) 
 - **TOKEN NIGHTSCOUT** - il token di accesso che hai creato nei precedenti step
 - **INTERVALLO REQUEST NIGHTSCOUT (SEC.)** - (*default: 60*) l'intervalli di tempo per l'aggiornamento dei dati da Nightscout da visualizzare nel widget
 
+
 ### 2. Preferenze Widget
+
 - **INFO: LIMITE ETÀ (MIN.)** - (*default: 20*) intervallo di timeout della richiesta dati, dopo questo intervallo il widget cambierà e mostrerà uno stato "congelato". Ciò indica in genere che il lettore è offline, staccato dal sensore o che la batteria dello smartphone è scarica. Se preferisci che il widget non si blocchi, puoi impostare questa proprietà su 0. Il valore massimo consentito per questo campo, così come il valore massimo mostrato, è 999 minuti.
 
 <img src="../docs/screenshot-widget-frozen.png" alt="Screenshot-widget" width="200"/>
@@ -121,7 +128,6 @@ L' app usa il seguente algoritmo dei sensori Abbot™ FreeStyle Libre™ per ric
 
 ### 3. Preferenze livello glicemia
 
-
 Imposta i parametri di monitoraggio della glicemia utilizzando le seguenti guide:
 
 - Oltre il **SOGLIA ALTO LIVELLO** (*default: 10*) e sotto il **SOGLIA BASSO LIVELLO** (*default: 3.5*) l'ultimo valore verrà colorato di rosso
@@ -142,12 +148,11 @@ Imposta i parametri di monitoraggio della glicemia utilizzando le seguenti guide
 
 ### 4. Impostazioni lingua e localizzazione 
 
-
 Puoi scegliere la lingua delle impostazioni facendo clic sull'icona **EN** in alto a sinistra e selezionando la lingua preferita.
 
 <figure>
   <p>
-    <img src="../docs/screenshot-settings-language-en.png" alt="Screenshot-widget"/>
+    <img src="../docs/screenshot-settings-language-en.png" alt="Screenshot-widget" width="400"/>
   </p>
 </figure>
 
@@ -162,11 +167,13 @@ Puoi scegliere la lingua delle impostazioni facendo clic sull'icona **EN** in al
 
 - Se ti senti sicuro e hai una buona conoscenza di una lingua straniera, puoi contribuire alla traduzione dell'applicazione diventando collaboratore del progetto su [POEditor](https://poeditor.com/join/project/PzcEMSOFc7).
 
+
 ## Uso del widget
 
 - Dopo il riavvio il widget rimarrà sempre in primo piano sullo schermo finché non lo chiuderai facendo clic sull'angolo in alto a sinistra con il segno X.
 - Se è necessario modificare le impostazioni è possibile fare clic sul simbolo dell'ingranaggio nell'angolo in basso a sinistra.
 - Se vuoi navigare velocemente nel sito Nightscout puoi cliccare il pulsante centrale con il simbolo del grafico.
+
 
 ## Auto aggiornamenti
 
@@ -175,6 +182,7 @@ Puoi scegliere la lingua delle impostazioni facendo clic sull'icona **EN** in al
 - Se è disponibile l'ultima versione, il widget verrà scaricato e installato automaticamente subito dopo l'uscita.
 - Sui sistemi operativi **Mac** e **Windows**, gli utenti riceveranno una notifica sulla versione appena scaricata.
 - Su **Linux**, la notifica non funziona ancora correttamente.
+
 
 ## Lavori in corso
 
@@ -202,24 +210,29 @@ npm start
 npm run dev
 ```
 
-### Sistemi Operativi
+
+## Sistemi Operativi
 
 Compatibile con:
 * Apple MacOS (10.10+) 
 * Microsoft Windows (10+)
 * Linux (testato su Ubuntu, Fedora, CentOS, Alma su GNOME Desktop e XFCE)
 
-### Risorse Aggiuntive
+
+## Risorse Aggiuntive
 
 - [Nightscout API v3](https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/api3/doc/tutorial.md) - documentazione Nightscout API v3
 - [Icons8.com](https://icons8.com/) - Fantastica raccolta di icone e risorse che ho utilizzato in questo progetto
 - [POEditor](https://poeditor.com/join/project/PzcEMSOFc7) - localizzazione dell'applicazione
 
+
 ## Licenze
 
 [GNU GPL v3](LICENSE.md)
 
+
 ## Contatti
+
 Sentitevi liberi di contattarmi in uno di questi modi:
 - dmitry.burnyshev@gmail.com
 - https://linkedin.com/in/diburn
