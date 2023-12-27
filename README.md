@@ -9,7 +9,7 @@ The app's name is "Owlet", which means baby owl and is chosen because of the Nig
 
 <div>
   <a href="https://github.com/kashamalasha/nightscout-widget-electron/releases"><img src="https://img.shields.io/github/downloads/kashamalasha/nightscout-widget-electron/total?color=%2300834a" /></a>
-  <a href="https://github.com/kashamalahsa/nightscout-widget-electron/releases/latest"><img src="https://img.shields.io/github/downloads/kashamalasha/nightscout-widget-electron/latest/total?color=%2300834a&label=latest" /></a>
+  <a href="https://github.com/kashamalasha/nightscout-widget-electron/releases/latest"><img src="https://img.shields.io/github/downloads/kashamalasha/nightscout-widget-electron/latest/total?color=%2300834a&label=latest" /></a>
   <a href="https://github.com/kashamalasha/nightscout-widget-electron/releases/latest"><img src="https://img.shields.io/github/v/release/kashamalasha/nightscout-widget-electron?color=%2300834a" /></a>
 </div>
 
