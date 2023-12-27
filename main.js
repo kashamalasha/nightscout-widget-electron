@@ -29,7 +29,7 @@ const alert = (type, title, message, parentWindow = null) => {
     message,
     buttons: [`OK`],
     defaultId: 0,
-    icon: type,
+    icon: `asset/icons/png/128x128.png`,
   };
 
   dialog.showMessageBox(parentWindow, options);

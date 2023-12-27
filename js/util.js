@@ -140,6 +140,7 @@ const alert = (type, title, msg, sync = false) => {
     message: msg.toString(),
     buttons: [`OK`],
     defaultId: 0,
+    icon: `asset/icons/png/128x128.png`
   };
 
   if (sync) {
