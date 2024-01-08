@@ -39,6 +39,7 @@ describe(`alert`, () => {
 
     expect(mockShowMessageBox).toHaveBeenCalledWith({
       type: `info`,
+      icon: `asset/icons/png/128x128.png`,
       title: `Title`,
       message: `Message`,
       buttons: [`OK`],
@@ -54,6 +55,7 @@ describe(`alert`, () => {
 
     expect(mockShowMessageBoxSync).toHaveBeenCalledWith({
       type: `error`,
+      icon: `asset/icons/png/128x128.png`,
       title: `Error Title`,
       message: `Error Message`,
       buttons: [`OK`],
@@ -69,6 +71,7 @@ describe(`alert`, () => {
 
     expect(mockShowMessageBox).toHaveBeenCalledWith({
       type: `info`,
+      icon: `asset/icons/png/128x128.png`,
       title: `Title`,
       message: `Message`,
       buttons: [`OK`],
