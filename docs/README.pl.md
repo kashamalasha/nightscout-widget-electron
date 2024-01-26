@@ -32,15 +32,15 @@ Zainspirowałem się rozwiązaniem [mlukasek/M5_NightscoutMon](https://github.co
 
 ## Gotowe pakiety instalacyjne
 
-[![Pobierz dla systemu Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.1-beta/Owlet-0.7.1-beta-win-x64.exe)
+[![Pobierz dla systemu Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.0-beta/Owlet-0.8.0-beta-win-x64.exe)
 
-[![Pobierz dla systemu macOS (procesory Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.1-beta/Owlet-0.7.1-beta-mac-arm64.dmg)
+[![Pobierz dla systemu macOS (procesory Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.0-beta/Owlet-0.8.0-beta-mac-arm64.dmg)
 
-[![Pobierz dla systemu macOS (procesory Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.1-beta/Owlet-0.7.1-beta-mac-x64.dmg)
+[![Pobierz dla systemu macOS (procesory Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.0-beta/Owlet-0.8.0-beta-mac-x64.dmg)
 
-[![Pobierz dla systemów Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.1-beta/Owlet-0.7.1-beta-linux-x86_64.AppImage)
+[![Pobierz dla systemów Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.0-beta/Owlet-0.8.0-beta-linux-x86_64.AppImage)
 
-[![Pobierz źródła](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.7.1-beta.tar.gz)
+[![Pobierz źródła](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.8.0-beta.tar.gz)
 
 [![Pobierz źródła](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
@@ -109,7 +109,7 @@ Przy pierwszym uruchomieniu aplikacja poprosi o uzupełnienie danych i wybór od
 
 - **CZAS OD ODCZYTU** - (*domyślnie: włączony*) pokazuje czas w minutach, jaki upłynął od odtatniego odczytu CGM
 
-- **UŻYJ MMOL/L** - (*domyślnie: włączony*) właczenie tej opcji oznacza obsługę w mmol/L. Polscy użytkownicy powinni odznaczyć ten checkbox, co będzie oznaczać przełącznie aplikacji w tryb wyświetlania w mg/dL. Pamiętaj, że należy zmodyfikować także Zakresy glikemii w prawym okienku.
+- **UŻYJ MMOL/L** - (*domyślnie: włączony*) właczenie tej opcji oznacza obsługę w mmol/L zamiast mg/dL. Pamiętaj, że musisz także zweryfikować zakresy poziomu glukozy we krwi w prawym panelu, i o zapisaniu ustawień po dostosowaniu systemu jednostek miary.
   
 - **KALKULUJ TREND** - (*domyślnie: wyłączony*) włączenie tej opcji spowoduje wewnętrzne wyliczanie strzałki trendu na podstawie ostatnich sześciu odczytów (czyli z ostatnich 30 minut). Włącz jeśli zamiast strzałki trendu zobaczysz na widźecie, w prawym dolnym rogu, znak "-" (minus). W standardowych warunkach opcja ta nie wymaga włączenia - dane o trendzie będą przekazywane przez Nightscout.
 

@@ -6,12 +6,15 @@
 import {
   dir2Char,
   mgdlToMMOL,
+  mmolToMGDL,
+  convertUnitsFor,
   charToEntity,
   directionToChar,
   prepareData,
   customAssign,
   calcTrend,
-  alert
+  alert,
+  formDataToObject
 } from "../js/util";
 
 describe(`alert`, () => {
@@ -39,6 +42,7 @@ describe(`alert`, () => {
 
     expect(mockShowMessageBox).toHaveBeenCalledWith({
       type: `info`,
+      icon: `asset/icons/png/128x128.png`,
       title: `Title`,
       message: `Message`,
       buttons: [`OK`],
@@ -54,6 +58,7 @@ describe(`alert`, () => {
 
     expect(mockShowMessageBoxSync).toHaveBeenCalledWith({
       type: `error`,
+      icon: `asset/icons/png/128x128.png`,
       title: `Error Title`,
       message: `Error Message`,
       buttons: [`OK`],
@@ -69,6 +74,7 @@ describe(`alert`, () => {
 
     expect(mockShowMessageBox).toHaveBeenCalledWith({
       type: `info`,
+      icon: `asset/icons/png/128x128.png`,
       title: `Title`,
       message: `Message`,
       buttons: [`OK`],
@@ -80,21 +86,131 @@ describe(`alert`, () => {
   });
 });
 
+describe(`mmolToMGDL`, () => {
+  const values = [
+    { mmol: 10.0, mgdl: 180 },
+    { mmol: 8.5, mgdl: 153 },
+    { mmol: 5.0, mgdl: 90 },
+    { mmol: 4.5, mgdl: 81 },
+    { mmol: 3.5, mgdl: 63 }
+  ];
+
+  for (const value of values) {
+    describe(`converting mmol to mgdl values`, () => {
+      it(`should correctly convert positive ${value.mmol} mmol to ${value.mgdl} mgdl`, () => {
+        const result = mmolToMGDL(value.mmol);
+        expect(result).toEqual(value.mgdl.toFixed());
+      });
+
+      it(`should correctly convert negative -${value.mmol} mmol to -${value.mgdl} mgdl`, () => {
+        const result = mmolToMGDL(-value.mmol);
+        expect(result).toEqual(`-${value.mgdl.toFixed()}`);
+      });
+    });
+  }
+
+  it(`should handle zero input`, () => {
+    const result = mmolToMGDL(`0.0`);
+    expect(result).toEqual(`0`);
+  });
+});
 
 describe(`mgdlToMMOL`, () => {
-  it(`should convert mg/dL to mmol/L correctly`, () => {
-    const result = mgdlToMMOL(90);
-    expect(result).toEqual(`5.0`);
-  });
+  const values = [
+    { mgdl: 180, mmol: 10.0 },
+    { mgdl: 153, mmol: 8.5 },
+    { mgdl: 90, mmol: 5.0 },
+    { mgdl: 81, mmol: 4.5 },
+    { mgdl: 63, mmol: 3.5 }
+  ];
+
+  for (const value of values) {
+    describe(`converting mgdl to mmol values`, () => {
+      it(`should correctly convert positive ${value.mgdl} mgdl to ${value.mmol} mmol`, () => {
+        const result = mgdlToMMOL(value.mgdl);
+        expect(result).toEqual(value.mmol.toFixed(1));
+      });
+
+      it(`should correctly convert negative -${value.mgdl} mgdl to -${value.mmol} mmol`, () => {
+        const result = mgdlToMMOL(-value.mgdl);
+        expect(result).toEqual(`-${value.mmol.toFixed(1)}`);
+      });
+    });
+  }
 
   it(`should handle zero input`, () => {
     const result = mgdlToMMOL(0);
     expect(result).toEqual(`0.0`);
   });
+});
 
-  it(`should handle negative input`, () => {
-    const result = mgdlToMMOL(-90);
-    expect(result).toEqual(`-5.0`);
+describe(`convertUnitsFor`, () => {
+  let ConfigInMMOL = null;
+  let ConfigInMGDL = null;
+
+  beforeEach(() => {
+    ConfigInMMOL = {
+      BG: {
+        HIGH: 10,
+        LOW: 3.5,
+        TARGET: {
+          TOP: 8.5,
+          BOTTOM: 4.5
+        }
+      }
+    };
+
+    ConfigInMGDL = {
+      BG: {
+        HIGH: 180,
+        LOW: 63,
+        TARGET: {
+          TOP: 153,
+          BOTTOM: 81
+        }
+      }
+    };
+  });
+
+  it(`should correctly convert mgdl config to mmol config`, () => {
+    const isMMOL = true;
+    convertUnitsFor(ConfigInMGDL.BG, isMMOL);
+    expect(ConfigInMGDL.BG).toMatchObject(ConfigInMMOL.BG);
+  });
+
+  it(`should correctly convert mmol config to mgdl config`, () => {
+    const isMMOL = false;
+    convertUnitsFor(ConfigInMMOL.BG, isMMOL);
+    expect(ConfigInMMOL.BG).toMatchObject(ConfigInMGDL.BG);
+  });
+
+  it(`should handle zero input with isMMOL = true`, () => {
+    const isMMOL = true;
+    convertUnitsFor({}, isMMOL);
+    expect({}).toEqual({});
+  });
+
+  it(`should handle zero input with isMMOL = true`, () => {
+    const isMMOL = false;
+    convertUnitsFor({}, isMMOL);
+    expect({}).toEqual({});
+  });
+
+  it(`should not modify non-numeric values`, () => {
+    const isMMOL = false;
+    const inputObject = {
+      TEXT: 'some text',
+      BOOLEAN: true,
+      ARRAY: [1, 2, 3],
+      OBJECT: { key: 'value' }
+    };
+
+    convertUnitsFor(inputObject, isMMOL);
+
+    expect(inputObject.TEXT).toBe('some text');
+    expect(inputObject.BOOLEAN).toBe(true);
+    expect(inputObject.ARRAY).toEqual([1, 2, 3]);
+    expect(inputObject.OBJECT).toEqual({ key: 'value' });
   });
 });
 
@@ -399,6 +515,35 @@ describe(`prepareData`, () => {
   it(`should prepare data correctly with the last measurement age`, () => {
     const result = prepareData(dataObj, paramsObj);
     expect(result.age).toBe(3);
+  });
+
+});
+
+
+describe(`formDataToObject`, () => {
+  it(`converts FormData to object`, () => {
+    const formData = new FormData();
+    formData.append('name', 'Dmitry');
+    formData.append('age', '40');
+    formData.append('is-happy', 'on');
+
+    const result = formDataToObject(formData);
+    expect(result).toEqual({ name: 'Dmitry', age: '40', 'is-happy': 'on' });
+  });
+
+  it(`handles FormData with multiple values for the same key`, () => {
+    const formData = new FormData();
+    formData.append(`colors`, [`red`, `blue`]);
+
+    const result = formDataToObject(formData);
+    expect(result).toEqual({ colors: `red,blue` });
+  });
+
+  it(`handles an empty FormData`, () => {
+    const formData = new FormData();
+
+    const result = formDataToObject(formData);
+    expect(result).toEqual({});
   });
 
 });

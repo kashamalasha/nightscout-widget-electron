@@ -1,6 +1,6 @@
 "use strict";
 
-import { customAssign, alert } from "./util.js";
+import { customAssign, alert, convertUnitsFor, formDataToObject } from "./util.js";
 import { getStatus } from "./backend.js";
 import { Translator } from "./translator.js";
 
@@ -13,43 +13,46 @@ translator.load(LANGUAGE);
 
 const log = window.electronAPI.logger;
 
+const form = document.forms["settings-form"];
+
 const FormFields = {
   NIGHTSCOUT: {
-    URL: document.querySelector(`#nightscout-url`),
-    TOKEN: document.querySelector(`#nightscout-token`),
-    INTERVAL: document.querySelector(`#nightscout-interval`),
+    URL: form.querySelector(`#nightscout-url`),
+    TOKEN: form.querySelector(`#nightscout-token`),
+    INTERVAL: form.querySelector(`#nightscout-interval`),
   },
   WIDGET: {
-    AGE_LIMIT: document.querySelector(`#age-limit`),
-    SHOW_AGE: document.querySelector(`#show-age`),
-    UNITS_IN_MMOL: document.querySelector(`#units-in-mmol`),
-    CALC_TREND: document.querySelector(`#calc-trend`),
+    AGE_LIMIT: form.querySelector(`#age-limit`),
+    SHOW_AGE: form.querySelector(`#show-age`),
+    UNITS_IN_MMOL: form.querySelector(`#units-in-mmol`),
+    CALC_TREND: form.querySelector(`#calc-trend`),
   },
   BG: {
-    HIGH: document.querySelector(`#bg-high`),
-    LOW: document.querySelector(`#bg-low`),
+    HIGH: form.querySelector(`#bg-high`),
+    LOW: form.querySelector(`#bg-low`),
     TARGET: {
-      TOP: document.querySelector(`#bg-target-top`),
-      BOTTOM: document.querySelector(`#bg-target-bottom`),
-    }
+      TOP: form.querySelector(`#bg-target-top`),
+      BOTTOM: form.querySelector(`#bg-target-bottom`),
+    },
   },
 };
 
 const FormButtons = {
-  SUBMIT: document.querySelector(`form`),
-  TEST: document.querySelector(`#button-test`),
-  LOG: document.querySelector(`.settings__log-link`),
+  SUBMIT: form.querySelector(`#button-submit`),
+  TEST: form.querySelector(`#button-test`),
+  LOG: form.querySelector(`.settings__log-link`),
   CLOSE: document.querySelector(`#button-close`),
 };
 
 const Language = {
-  BUTTON : document.querySelector(`.settings-language__button`),
-  LIST : document.querySelector(`.language-list`),
+  BUTTON: document.querySelector(`.settings-language__button`),
+  LIST: document.querySelector(`.language-list`),
 };
 
 Language.BUTTON.textContent = translator.getLanguage();
 
 customAssign(FormFields, CONFIG);
+const initialFormState = new FormData(form);
 
 document.querySelector(`#app-version`).textContent = VERSION;
 
@@ -57,7 +60,7 @@ FormFields.WIDGET.SHOW_AGE.addEventListener(`change`, (evt) => {
   const show = evt.target.checked;
   try {
     window.electronAPI.testAgeVisisblity(show);
-  } catch(error) {
+  } catch (error) {
     log.error(error);
   }
 });
@@ -66,8 +69,8 @@ FormFields.WIDGET.UNITS_IN_MMOL.addEventListener(`change`, (evt) => {
   const isMMOL = evt.target.checked;
 
   try {
-    window.electronAPI.testUnits(isMMOL, FormFields.WIDGET.CALC_TREND.checked);
-  } catch(error) {
+    window.electronAPI.testUnits(isMMOL);
+  } catch (error) {
     log.error(error);
   }
 });
@@ -77,7 +80,7 @@ FormFields.WIDGET.CALC_TREND.addEventListener(`change`, (evt) => {
 
   try {
     window.electronAPI.testCalcTrend(calcTrend, FormFields.WIDGET.UNITS_IN_MMOL.checked);
-  } catch(error) {
+  } catch (error) {
     log.error(error);
   }
 });
@@ -135,28 +138,40 @@ nightscoutTextInputs.forEach((input) => {
   input.addEventListener(`blur`, trimInputs);
 });
 
-FormButtons.SUBMIT.addEventListener(`submit`, async (evt) => {
-  evt.preventDefault();
-
+const formSubmission = (formDataObj) => {
   const msg = `Settings were updated. Widget will be restarted.`;
 
-  const formData = new FormData(evt.target);
-  const formDataObj = Object.fromEntries(formData.entries());
+  formDataObj[`show-age`] = !!formDataObj[`show-age`];
+  formDataObj[`units-in-mmol`] = !!formDataObj[`units-in-mmol`];
+  formDataObj[`calc-trend`] = !!formDataObj[`calc-trend`];
 
-  formDataObj[`show-age`] = formDataObj[`show-age`] ? true : false;
-  formDataObj[`units-in-mmol`] = formDataObj[`units-in-mmol`] ? true : false;
-  formDataObj[`calc-trend`] = formDataObj[`calc-trend`] ? true : false;
+  window.electronAPI.setSettings(formDataObj);
+  alert(`info`, `OK`, msg, true);
+  log.warn(msg);
+
+  window.electronAPI.closeWindow();
+  window.electronAPI.restart();
+}
+
+window.electronAPI.setUnits((_evt, isMMOL) => {
+  log.info(`Test of converting units in mmol/l: ${isMMOL} from settingsWindow`);
+
+  convertUnitsFor(CONFIG.BG, isMMOL);
+  customAssign(FormFields.BG, CONFIG.BG);
+});
+
+form.addEventListener(`submit`, async (evt) => {
+  evt.preventDefault();
+
+  const formData = new FormData(evt.target);
+  const formDataObj = formDataToObject(formData);
 
   try {
     await testConnection(evt);
-    window.electronAPI.setSettings(formDataObj);
-    alert(`info`, `OK`, msg, true);
-    log.warn(msg);
-    window.electronAPI.closeWindow();
-    window.electronAPI.restart();
-  } catch(error) {
+    formSubmission(formDataObj);
+  } catch (error) {
     log.error(error);
-    alert(`error`, `Something went wrong`, msg, true);
+    alert(`error`, `Error`, `Something went wrong`, true);
   }
 });
 
@@ -167,8 +182,20 @@ FormButtons.LOG.addEventListener(`click`, (evt) => {
   window.electronAPI.closeWindow();
 });
 
+const isFormModified = (currentForm, initialForm) => {
+  return JSON.stringify(formDataToObject(currentForm)) !== JSON.stringify(formDataToObject(initialForm));
+}
+
 FormButtons.CLOSE.addEventListener(`click`, () => {
-  window.electronAPI.closeWindow();
+  const currentFormState = new FormData(form);
+  const modified = isFormModified(currentFormState, initialFormState);
+
+  if (modified) {
+    alert(`warning`, `Save settings`, `Save the settings before exit`, true);
+    FormButtons.SUBMIT.focus();
+  } else {
+    window.electronAPI.closeWindow();
+  }
 });
 
 setTimeout(window.electronAPI.checkFormValidation, 100);

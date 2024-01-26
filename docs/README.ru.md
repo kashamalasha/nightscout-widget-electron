@@ -32,15 +32,15 @@
 
 ## Установка приложения
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.1-beta/Owlet-0.7.1-beta-win-x64.exe)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.0-beta/Owlet-0.8.0-beta-win-x64.exe)
 
-[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.1-beta/Owlet-0.7.1-beta-mac-arm64.dmg)
+[![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.0-beta/Owlet-0.8.0-beta-mac-arm64.dmg)
 
-[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.1-beta/Owlet-0.7.1-beta-mac-x64.dmg)
+[![Download for macOS(Intel)](https://img.shields.io/badge/Download-macOS%20(Intel)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.0-beta/Owlet-0.8.0-beta-mac-x64.dmg)
 
-[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.7.1-beta/Owlet-0.7.1-beta-linux-x86_64.AppImage)
+[![Download for Linux](https://img.shields.io/badge/Download-Linux%20.AppImage-blue?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.0-beta/Owlet-0.8.0-beta-linux-x86_64.AppImage)
 
-[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.7.1-beta.tar.gz)
+[![Download Souces](https://img.shields.io/badge/Download-Sources%20.tar.gz-blue?style=for-the-badge&logo=electron&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/archive/refs/tags/v0.8.0-beta.tar.gz)
 
 [![Download Souces](https://img.shields.io/badge/Browse-Latest%20Release-red?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kashamalasha/nightscout-widget-electron/releases/latest)
 
@@ -107,7 +107,7 @@
 
 - **ВРЕМЯ ПОСЛ. ЗАМЕРА** - (*по-умолчанию: включено*) эта опция позволяет отображать информацию о том, как давно было получено последнее измерение
 
-- **ЗНАЧЕНИЯ В MMOL/L** - (*по-умолчанию: включено*) эта опция позволяет установить единицы измерения mmol/l вместо mg/dl. Если вы решили изменить эту настройку, убедитесь, что вы привели в соответствие параметры настроек контроля уровня глюкозы в соответствии с выбранными единицами измерения. В момент переключения единиц измерения цветовая заливка последнего значения будет отключена до сохранения настроек. 
+- **ЗНАЧЕНИЯ В MMOL/L** - (*по-умолчанию: включено*) эта опция позволяет установить единицы измерения mmol/l вместо mg/dl. Если вы решили изменить эту настройку, убедитесь, что вы прoверили параметры настроек контроля уровня глюкозы в соответствии с выбранными единицами измерения. Не забудьте сохранить настройки после выбора единиц измерения.
 
 - **РАСЧЕТ ТРЕНДА** - (*по-умолчанию: выключено*) эта опция включает расчет направление тренда, используя последние 6 полученных измерений (последние 30 минут). 
 Эта функция может пригодиться, если ваш сенсор не имеет встроенной функции расчета тренда (напр. Dexcom или Medtronic), и Nightscout не хранит эту информацию; в таких случаях вы всегда будете видеть символ ` - ` в правом нижнем углу виджета вместо стрелки с направлением тренда.
