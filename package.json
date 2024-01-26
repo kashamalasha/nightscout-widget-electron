@@ -17,7 +17,8 @@
     "dist": "electron-builder",
     "ship": "electron-builder -p always",
     "test": "jest",
-    "test-coverage": "jest --coverage"
+    "test-coverage": "jest --coverage",
+    "version-update": "node build/version-update.js"
   },
   "build": {
     "appId": "com.burny.owlet.app",
