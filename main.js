@@ -391,6 +391,7 @@ app.whenReady().then(() => {
   ipcMain.on(`test-units`, (_evt, isMMOL) => {
     config.set(`WIDGET.UNITS_IN_MMOL`, isMMOL);
     widget.mainWindow.webContents.send(`set-units`, isMMOL);
+    widget.settingsWindow.webContents.send(`set-units`, isMMOL);
   });
 
   ipcMain.on(`test-calc-trend`, (_evt, calcTrend, isMMOL) => {

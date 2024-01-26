@@ -15,6 +15,8 @@ const dir2Char = {
   "RATE OUT OF RANGE": `⇕`
 };
 
+const MMOL_TO_MGDL_RATE = 18;
+
 const customAssign = (targetObject, patchObject) => {
 
   if (patchObject === null) {
@@ -38,8 +40,25 @@ const customAssign = (targetObject, patchObject) => {
 };
 
 const mgdlToMMOL = (mgdl) => {
-  const MMOL_TO_MGDL = 18;
-  return (Math.round((mgdl / MMOL_TO_MGDL) * 10) / 10).toFixed(1);
+  return (mgdl / MMOL_TO_MGDL_RATE).toFixed(1);
+};
+
+const mmolToMGDL = (mmol) => {
+  return (mmol * MMOL_TO_MGDL_RATE).toFixed();
+};
+
+const convertUnitsFor = (obj, toMMOL) => {
+  for (const key in obj) {
+    if (typeof(obj[key]) === `object` && !Array.isArray(obj[key])) {
+      convertUnitsFor(obj[key], toMMOL);
+    } else if (typeof(obj[key]) === `number`) {
+      if (toMMOL) {
+        obj[key] = parseFloat(mgdlToMMOL(obj[key]));
+      } else {
+        obj[key] = parseFloat(mmolToMGDL(obj[key]));
+      }
+    }
+  }
 };
 
 const charToEntity = (char) => {
@@ -56,10 +75,11 @@ const directionToChar = (direction) => {
 
 const calcTrend = (data) => {
 
-  const MIN_DATA_LENGTH = 6;
+  const MIN_DATA_CALC_LENGTH = 6;
+  const SENSOR_READ_INTERVAL_IN_MIN = 5;
 
   if (!Array.isArray(data) ||
-      data.length < MIN_DATA_LENGTH ||
+      data.length < MIN_DATA_CALC_LENGTH ||
       !data.every(isFinite)) {
     return `NOT COMPUTABLE`;
   }
@@ -71,11 +91,11 @@ const calcTrend = (data) => {
   };
 
   const changes = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < MIN_DATA_CALC_LENGTH - 1; i++) {
     changes.push(data[i] - data[i + 1]);
   }
 
-  const lastMinuteChange = changes[0] / 5;
+  const lastMinuteChange = changes[0] / SENSOR_READ_INTERVAL_IN_MIN;
   const totalChangePerHalf = changes.reduce((sum, change) => sum + change, 0);
 
   for (const trend in thresholds) {
@@ -150,13 +170,20 @@ const alert = (type, title, msg, sync = false) => {
   }
 };
 
+const formDataToObject = (formData) => {
+  return Object.fromEntries([...formData.entries()]);
+}
+
 export {
   dir2Char,
   mgdlToMMOL,
+  mmolToMGDL,
+  convertUnitsFor,
   charToEntity,
   directionToChar,
   prepareData,
   customAssign,
   alert,
-  calcTrend
+  calcTrend,
+  formDataToObject
 };

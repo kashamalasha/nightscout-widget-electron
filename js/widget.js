@@ -1,16 +1,17 @@
 "use strict";
 
 import { getData } from "./backend.js";
-import { prepareData, alert } from "./util.js";
+import { prepareData, alert, convertUnitsFor } from "./util.js";
 
 const CONNECTION_RETRY_LIMIT = 5;
+const DATA_AGE_SHOW_LIMIT = 999;
 const CONFIG = await window.electronAPI.getSettings();
 
 const log = window.electronAPI.logger;
 
 const RenderParams = {
   calc_trend: CONFIG.WIDGET.CALC_TREND,
-  units_in_mmol: CONFIG.WIDGET.UNITS_IN_MMOL
+  units_in_mmol: CONFIG.WIDGET.UNITS_IN_MMOL,
 };
 
 const Fields = {
@@ -60,8 +61,7 @@ Fields.last.addEventListener(`mouseup`, (evt) => {
   evt.target.classList.toggle(`sgv__last--accented`, false);
 });
 
-const render = (data, isTestMMOL=false) => {
-
+const render = (data) => {
   Fields.last.textContent = data.last;
   Fields.delta.textContent = data.delta;
   Fields.trend.innerHTML = data.direction;
@@ -75,8 +75,8 @@ const render = (data, isTestMMOL=false) => {
     Fields.last.classList.add(ModMap.default);
   }
 
-  if (data.age.toString().length > 3) {
-    Fields.ageValue.textContent = `999`;
+  if (data.age.toString().length > DATA_AGE_SHOW_LIMIT.toString().length) {
+    Fields.ageValue.textContent = `${DATA_AGE_SHOW_LIMIT}`;
   }
 
   let classMod = ModMap.default;
@@ -87,19 +87,24 @@ const render = (data, isTestMMOL=false) => {
       Fields.sgv.classList.remove(`sgv--frozen`);
     }
 
-    if (!isTestMMOL) {
-      const lastResult = parseFloat(data.last);
-      if (lastResult >= CONFIG.BG.HIGH || lastResult <= CONFIG.BG.LOW) {
-        classMod = ModMap.critical;
-      } else if (lastResult >= CONFIG.BG.TARGET.TOP || lastResult <= CONFIG.BG.TARGET.BOTTOM) {
-        classMod = ModMap.warning;
-      } else {
-        classMod = ModMap.ok;
-      }
+    const lastResult = parseFloat(data.last);
+
+    if (lastResult >= CONFIG.BG.HIGH || lastResult <= CONFIG.BG.LOW) {
+      classMod = ModMap.critical;
+    } else if (
+      lastResult >= CONFIG.BG.TARGET.TOP ||
+      lastResult <= CONFIG.BG.TARGET.BOTTOM
+    ) {
+      classMod = ModMap.warning;
+    } else {
+      classMod = ModMap.ok;
     }
   }
 
-  Fields.last.className = Fields.last.className.replace(/sgv__last--\S*/, classMod);
+  Fields.last.className = Fields.last.className.replace(
+    /sgv__last--\S*/,
+    classMod,
+  );
 };
 
 window.electronAPI.setAgeVisibility((_evt, show) => {
@@ -130,18 +135,22 @@ const onError = (errorMessage) => {
   if (retry > CONNECTION_RETRY_LIMIT && !isAlertShown) {
     log.error(msg);
     Fields.sgv.classList.add(`sgv--frozen`);
-    Fields.last.className = Fields.last.className.replace(/sgv__last--.*/, ModMap.default);
+    Fields.last.className = Fields.last.className.replace(
+      /sgv__last--.*/,
+      ModMap.default,
+    );
     alert(`error`, `Connection error`, msg);
     isAlertShown = true;
   }
 };
 
-window.electronAPI.setUnits((_evt, isMMOL, calcTrend) => {
-  log.info(`Test of displaying units in mmol/l: ${isMMOL}`);
-  const isTestValue = (CONFIG.WIDGET.UNITS_IN_MMOL !== isMMOL);
+window.electronAPI.setUnits((_evt, isMMOL) => {
+  log.info(`Test of displaying units in mmol/l: ${isMMOL} from mainWindow`);
+
+  convertUnitsFor(CONFIG.BG, isMMOL);
 
   const onSuccessSwitch = (result) => {
-    render(prepareData(result, {calc_trend: calcTrend, units_in_mmol: isMMOL}), isTestValue);
+    render(prepareData(result, { units_in_mmol: isMMOL }));
   };
 
   getData(onSuccessSwitch, onError);
@@ -149,10 +158,9 @@ window.electronAPI.setUnits((_evt, isMMOL, calcTrend) => {
 
 window.electronAPI.setCalcTrend((_evt, calcTrend, isMMOL) => {
   log.info(`Test trend calculation: ${calcTrend}`);
-  const isTestValue = (CONFIG.WIDGET.UNITS_IN_MMOL !== isMMOL);
 
   const onSuccessSwitch = (result) => {
-    render(prepareData(result, {units_in_mmol: isMMOL, calc_trend: calcTrend}), isTestValue);
+    render(prepareData(result, { units_in_mmol: isMMOL, calc_trend: calcTrend }));
   };
 
   getData(onSuccessSwitch, onError);
