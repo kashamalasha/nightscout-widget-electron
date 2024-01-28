@@ -10,6 +10,8 @@ const RESET = `\x1b[0m`;
 
 console.log(`Current package.json version is: ${YELLOW}${process.env.npm_package_version}${RESET}\n`);
 
+let countOldVersion = 0;
+
 const readmeFiles = [
   path.join(process.cwd(), `README.md`),
   path.join(process.cwd(), `docs`, `README.it.md`),
@@ -19,13 +21,31 @@ const readmeFiles = [
 
 readmeFiles.forEach((file) => {
   try {
-    let readmeContent = fs.readFileSync(file, `utf-8`);
-    readmeContent = readmeContent.replace(/\d\.\d\.\d-beta/g, process.env.npm_package_version);
-    fs.writeFileSync(file, readmeContent, `utf-8`);
-    console.log(`${GREEN}${path.relative(process.cwd(), file)}${RESET} is updated`);
+    const readmeContent = fs.readFileSync(file, `utf-8`);
+    const linksInFileArray = readmeContent.match(/\d\.\d\.\d-beta/g);
+
+    let hasOldVersion = false;
+
+    linksInFileArray.some((linkVersion) => {
+      if (linkVersion != process.env.npm_package_version) {
+        hasOldVersion = true;
+        countOldVersion++;
+      }
+      return hasOldVersion;
+    });
+
+    if (hasOldVersion) {
+      console.log(`${RED}${path.relative(process.cwd(), file)}${RESET} is outdated`);
+    } else {
+      console.log(`${GREEN}${path.relative(process.cwd(), file)}${RESET} is ok`);
+    }
   } catch (error) {
     console.error(`${RED}Error reading file: ${path.relative(process.cwd(), file)}${RESET}: \n${error}`);
   }
 });
 
-console.log(`\nVersion-update job is done`);
+console.log(`\nVersion-check job is done`);
+
+if (countOldVersion > 0) {
+  process.exit(1);
+}
