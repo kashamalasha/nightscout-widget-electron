@@ -199,18 +199,18 @@ describe(`convertUnitsFor`, () => {
   it(`should not modify non-numeric values`, () => {
     const isMMOL = false;
     const inputObject = {
-      TEXT: 'some text',
+      TEXT: `some text`,
       BOOLEAN: true,
       ARRAY: [1, 2, 3],
-      OBJECT: { key: 'value' }
+      OBJECT: { key: `value` }
     };
 
     convertUnitsFor(inputObject, isMMOL);
 
-    expect(inputObject.TEXT).toBe('some text');
+    expect(inputObject.TEXT).toBe(`some text`);
     expect(inputObject.BOOLEAN).toBe(true);
     expect(inputObject.ARRAY).toEqual([1, 2, 3]);
-    expect(inputObject.OBJECT).toEqual({ key: 'value' });
+    expect(inputObject.OBJECT).toEqual({ key: `value` });
   });
 });
 
@@ -523,12 +523,12 @@ describe(`prepareData`, () => {
 describe(`formDataToObject`, () => {
   it(`converts FormData to object`, () => {
     const formData = new FormData();
-    formData.append('name', 'Dmitry');
-    formData.append('age', '40');
-    formData.append('is-happy', 'on');
+    formData.append(`name`, `Dmitry`);
+    formData.append(`age`, `40`);
+    formData.append(`is-happy`, `on`);
 
     const result = formDataToObject(formData);
-    expect(result).toEqual({ name: 'Dmitry', age: '40', 'is-happy': 'on' });
+    expect(result).toEqual({ name: `Dmitry`, age: `40`, 'is-happy': `on` });
   });
 
   it(`handles FormData with multiple values for the same key`, () => {
