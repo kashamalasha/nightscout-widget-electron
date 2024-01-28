@@ -29,9 +29,7 @@ jobs:
       run: npm install
 
     - name: Run linter
-      run: |
-        npm ci
-        npm run lint
+      run: npm run lint
 
   version-check:
     runs-on: ubuntu-latest
@@ -45,9 +43,8 @@ jobs:
       with:
         node-version: '21.1.0'
 
-    - name: Check version
-      run: |
-        npm ci
-        npm run version-check
+    - name: Install dependencies
+      run: npm install
 
-
+    - name: Check README files version
+      run: npm run version-check

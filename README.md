@@ -32,7 +32,7 @@ I was inspired by the [mlukasek/M5_NightscoutMon](https://github.com/mlukasek/M5
 
 ## Installation packages
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.1-beta/Owlet-0.8.1-beta-win-x64.exe)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.1-beta/Owlet-0.8.0-beta-win-x64.exe)
 
 [![Download for macOS(Apple Silicon)](https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)%20.dmg-blue?style=for-the-badge&logo=apple)](https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.1-beta/Owlet-0.8.1-beta-mac-arm64.dmg)
 
