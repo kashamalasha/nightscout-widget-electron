@@ -13,7 +13,7 @@ translator.load(LANGUAGE);
 
 const log = window.electronAPI.logger;
 
-const form = document.forms['settings-form'];
+const form = document.forms[`settings-form`];
 
 const FormFields = {
   NIGHTSCOUT: {
