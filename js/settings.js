@@ -13,7 +13,7 @@ translator.load(LANGUAGE);
 
 const log = window.electronAPI.logger;
 
-const form = document.forms["settings-form"];
+const form = document.forms[`settings-form`];
 
 const FormFields = {
   NIGHTSCOUT: {
@@ -151,7 +151,7 @@ const formSubmission = (formDataObj) => {
 
   window.electronAPI.closeWindow();
   window.electronAPI.restart();
-}
+};
 
 window.electronAPI.setUnits((_evt, isMMOL) => {
   log.info(`Test of converting units in mmol/l: ${isMMOL} from settingsWindow`);
@@ -184,7 +184,7 @@ FormButtons.LOG.addEventListener(`click`, (evt) => {
 
 const isFormModified = (currentForm, initialForm) => {
   return JSON.stringify(formDataToObject(currentForm)) !== JSON.stringify(formDataToObject(initialForm));
-}
+};
 
 FormButtons.CLOSE.addEventListener(`click`, () => {
   const currentFormState = new FormData(form);

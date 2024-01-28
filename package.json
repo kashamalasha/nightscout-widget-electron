@@ -7,7 +7,7 @@
     "email": "dmitry.burnyshev@gmail.com"
   },
   "homepage": "https://github.com/kashamalasha/nightscout-widget-electron",
-  "version": "0.8.0-beta",
+  "version": "0.8.1-beta",
   "main": "main.js",
   "scripts": {
     "start": "NODE_ENV=production electron .",
@@ -18,7 +18,8 @@
     "ship": "electron-builder -p always",
     "test": "jest",
     "test-coverage": "jest --coverage",
-    "version-update": "node build/version-update.js"
+    "version-update": "node build/version-update.js",
+    "version-check": "node build/version-check.js"
   },
   "build": {
     "appId": "com.burny.owlet.app",

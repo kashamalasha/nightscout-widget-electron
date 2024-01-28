@@ -2,6 +2,8 @@ name: Build release
 
 on:
   pull_request:
+    branches:
+      - main
     types:
       - closed
 
@@ -120,7 +122,7 @@ jobs:
 
     steps:
       - name: Get the release data
-        id: releases_data
+        id: releases_data_first
         env:
           HOST: "https://api.github.com"
           ENDPOINT: "/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases"
@@ -135,13 +137,13 @@ jobs:
 
       - name: Read the output
         run: |
-          echo ${{ steps.releases_data.outputs.release_data }} | jq '.'
+          echo ${{ steps.releases_data_first.outputs.release_data }} | jq '.'
 
       - name: Filter requested data for blockmaps
         id: jq_filter_blockmap
         run: |
           blockmaps=$(
-            echo '${{ steps.releases_data.outputs.release_data }}' | jq -r \
+            echo '${{ steps.releases_data_first.outputs.release_data }}' | jq -r \
             'fromjson | .assets | map(select(.name | endswith(".blockmap"))) | map(.id | tostring) | join(" ")'
           )
           echo "( ${blockmaps} )"
@@ -168,11 +170,25 @@ jobs:
             "${HOST}${ENDPOINT}$asset_id"
           done
 
+      - name: Get the release data
+        id: releases_data_second
+        env:
+          HOST: "https://api.github.com"
+          ENDPOINT: "/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases"
+        run: |
+          data=$(
+            curl -X GET -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "${HOST}${ENDPOINT}"
+          )
+          data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))} | tostring')
+          echo "release_data=${data}" >> $GITHUB_OUTPUT
+
       - name: Filter requested data for mac universal distros
         id: jq_filter_macuni
         run: |
           macuni=$(
-            echo '${{ steps.releases_data.outputs.release_data }}' | jq -r \
+            echo '${{ steps.releases_data_second.outputs.release_data }}' | jq -r \
             'fromjson | .assets | map(select(.name | contains("universal"))) | map(.id | tostring) | join(" ")'
           )
           echo "( ${macuni} )"

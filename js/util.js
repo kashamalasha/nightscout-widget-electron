@@ -172,7 +172,7 @@ const alert = (type, title, msg, sync = false) => {
 
 const formDataToObject = (formData) => {
   return Object.fromEntries([...formData.entries()]);
-}
+};
 
 export {
   dir2Char,
