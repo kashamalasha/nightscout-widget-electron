@@ -1,4 +1,4 @@
-name: Check and lint Pull Request
+name: Check the source code
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18.14.0'
+        node-version: '21.1.0'
 
     - name: Install dependencies
       run: npm install
@@ -43,7 +43,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18.14.0'
+        node-version: '21.1.0'
 
     - name: Check version
       run: |
