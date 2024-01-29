@@ -1,11 +1,8 @@
 name: Bug Report
 description:  Submit a report to help us improve
 title: "[Bug]: "
-labels:
-  - bug
-  - triage
-projects:
-  - kashamalasha/nightscout-widget-electron
+labels: ["bug", "triage"]
+projects: ["kashamalasha/nightscout-widget-electron"]
 assignees:
   - kashamalasha
 body:
