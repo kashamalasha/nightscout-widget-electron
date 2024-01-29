@@ -1,0 +1,83 @@
+name: Bug Report
+description:  Submit a report to help us improve
+title: "[Bug]: "
+labels:
+  - triage
+projects:
+  - nightscout-widget-electron
+assignees:
+  - kashamalasha
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug.
+      placeholder: A clear and concise describe of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce?
+      description: Describe some path to reproduce the buggy behavior.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: false
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot?
+      description: Add some screenshop (if applicable) to demonstrate the buggy behavior.
+    validations:
+      required: false
+  - type: dropdown
+    id: version
+    attributes:
+      label: Application version
+      description: What version of our software are you running?
+      options:
+        - 0.8.2-beta (Latest)
+        - other (specify in description)
+      default: 0
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: What operating system are you seeing the problem on?
+      multiple: true
+      options:
+        - Apple MacOS
+        - MS Windows
+        - Linux
+  - type: input
+    id: os_version
+    attributes:
+      label: Operating system's version and architecture
+      description: Specify the operating system's version and the CPU architecture (last attribute relevant for MacOS only)?
+      placeholder: ex. Sonoma 14.0, Apple Silicon
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output or debug info
+      description: Please copy and paste any relevant log or debug output. This will be automatically formatted into code, so no need for backticks.
+      render: shell

@@ -23,8 +23,8 @@ const Fallback = {
 
 const GetParams = {
   SORT_BY: `date`,
-  LIMIT: 6,
-  FIELDS: `sgv,direction,srvCreated`,
+  LIMIT: 10,
+  FIELDS: `sgv,direction,date`,
   TYPE: `sgv`,
   TOKEN: null,
 };
@@ -38,7 +38,7 @@ const fallbackTransform = (dataObj) => {
     transformedData.result = dataObj.map(item => ({
       direction: item.direction,
       sgv: item.sgv,
-      srvCreated: item.mills
+      date: item.mills
     }));
   }
 

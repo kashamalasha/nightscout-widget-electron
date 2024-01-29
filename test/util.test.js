@@ -429,12 +429,12 @@ describe(`customAssign`, () => {
 describe(`prepareData`, () => {
   const dataObj = {
     result: [
-      { sgv: 90, srvCreated: new Date().getTime() - 3 * 60 * 1000 , direction: `FortyFiveUp`},
-      { sgv: 80, srvCreated: new Date().getTime() - 8 * 60 * 1000 , direction: `Flat`},
-      { sgv: 80, srvCreated: new Date().getTime() - 12 * 60 * 1000 , direction: `Flat`},
-      { sgv: 80, srvCreated: new Date().getTime() - 17 * 60 * 1000 , direction: `Flat`},
-      { sgv: 80, srvCreated: new Date().getTime() - 22 * 60 * 1000 , direction: `Flat`},
-      { sgv: 80, srvCreated: new Date().getTime() - 27 * 60 * 1000 , direction: `Flat`},
+      { sgv: 90, date: new Date().getTime() - 3 * 60 * 1000 , direction: `FortyFiveUp`},
+      { sgv: 80, date: new Date().getTime() - 8 * 60 * 1000 , direction: `Flat`},
+      { sgv: 80, date: new Date().getTime() - 12 * 60 * 1000 , direction: `Flat`},
+      { sgv: 80, date: new Date().getTime() - 17 * 60 * 1000 , direction: `Flat`},
+      { sgv: 80, date: new Date().getTime() - 22 * 60 * 1000 , direction: `Flat`},
+      { sgv: 80, date: new Date().getTime() - 27 * 60 * 1000 , direction: `Flat`},
     ],
   };
 
@@ -454,7 +454,7 @@ describe(`prepareData`, () => {
     });
     it(`should prepare data with the correct delta calculation (< 0)`, () => {
       dataObj.result.unshift(
-        { sgv: 80, srvCreated: new Date().getTime(), direction: `FortyFiveDown`}
+        { sgv: 80, date: new Date().getTime(), direction: `FortyFiveDown`}
       );
 
       const result = prepareData(dataObj, paramsObj);
@@ -483,7 +483,7 @@ describe(`prepareData`, () => {
     });
     it(`should prepare data with the correct delta calculation (< 0)`, () => {
       dataObj.result.unshift(
-        { sgv: 80, srvCreated: new Date().getTime(), direction: `FortyFiveDown`}
+        { sgv: 80, date: new Date().getTime(), direction: `FortyFiveDown`}
       );
 
       const result = prepareData(dataObj, paramsObjMMOL);
