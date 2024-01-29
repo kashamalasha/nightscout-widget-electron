@@ -17,6 +17,7 @@ const readmeFiles = [
   path.join(process.cwd(), `docs`, `README.it.md`),
   path.join(process.cwd(), `docs`, `README.pl.md`),
   path.join(process.cwd(), `docs`, `README.ru.md`),
+  path.join(process.cwd(), `.github`, `ISSUE_TEMPLATE`, `bug-report.yml`),
 ];
 
 readmeFiles.forEach((file) => {
