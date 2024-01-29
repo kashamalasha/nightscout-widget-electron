@@ -53,7 +53,7 @@ body:
       label: Application version
       description: What version of our software are you running?
       options:
-        - 0.8.1-beta (Latest)
+        - 0.8.2-beta (Latest)
         - other (specify in description)
       default: 0
     validations:

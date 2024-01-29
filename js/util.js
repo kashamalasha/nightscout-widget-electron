@@ -122,7 +122,7 @@ const prepareData = (dataObj, paramsObj) => {
   result.prev = dataObj.result[1].sgv;
 
   const currentTime = new Date();
-  result.age = Math.floor((currentTime.getTime() - dataObj.result[0].srvCreated) / 1000 / 60);
+  result.age = Math.floor((currentTime.getTime() - dataObj.result[0].date) / 1000 / 60);
 
   let delta = Math.round((result.last - result.prev) * 100) / 100;
 
