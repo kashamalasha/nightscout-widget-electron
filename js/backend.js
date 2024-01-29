@@ -23,7 +23,7 @@ const Fallback = {
 
 const GetParams = {
   SORT_BY: `date`,
-  LIMIT: 6,
+  LIMIT: 10,
   FIELDS: `sgv,direction,date`,
   TYPE: `sgv`,
   TOKEN: null,
