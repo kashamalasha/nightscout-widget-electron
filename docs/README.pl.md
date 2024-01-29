@@ -13,8 +13,8 @@ Aplikacja nosi nazwę „Owlet”, co oznacza małą sowę i została wybrana ze
   <a href="https://github.com/kashamalasha/nightscout-widget-electron/releases/latest"><img src="https://img.shields.io/github/v/release/kashamalasha/nightscout-widget-electron?color=%2300834a" /></a>
 </div>
 <div style="margin-top: 5px">
-  <a style="margin: 5px;" href="https://boosty.to/owlet/donate"><img src="./support_me_boosty.png" width="130" alt="Donate me on Boosty"/></a>
-  <a style="margin: 5px;" href="https://www.paypal.com/donate/?business=46K7J6S3UB3CS&no_recurring=0&item_name=Support+Owlet%3A+Improve+T1D+care+with+a+donation%21+Your+contribution+empowers+health+monitoring.+Join+me+in+making+a+difference%21&currency_code=USD"><img src="./support_me_paypal.png" width="130" alt="Donate me on PayPal"/></a>
+  <a style="margin: 5px;" target="_blank" rel="noopener noreferrer" href="https://boosty.to/owlet/donate"><img src="./support_me_boosty.png" width="130" alt="Donate me on Boosty"/></a>
+  <a style="margin: 5px;" target="_blank" rel="noopener noreferrer" href="https://www.paypal.com/donate/?business=46K7J6S3UB3CS&no_recurring=0&item_name=Support+Owlet%3A+Improve+T1D+care+with+a+donation%21+Your+contribution+empowers+health+monitoring.+Join+me+in+making+a+difference%21&currency_code=USD"><img src="./support_me_paypal.png" width="130" alt="Donate me on PayPal"/></a>
 </div>
 
 ## Tłumaczenie README
