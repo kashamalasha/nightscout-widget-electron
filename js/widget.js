@@ -57,10 +57,6 @@ Buttons.browse.addEventListener(`pointerup`, () => {
   Fields.last.classList.toggle(`sgv__last--accented`);
 });
 
-Fields.last.addEventListener(`mouseup`, (evt) => {
-  evt.target.classList.toggle(`sgv__last--accented`, false);
-});
-
 const render = (data) => {
   Fields.last.textContent = data.last;
   Fields.delta.textContent = data.delta;
