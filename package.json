@@ -28,8 +28,14 @@
     "directories": {
       "output": "dist"
     },
-    "files": ["**/*", "!README.md", "asset/**/*"],
-    "extraFiles": ["LICENSE"],
+    "files": [
+      "**/*",
+      "!README.md",
+      "asset/**/*"
+    ],
+    "extraFiles": [
+      "LICENSE"
+    ],
     "mac": {
       "notarize": false,
       "hardenedRuntime": true,
@@ -41,13 +47,19 @@
       "target": [
         {
           "target": "default",
-          "arch": ["x64", "arm64"]
+          "arch": [
+            "x64",
+            "arm64"
+          ]
         }
       ]
     },
     "afterSign": "build/notarize.js",
     "win": {
-      "target": ["nsis", "zip"],
+      "target": [
+        "nsis",
+        "zip"
+      ],
       "icon": "asset/icons/win/AppIcon.ico"
     },
     "nsis": {
@@ -59,7 +71,9 @@
       "allowToChangeInstallationDirectory": false
     },
     "linux": {
-      "target": ["appImage"],
+      "target": [
+        "appImage"
+      ],
       "icon": "asset/icons/png",
       "category": "Utility"
     },
@@ -91,20 +105,20 @@
   ],
   "license": "AGPL-3.0",
   "dependencies": {
-    "electron-log": "^5.0.1",
+    "electron-log": "^5.1.1",
     "electron-store": "^8.1.0",
-    "electron-updater": "^6.1.7"
+    "electron-updater": "^6.1.8"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
-    "@electron/notarize": "^2.2.0",
+    "@electron/notarize": "^2.3.0",
     "ajv": "^8.12.0",
-    "dotenv": "^16.3.1",
-    "electron": "^27.1.2",
-    "electron-builder": "^24.9.1",
-    "eslint": "^8.54.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-jest": "^27.6.0",
+    "dotenv": "^16.4.5",
+    "electron": "^29.0.0",
+    "electron-builder": "^24.12.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "jest": "^29.7.0",
