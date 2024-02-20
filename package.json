@@ -28,7 +28,7 @@
     "directories": {
       "output": "dist"
     },
-    "files": ["**/*", "!README.md", "asset/**/*", "!asset/screenshot*"],
+    "files": ["**/*", "!README.md", "asset/**/*"],
     "extraFiles": ["LICENSE"],
     "mac": {
       "notarize": false,
