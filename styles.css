@@ -323,8 +323,11 @@ a:focus-visible {
     }
     .settings-input__check-wrapper {
       width: 100%;
-
       display: flex;
+      gap: 10px;
+    }
+
+    .settings-input__check-wrapper.check-reverse {
       flex-direction: row-reverse;
       justify-content: space-between;
     }
