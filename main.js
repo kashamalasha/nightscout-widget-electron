@@ -80,7 +80,7 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, `js/preload.js`)
     },
-    alwaysOnTop: true,
+    alwaysOnTop: config.get(`WIDGET.ALWAYS_ON_TOP`) ?? true,
     frame: false,
     skipTaskbar: true,
     transparent: true,
@@ -89,7 +89,7 @@ const createWindow = () => {
 
   const settingsBounds = {
     width: 800,
-    height: 530,
+    height: 560,
   };
 
   const getPosition = () => {
@@ -273,13 +273,13 @@ app.whenReady().then(() => {
     const prefix = `Renderer:`;
     switch (level) {
     case `info`:
-      log.info(`${prefix} ${msg}`);
+      log.info(`${prefix} ${JSON.stringify(msg)}`);
       break;
     case `warn`:
-      log.warn(`${prefix} ${msg}`, `color: orange`);
+      log.warn(`${prefix} ${JSON.stringify(msg)}`, `color: orange`);
       break;
     case `error`:
-      log.error(`${prefix} ${msg}`, `color: red`);
+      log.error(`${prefix} ${JSON.stringify(msg)}`, `color: red`);
       break;
     }
   });
@@ -372,6 +372,7 @@ app.whenReady().then(() => {
       config.set(`WIDGET.SHOW_AGE`, data[`show-age`]);
       config.set(`WIDGET.UNITS_IN_MMOL`, data[`units-in-mmol`]);
       config.set(`WIDGET.CALC_TREND`, data[`calc-trend`]);
+      config.set(`WIDGET.ALWAYS_ON_TOP`, data[`always-on-top`]);
       config.set(`BG.HIGH`, parseFloat(data[`bg-high`]));
       config.set(`BG.LOW`, parseFloat(data[`bg-low`]));
       config.set(`BG.TARGET.TOP`, parseFloat(data[`bg-target-top`]));

@@ -98,6 +98,10 @@
         "CALC_TREND": {
           "type": "boolean",
           "default": false
+        },
+        "ALWAYS_ON_TOP": {
+          "type": "boolean",
+          "default": true
         }
       },
       "required": [

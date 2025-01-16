@@ -12,7 +12,8 @@
       "age_limit": "Info: Stale data (min.)",
       "show_age": "Show data age",
       "calc_trend": "Calc trend",
-      "units_in_mmol": "Units in mmol/l"
+      "units_in_mmol": "Units in mmol/l",
+      "always_on_top": "Always on top"
     },
     "bg": {
       "title": "Blood sugar levels preferences",

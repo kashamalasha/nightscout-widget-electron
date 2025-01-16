@@ -26,6 +26,7 @@ const FormFields = {
     SHOW_AGE: form.querySelector(`#show-age`),
     UNITS_IN_MMOL: form.querySelector(`#units-in-mmol`),
     CALC_TREND: form.querySelector(`#calc-trend`),
+    ALWAYS_ON_TOP: form.querySelector(`#always-on-top`),
   },
   BG: {
     HIGH: form.querySelector(`#bg-high`),
@@ -144,6 +145,7 @@ const formSubmission = (formDataObj) => {
   formDataObj[`show-age`] = !!formDataObj[`show-age`];
   formDataObj[`units-in-mmol`] = !!formDataObj[`units-in-mmol`];
   formDataObj[`calc-trend`] = !!formDataObj[`calc-trend`];
+  formDataObj[`always-on-top`] = !!formDataObj[`always-on-top`];
 
   window.electronAPI.setSettings(formDataObj);
   alert(`info`, `OK`, msg, true);

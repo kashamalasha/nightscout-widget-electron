@@ -12,7 +12,8 @@
       "age_limit": "Datos obsoletos (min.)",
       "show_age": "Mostrar edad de datos",
       "calc_trend": "Calc. tendencia",
-      "units_in_mmol": "Unidades en mmol/l"
+      "units_in_mmol": "Unidades en mmol/l",
+      "always_on_top": "Siempre visible"
     },
     "bg": {
       "title": "Niveles de glucosa en sangre",

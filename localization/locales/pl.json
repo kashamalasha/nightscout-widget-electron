@@ -12,7 +12,8 @@
       "age_limit": "Brak danych od (min.)",
       "show_age": "Czas od odczytu",
       "calc_trend": "Kalkuluj trend",
-      "units_in_mmol": "Użyj mmol/l"
+      "units_in_mmol": "Użyj mmol/l",
+      "always_on_top": "Zawsze na wierzchu"
     },
     "bg": {
       "title": "Zakresy glikemii",

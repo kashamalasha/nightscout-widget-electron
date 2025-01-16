@@ -1,28 +1,29 @@
 {
-    "NIGHTSCOUT": {
-        "URL": "https://some-cgm.site.com",
-        "TOKEN": "token-hash123string456789",
-        "INTERVAL": 30
+  "NIGHTSCOUT": {
+    "URL": "https://some-cgm.site.com",
+    "TOKEN": "token-hash123string456789",
+    "INTERVAL": 30
+  },
+  "BG": {
+    "HIGH": 10,
+    "LOW": 3.3,
+    "TARGET": {
+      "TOP": 8.5,
+      "BOTTOM": 4.5
+    }
+  },
+  "WIDGET": {
+    "SHOW_AGE": true,
+    "AGE_LIMIT": 20,
+    "POSITION": {
+      "x": 100,
+      "y": 100
     },
-    "BG": {
-        "HIGH": 10,
-        "LOW": 3.3,
-        "TARGET": {
-            "TOP": 8.5,
-            "BOTTOM": 4.5
-        }
-    },
-    "WIDGET": {
-        "SHOW_AGE": true,
-        "AGE_LIMIT": 20,
-        "POSITION": {
-            "x": 100,
-            "y": 100
-        },
-        "UNITS_IN_MMOL": true,
-        "CALC_TREND": false
-    },
-    "LAST_UPDATE_REQUEST": "1/1/2000",
-    "IS_FIRST_RUN": false,
-    "LANGUAGE": "en"
+    "UNITS_IN_MMOL": true,
+    "CALC_TREND": false,
+    "ALWAYS_ON_TOP": true
+  },
+  "LAST_UPDATE_REQUEST": "1/1/2000",
+  "IS_FIRST_RUN": false,
+  "LANGUAGE": "en"
 }

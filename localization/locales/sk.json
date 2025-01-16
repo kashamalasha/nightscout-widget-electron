@@ -12,7 +12,8 @@
       "age_limit": "Info: Staré údaje (min.)",
       "show_age": "Zobrazovať vek údajov",
       "calc_trend": "Vypočítaný trend",
-      "units_in_mmol": "Jednotky v mmol/l"
+      "units_in_mmol": "Jednotky v mmol/l",
+      "always_on_top": "Vždy na vrchu"
     },
     "bg": {
       "title": "Predvoľby zobrazovania glykémie",

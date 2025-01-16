@@ -12,7 +12,8 @@
       "age_limit": "Info: Limite età (min.)",
       "show_age": "Mostra età dati",
       "calc_trend": "Calcola trend",
-      "units_in_mmol": "Unità in mmol/l"
+      "units_in_mmol": "Unità in mmol/l",
+      "always_on_top": "Sempre in primo piano"
     },
     "bg": {
       "title": "Preferenze livello glicemia",
