@@ -1,29 +1,29 @@
 {
   "NIGHTSCOUT": {
-    "INTERVAL": 60
+      "INTERVAL": 60
   },
   "BG": {
-    "HIGH": 10,
-    "LOW": 3.5,
-    "TARGET": {
-      "TOP": 8.5,
-      "BOTTOM": 4.5
-    }
+      "HIGH": 10,
+      "LOW": 3.5,
+      "TARGET": {
+          "TOP": 8.5,
+          "BOTTOM": 4.5
+      }
   },
   "WIDGET": {
-    "SHOW_AGE": true,
-    "AGE_LIMIT": 20,
-    "POSITION": {
-      "x": 1000,
-      "y": 100
-    },
-    "UNITS_IN_MMOL": true,
-    "CALC_TREND": false,
-    "ALWAYS_ON_TOP": true
+      "SHOW_AGE": true,
+      "AGE_LIMIT": 20,
+      "POSITION": {
+          "x": 1000,
+          "y": 100
+      },
+      "UNITS_IN_MMOL": true,
+      "CALC_TREND": false,
+      "ALWAYS_ON_TOP": true
   },
   "SHORTCUT": {
-    "ENABLED": true,
-    "COMBINATION": "Ctrl+Alt+G"
+      "ENABLED": true,
+      "COMBINATION": "Ctrl+Alt+G"
   },
   "LAST_UPDATE_REQUEST": "1/1/2000",
   "IS_FIRST_RUN": true,
