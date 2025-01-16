@@ -15,6 +15,11 @@
       "units_in_mmol": "Unidades en mmol/l",
       "always_on_top": "Siempre visible"
     },
+    "shortcut": {
+      "title": "Atajos",
+      "bring_to_front": "Traer al frente",
+      "combination": "Combinación"
+    },
     "bg": {
       "title": "Niveles de glucosa en sangre",
       "high": "Umbral nivel alto",

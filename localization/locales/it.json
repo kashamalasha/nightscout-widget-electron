@@ -15,6 +15,11 @@
       "units_in_mmol": "Unità in mmol/l",
       "always_on_top": "Sempre in primo piano"
     },
+    "shortcut": {
+      "title": "Scorciatoie",
+      "bring_to_front": "Porta in primo piano",
+      "combination": "Combinazione"
+    },
     "bg": {
       "title": "Preferenze livello glicemia",
       "high": "Soglia Alto livello",

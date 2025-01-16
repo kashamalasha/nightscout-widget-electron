@@ -21,6 +21,10 @@
     "CALC_TREND": false,
     "ALWAYS_ON_TOP": true
   },
+  "SHORTCUT": {
+    "ENABLED": true,
+    "COMBINATION": "Ctrl+Alt+G"
+  },
   "LAST_UPDATE_REQUEST": "1/1/2000",
   "IS_FIRST_RUN": true,
   "LANGUAGE": "en"

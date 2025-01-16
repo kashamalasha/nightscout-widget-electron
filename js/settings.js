@@ -28,6 +28,10 @@ const FormFields = {
     CALC_TREND: form.querySelector(`#calc-trend`),
     ALWAYS_ON_TOP: form.querySelector(`#always-on-top`),
   },
+  SHORTCUT: {
+    ENABLED: form.querySelector(`#enable-shortcut`),
+    COMBINATION: form.querySelector(`#shortcut-combination`)
+  },
   BG: {
     HIGH: form.querySelector(`#bg-high`),
     LOW: form.querySelector(`#bg-low`),
@@ -146,6 +150,7 @@ const formSubmission = (formDataObj) => {
   formDataObj[`units-in-mmol`] = !!formDataObj[`units-in-mmol`];
   formDataObj[`calc-trend`] = !!formDataObj[`calc-trend`];
   formDataObj[`always-on-top`] = !!formDataObj[`always-on-top`];
+  formDataObj[`enable-shortcut`] = !!formDataObj[`enable-shortcut`];
 
   window.electronAPI.setSettings(formDataObj);
   alert(`info`, `OK`, msg, true);

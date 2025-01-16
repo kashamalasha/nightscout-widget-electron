@@ -16,6 +16,11 @@
       "units_in_mmol": "יחידות ב-mmol/l",
       "always_on_top": "גלוי תמיד בקצה המסך"
     },
+    "shortcut": {
+      "title": "קיצורים",
+      "bring_to_front": "הבא לקדמה",
+      "combination": "שילוב"
+    },
     "bg": {
       "title": "העדפות תצוגת ערכי הסוכר",
       "high": "סף סוכר גבוה",

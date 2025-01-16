@@ -224,7 +224,8 @@ a:focus-visible {
   display: grid;
   grid-template-columns: 42% auto;
 }
-  .settings-fields__nightscout {
+  .settings-fields__nightscout,
+  .settings-fields__other {
     grid-column: span 2;
   }
 
@@ -339,7 +340,8 @@ a:focus-visible {
     .settings-input__field--checkbox {
       width: 30px;
       height: 30px;
-
+    }
+    .settings-fields__widget .settings-input__field--checkbox {
       margin-right: 40px;
     }
     .settings-input__check {
@@ -359,12 +361,14 @@ a:focus-visible {
   justify-content: space-between;
   align-items: center;
 }
+
 .settings-footer__buttons {
   margin-top: 5px;
   margin-left: 5px;
   display: flex;
   justify-content: flex-start;
 }
+
 .settings-footer__meta {
   display: flex;
   justify-content: space-between;

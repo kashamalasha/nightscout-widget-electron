@@ -15,6 +15,11 @@
       "units_in_mmol": "Jednotky v mmol/l",
       "always_on_top": "Vždy na vrchu"
     },
+    "shortcut": {
+      "title": "Skratky",
+      "bring_to_front": "Priniesť do popredia",
+      "combination": "Kombinácia"
+    },
     "bg": {
       "title": "Predvoľby zobrazovania glykémie",
       "high": "Vysoká úroveň glykémie",

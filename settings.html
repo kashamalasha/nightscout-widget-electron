@@ -52,28 +52,28 @@
           </div>
           <div class="settings-input">
             <input class="settings-input__check" type="checkbox" name="show-age" id="show-age">
-            <label class="settings-input__check-wrapper" for="show-age">
+            <label class="settings-input__check-wrapper check-reverse" for="show-age">
               <span class="settings-input__field settings-input__field--checkbox"></span>
               <span class="settings-input__label" data-i18n="settings.widget.show_age">Show age</span>
             </label>
           </div>
           <div class="settings-input">
             <input class="settings-input__check" type="checkbox" name="units-in-mmol" id="units-in-mmol">
-            <label class="settings-input__check-wrapper" for="units-in-mmol">
+            <label class="settings-input__check-wrapper check-reverse" for="units-in-mmol">
               <span class="settings-input__field settings-input__field--checkbox"></span>
               <span class="settings-input__label" data-i18n="settings.widget.units_in_mmol">Units in mmol/l</span>
             </label>
           </div>
           <div class="settings-input">
             <input class="settings-input__check" type="checkbox" name="calc-trend" id="calc-trend">
-            <label class="settings-input__check-wrapper" for="calc-trend">
+            <label class="settings-input__check-wrapper check-reverse" for="calc-trend">
               <span class="settings-input__field settings-input__field--checkbox"></span>
               <span class="settings-input__label" data-i18n="settings.widget.calc_trend">Calc trend</span>
             </label>
           </div>
           <div class="settings-input">
             <input class="settings-input__check" type="checkbox" name="always-on-top" id="always-on-top">
-            <label class="settings-input__check-wrapper" for="always-on-top">
+            <label class="settings-input__check-wrapper check-reverse" for="always-on-top">
               <span class="settings-input__field settings-input__field--checkbox"></span>
               <span class="settings-input__label" data-i18n="settings.widget.always_on_top">Always On Top</span>
             </label>
@@ -98,6 +98,21 @@
             <label class="settings-input__label" for="bg-low" data-i18n="settings.bg.low">Low level threshold</label>
           </div>
         </section>
+        <section class="settings-field settings-fields__other">
+          <h2 class="settings-field__title" data-i18n="settings.shortcut.title">Shortcuts</h2>
+          <div class="settings-input">
+            <input class="settings-input__field settings-input__field--text" type="text" name="shortcut-combination"
+              id="shortcut-combination" spellcheck="false" placeholder="Ctrl+Alt+G">
+            <input class="settings-input__check" type="checkbox" name="enable-shortcut" id="enable-shortcut">
+            <label class="settings-input__check-wrapper" for="enable-shortcut">
+              <span class="settings-input__field settings-input__field--checkbox"></span>
+              <span class="settings-input__label" data-i18n="settings.shortcut.bring_to_front">Bring To
+                The Front</span>
+            </label>
+          </div>
+
+        </section>
+
       </div>
       <footer class="settings-footer">
         <div class="settings-footer__buttons">

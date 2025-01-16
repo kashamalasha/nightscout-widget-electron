@@ -1,4 +1,4 @@
-const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell, dialog } = require(`electron`);
+const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell, dialog, globalShortcut } = require(`electron`);
 const path = require(`path`);
 const { readFileSync } = require(`fs`);
 const { exec } = require(`child_process`);
@@ -89,7 +89,7 @@ const createWindow = () => {
 
   const settingsBounds = {
     width: 800,
-    height: 560,
+    height: 680,
   };
 
   const getPosition = () => {
@@ -373,6 +373,8 @@ app.whenReady().then(() => {
       config.set(`WIDGET.UNITS_IN_MMOL`, data[`units-in-mmol`]);
       config.set(`WIDGET.CALC_TREND`, data[`calc-trend`]);
       config.set(`WIDGET.ALWAYS_ON_TOP`, data[`always-on-top`]);
+      config.set(`SHORTCUT.ENABLED`, data[`enable-shortcut`]);
+      config.set(`SHORTCUT.COMBINATION`, data[`shortcut-combination`]);
       config.set(`BG.HIGH`, parseFloat(data[`bg-high`]));
       config.set(`BG.LOW`, parseFloat(data[`bg-low`]));
       config.set(`BG.TARGET.TOP`, parseFloat(data[`bg-target-top`]));
@@ -409,6 +411,16 @@ app.whenReady().then(() => {
   ipcMain.handle(`is-always-on-top`, () => {
     return widget.mainWindow.isAlwaysOnTop();
   });
+
+  if(config.get(`SHORTCUT.ENABLED`)) {
+    const ret = globalShortcut.register(config.get(`SHORTCUT.COMBINATION`) , () => {
+      widget.mainWindow.show();
+    });
+    
+    if (!ret) {
+      log.warn(`shortcut registration failed`);
+    }
+  }
 
 });
 
@@ -450,5 +462,6 @@ if (isMac) {
 }
 
 app.on(`window-all-closed`, () => {
+  globalShortcut.unregisterAll();
   app.quit();
 });

@@ -104,12 +104,22 @@
           "default": true
         }
       },
-      "required": [
-        "AGE_LIMIT",
-        "POSITION",
-        "UNITS_IN_MMOL",
-        "CALC_TREND"
-      ]
+      "required": ["AGE_LIMIT", "POSITION", "UNITS_IN_MMOL", "CALC_TREND"]
+    },
+    "SHORTCUT": {
+      "type": "object",
+      "properties": {
+        "ENABLED": {
+          "type": "boolean",
+          "default": false
+        },
+        "COMBINATION": {
+          "type": "string",
+          "default": "",
+          "pattern": "((Ctrl|Alt|Shift|Meta)\\+)+(\\+)?([A-Z0-9])"
+        }
+      },
+      "required": ["ENABLED"]
     },
     "LAST_UPDATE_REQUEST": {
       "type": "string",
