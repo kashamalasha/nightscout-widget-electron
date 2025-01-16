@@ -399,6 +399,16 @@ app.whenReady().then(() => {
     widget.mainWindow.webContents.send(`set-calc-trend`, calcTrend, isMMOL);
   });
 
+  ipcMain.handle(`toggle-always-on-top`, () => {
+    const newState = !widget.mainWindow.isAlwaysOnTop();
+    widget.mainWindow.setAlwaysOnTop(newState);
+    return newState;
+  });
+
+  ipcMain.handle(`is-always-on-top`, () => {
+    return widget.mainWindow.isAlwaysOnTop();
+  });
+
 });
 
 if (isMac) {

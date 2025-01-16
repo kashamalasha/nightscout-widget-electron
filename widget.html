@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <link href="./styles.css" rel="stylesheet">
-    <title>Owlet</title>
-  </head>
-  <body>
-    <main>
-      <section class="sgv">
-        <div class="sgv__last sgv--flicker">?.?</div>
-        <div class="sgv__delta sgv--flicker">?.?</div>
-        <div class="sgv__trend sgv--flicker">?</div>
-        <div class="sgv__age sgv--flicker"><span class="sgv__age-value">?</span> min.</div>
-      </section>
-      <section class="widget-control">
-        <button class="widget-button" id="button-close">
-          <img src="asset/icons8-close.png" alt="close" width="12px" height="12px">
-        </button>
-        <button class="widget-button" id="button-browse">
-          <img src="asset/icons8-polyline.png" alt="browse" width="12px" height="12px">
-        </button>
-        <button class="widget-button" id="button-settings">
-          <img src="asset/icons8-settings.png" alt="setup" width="12px" height="12px">
-        </button>
-      </section>
-    </main>
-    <script type="module" src="./js/widget.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <link href="./styles.css" rel="stylesheet">
+  <title>Owlet</title>
+</head>
+
+<body>
+  <main>
+    <section class="sgv">
+      <div class="sgv__last sgv--flicker">?.?</div>
+      <div class="sgv__delta sgv--flicker">?.?</div>
+      <div class="sgv__trend sgv--flicker">?</div>
+      <div class="sgv__age sgv--flicker"><span class="sgv__age-value">?</span> min.</div>
+    </section>
+    <section class="widget-control">
+      <button class="widget-button" id="button-close">
+        <img src="asset/icons8-close.png" alt="close" width="12px" height="12px">
+      </button>
+      <button class="widget-button" id="button-browse">
+        <img src="asset/icons8-polyline.png" alt="browse" width="12px" height="12px">
+      </button>
+      <button class="widget-button" id="button-always-on-top">
+        <img src="asset/icons8-pin-filled-25.png" alt="always-on-top" width="12px" height="12px">
+      </button>
+      <button class="widget-button" id="button-settings">
+        <img src="asset/icons8-settings.png" alt="setup" width="12px" height="12px">
+      </button>
+    </section>
+  </main>
+  <script type="module" src="./js/widget.js"></script>
+</body>
+
 </html>

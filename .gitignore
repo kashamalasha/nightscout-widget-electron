@@ -10,3 +10,4 @@ yarn.lock
 .env
 notarization-error.log
 ci.copy
+secret/

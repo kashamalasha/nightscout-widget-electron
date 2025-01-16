@@ -29,6 +29,7 @@ const Buttons = {
   close: document.querySelector(`#button-close`),
   settings: document.querySelector(`#button-settings`),
   browse: document.querySelector(`#button-browse`),
+  alwaysOnTop: document.querySelector(`#button-always-on-top`),
 };
 
 const ModMap = {
@@ -37,6 +38,15 @@ const ModMap = {
   ok: `sgv__last--ok`,
   default: `sgv__last--`,
 };
+
+const updateAlwaysOnTopButton = (isAlwaysOnTop) => 
+  Buttons.alwaysOnTop.querySelector(`img`).src = isAlwaysOnTop ? `asset/icons8-pin-filled-25.png`:`asset/icons8-pin-hollow-25.png`;
+updateAlwaysOnTopButton(await window.electronAPI.isAlwaysOnTop());
+
+Buttons.alwaysOnTop.addEventListener(`click`, async() => {
+  const isPinned = await window.electronAPI.toggleAlwaysOnTop();
+  updateAlwaysOnTopButton(isPinned);
+});
 
 Buttons.close.addEventListener(`click`, () => {
   window.electronAPI.closeWindow();

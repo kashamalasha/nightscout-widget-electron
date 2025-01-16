@@ -28,4 +28,6 @@ contextBridge.exposeInMainWorld(`electronAPI`, {
   setUnits: (isMMOL) => ipcRenderer.on(`set-units`, isMMOL),
   testCalcTrend: (calcTrend, isMMOL) => ipcRenderer.send(`test-calc-trend`, calcTrend, isMMOL),
   setCalcTrend: (calcTrend, isMMOL) => ipcRenderer.on(`set-calc-trend`, calcTrend, isMMOL),
+  toggleAlwaysOnTop: () => ipcRenderer.invoke(`toggle-always-on-top`),
+  isAlwaysOnTop: () => ipcRenderer.invoke(`is-always-on-top`),
 });
