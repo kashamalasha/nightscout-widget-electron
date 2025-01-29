@@ -153,30 +153,31 @@ const createWindow = () => {
       "xdg-utils": `xdg-open`,
     };
 
-    const checkDependencies = (() => {
-      let missingCounter = 0;
+    const checkDependencies = async () => {
       const missingDependencies = [];
 
-      Object.entries(linuxDependencies).forEach(([package, command]) => {
-        exec(`which ${command}`, (error) => {
-          if (error) {
-            log.error(`${package} is not installed on your system.`);
-            missingDependencies.push(package);
-          } else {
-            log.info(`${package} is installed.`);
-          }
-
-          missingCounter++;
-
-          if (missingCounter === Object.keys(linuxDependencies).length) {
-            if (missingDependencies.length > 0) {
-              const errorMessage = `Please install the following dependencies:\n - ${missingDependencies.join(`\n - `)}`;
-              alert(`error`, `Missing dependencies`, errorMessage);
+      const dependencyChecks = Object.entries(linuxDependencies).map(async ([dependency, command]) => {
+        await new Promise((resolve, reject) => {
+          exec(`which ${command}`, (error) => {
+            if (error) {
+              log.error(`${dependency} is not installed on your system.`);
+              missingDependencies.push(dependency);
+              reject(error);
+            } else {
+              log.info(`${dependency} is installed.`);
+              resolve();
             }
-          }
+          });
         });
       });
-    });
+
+      await Promise.allSettled(dependencyChecks);
+
+      if (missingDependencies.length > 0) {
+        const errorMessage = `Please install the following dependencies:\n - ${missingDependencies.join(`\n - `)}`;
+        alert(`error`, `Missing dependencies`, errorMessage);
+      }
+    };
 
     mainWindow.webContents.on(`ready-to-show`, () => {
       checkDependencies();
