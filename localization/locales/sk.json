@@ -17,7 +17,7 @@
     "bg": {
       "title": "Predvoľby zobrazovania glykémie",
       "high": "Vysoká úroveň glykémie",
-      "low": "Nízka úroveň glukémie",
+      "low": "Nízka úroveň glykémie",
       "target": {
         "top": "Najvyššia cieľová úroveň",
         "bottom": "Najnižšia cieľová úroveň"
