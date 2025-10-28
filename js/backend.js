@@ -135,16 +135,46 @@ const obtainToken = (paramsObj) => {
     `GET`,
     url,
     (responseText) => {
-      const response = JSON.parse(responseText);
-      const expirationInMillis = response.exp * 1000;
+      try {
+        // Validate response text exists and is not empty
+        if (!responseText || typeof responseText !== `string`) {
+          throw new Error(`Invalid response: empty or non-string response`);
+        }
+        
+        const response = JSON.parse(responseText);
+        
+        // Validate required fields in response
+        if (!response.token) {
+          throw new Error(`Invalid response: token field missing`);
+        }
+        
+        if (typeof response.exp !== `number`) {
+          throw new Error(`Invalid response: expiration field missing or invalid`);
+        }
+        
+        const expirationInMillis = response.exp * 1000;
+        
+        // Validate token is not empty
+        if (!response.token || response.token.trim() === ``) {
+          throw new Error(`Invalid response: token is empty`);
+        }
 
-      GetParams.TOKEN = response.token;
-      CONFIG.JWT_EXPIRATION = expirationInMillis;
+        GetParams.TOKEN = response.token;
+        CONFIG.JWT_EXPIRATION = expirationInMillis;
 
-      log.info(`JWT token obtained successfully`);
+        log.info(`JWT token obtained successfully`);
+      } catch (parseError) {
+        log.error(`Failed to parse JWT token response: ${parseError.message}`);
+        // Clear invalid token to prevent further issues
+        GetParams.TOKEN = null;
+        CONFIG.JWT_EXPIRATION = 0;
+      }
     },
     (error) => {
       log.error(`Failed to obtain JWT token ${error} for the ${maskedToken}`);
+      // Clear token on error to prevent using invalid token
+      GetParams.TOKEN = null;
+      CONFIG.JWT_EXPIRATION = 0;
     },
     true // Changed to async for better performance
   );
