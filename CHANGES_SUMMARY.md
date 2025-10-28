@@ -64,10 +64,6 @@ Updated all npm packages to latest versions and fixed compatibility issues with 
 - Prepared for Windows Package Manager distribution
 - Provides alternative to code signing for security
 
-### 4. Build Signing Scripts
-- Created `build/sign.js` for future code signing
-- Created `build-signed.bat` for signed builds
-- Added signing configuration to package.json
 
 ## Files Changed
 
@@ -79,13 +75,8 @@ Updated all npm packages to latest versions and fixed compatibility issues with 
 
 ### New Files:
 - `eslint.config.mjs` - ESLint v9 flat config
-- `docs/CODE_SIGNING_GUIDE.md` - Complete signing guide
 - `WINGET_SUBMISSION_GUIDE.md` - Winget instructions
 - `winget-manifest.yaml` - Winget manifest
-- `build/sign.js` - Signing script
-- `build-signed.bat` - Signed build script
-- `build.config.js` - Build config
-- `PULL_REQUEST_GUIDE.md` - PR creation guide
 
 ### Removed:
 - `.eslintrc.js` (replaced by flat config)
