@@ -78,7 +78,10 @@ const createWindow = () => {
     x: widgetBounds.x,
     y: widgetBounds.y,
     webPreferences: {
-      preload: path.join(__dirname, `js/preload.js`)
+      preload: path.join(__dirname, `js/preload.js`),
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: false
     },
     alwaysOnTop: true,
     frame: false,
@@ -111,7 +114,10 @@ const createWindow = () => {
     x: getPosition().x,
     y: getPosition().y,
     webPreferences: {
-      preload: path.join(__dirname, `js/preload.js`)
+      preload: path.join(__dirname, `js/preload.js`),
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: false
     },
     transparent: true,
     show: configValid ? false : true,
@@ -125,7 +131,7 @@ const createWindow = () => {
 
   settingsWindow.webContents.once(`ready-to-show`, () => {
     ipcMain.on(`check-validation`, () => {
-      if (!configValid) {
+      if (!configValid && validate.errors && validate.errors.length > 0) {
         const errorPath = validate.errors[0].instancePath.substring(1).replaceAll(`/`, `.`);
         const errorReason = validate.errors[0].message;
         const errorMessage = `Config invalid on: ${errorPath}\nReason: ${errorReason}`;

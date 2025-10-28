@@ -93,7 +93,7 @@
     "provider": "github",
     "owner": "kashamalasha",
     "repo": "nightscout-widget-electron",
-    "ulr": "https://github.com/kashamalasha/nightscout-widget-electron"
+    "url": "https://github.com/kashamalasha/nightscout-widget-electron"
   },
   "keywords": [
     "diabetes",

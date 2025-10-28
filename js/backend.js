@@ -109,7 +109,10 @@ const hasTokenExpired = () => {
 };
 
 const obtainToken = (paramsObj) => {
-  log.info(`Requesting JWT token for the ${paramsObj.token}`);
+  const maskedToken = paramsObj.token ? 
+    `${paramsObj.token.substring(0, 4)}...${paramsObj.token.substring(paramsObj.token.length - 4)}` : 
+    `***`;
+  log.info(`Requesting JWT token for the ${maskedToken}`);
   const url = new URL(paramsObj.url + Endpoints.AUTH + `/` + paramsObj.token);
   const xhr = createRequest(
     `GET`,

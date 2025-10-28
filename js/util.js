@@ -126,15 +126,17 @@ const prepareData = (dataObj, paramsObj) => {
 
   let delta = Math.round((result.last - result.prev) * 100) / 100;
 
-  if (paramsObj.units_in_mmol) {
-    delta = mgdlToMMOL(delta);
-  }
-
   if (delta > 0) {
+    if (paramsObj.units_in_mmol) {
+      delta = mgdlToMMOL(delta);
+    }
     result.delta = `+${delta}`;
-  } else if (delta == 0) {
+  } else if (delta === 0 || delta === 0.0) {
     result.delta = `+${paramsObj.units_in_mmol ? `0.0` : `0`}`;
   } else {
+    if (paramsObj.units_in_mmol) {
+      delta = mgdlToMMOL(delta);
+    }
     result.delta = delta.toString();
   }
 
