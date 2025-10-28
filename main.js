@@ -373,7 +373,23 @@ app.whenReady().then(() => {
       return translation;
     } catch (err) {
       log.error(`Failed to load translation for language ${language}:`, err);
-      throw err;
+      
+      // Fallback to English if translation file not found
+      if (err.code === `ENOENT` && language !== `en`) {
+        try {
+          const fallbackData = await readFileAsync(path.join(__dirname, `localization/locales/en.json`));
+          const fallbackTranslation = JSON.parse(fallbackData);
+          log.info(`Fallback to English translation for language ${language}`);
+          return fallbackTranslation;
+        } catch (fallbackErr) {
+          log.error(`Failed to load fallback English translation:`, fallbackErr);
+          // Return empty object to prevent app crash
+          return {};
+        }
+      }
+      
+      // Return empty object for other errors to prevent app crash
+      return {};
     }
   });
 
