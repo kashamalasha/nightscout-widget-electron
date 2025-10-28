@@ -109,6 +109,18 @@ const hasTokenExpired = () => {
 };
 
 const obtainToken = (paramsObj) => {
+  // Validate token before making request
+  if (!paramsObj.token) {
+    log.error(`Token is undefined or missing`);
+    return;
+  }
+  
+  // Validate token is a non-empty string
+  if (typeof paramsObj.token !== `string` || paramsObj.token.trim() === ``) {
+    log.error(`Token is invalid or empty`);
+    return;
+  }
+  
   const maskedToken = paramsObj.token ? 
     `${paramsObj.token.substring(0, 4)}...${paramsObj.token.substring(paramsObj.token.length - 4)}` : 
     `***`;
