@@ -4,7 +4,7 @@ const { readFileSync, readFile } = require(`fs`);
 const { promisify } = require(`util`);
 
 const readFileAsync = promisify(readFile);
-const { exec } = require(`child_process`);
+const { spawn } = require(`child_process`);
 const Store = require(`electron-store`).default;
 const Ajv = require(`ajv`);
 const log = require(`./js/logger`);
@@ -167,8 +167,11 @@ const createWindow = () => {
       const missingDependencies = [];
 
       Object.entries(linuxDependencies).forEach(([package, command]) => {
-        exec(`which ${command}`, (error) => {
-          if (error) {
+        // Use spawn with proper argument handling instead of exec for security
+        const whichProcess = spawn(`which`, [command]);
+        
+        whichProcess.on(`close`, (code) => {
+          if (code !== 0) {
             log.error(`${package} is not installed on your system.`);
             missingDependencies.push(package);
           } else {
@@ -189,10 +192,12 @@ const createWindow = () => {
 
     mainWindow.webContents.on(`ready-to-show`, () => {
       checkDependencies();
-      exec(`wmctrl -r "${mainWindow.getTitle()}" -b add,skip_taskbar`, (error) => {
-        if (error) {
-          log.error(`Failed to execute wmctrl: ${error.message}`);
-        }
+      // Use spawn with proper argument handling instead of exec for security
+      const title = mainWindow.getTitle();
+      const wmctrlProcess = spawn(`wmctrl`, [`-r`, title, `-b`, `add,skip_taskbar`]);
+      
+      wmctrlProcess.on(`error`, (error) => {
+        log.error(`Failed to execute wmctrl: ${error.message}`);
       });
     });
   }
