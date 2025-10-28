@@ -84,7 +84,8 @@ const createWindow = () => {
       preload: path.join(__dirname, `js/preload.js`),
       nodeIntegration: false,
       contextIsolation: true,
-      sandbox: false
+      sandbox: true,
+      enableRemoteModule: false
     },
     alwaysOnTop: true,
     frame: false,
@@ -120,7 +121,8 @@ const createWindow = () => {
       preload: path.join(__dirname, `js/preload.js`),
       nodeIntegration: false,
       contextIsolation: true,
-      sandbox: false
+      sandbox: true,
+      enableRemoteModule: false
     },
     transparent: true,
     show: configValid ? false : true,
