@@ -113,7 +113,10 @@ const obtainToken = (paramsObj) => {
     `${paramsObj.token.substring(0, 4)}...${paramsObj.token.substring(paramsObj.token.length - 4)}` : 
     `***`;
   log.info(`Requesting JWT token for the ${maskedToken}`);
-  const url = new URL(paramsObj.url + Endpoints.AUTH + `/` + paramsObj.token);
+  
+  // Use URL path without token in URL - token will be sent in Authorization header
+  const url = new URL(paramsObj.url + Endpoints.AUTH);
+  
   const xhr = createRequest(
     `GET`,
     url,
@@ -127,11 +130,13 @@ const obtainToken = (paramsObj) => {
       log.info(`JWT token obtained successfully`);
     },
     (error) => {
-      log.error(`Failed to obtain JWT token ${error} for the ${paramsObj.token}`);
+      log.error(`Failed to obtain JWT token ${error} for the ${maskedToken}`);
     },
     false
   );
 
+  // Send token in Authorization header instead of URL
+  xhr.setRequestHeader(`Authorization`, `Bearer ${paramsObj.token}`);
   xhr.send();
 };
 
