@@ -1,6 +1,31 @@
 import js from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 
+// Common rules for all JavaScript files
+const commonRules = {
+  ...js.configs.recommended.rules,
+  'semi': 'error',
+  'indent': ['error', 2],
+  'no-multi-spaces': 'error',
+  'space-in-parens': 'error',
+  'no-multiple-empty-lines': 'error',
+  'prefer-const': 'error',
+  'no-use-before-define': 'error',
+  'no-console': 'error',
+  'curly': 'error',
+  'no-undef-init': 'error',
+  'init-declarations': ['error', 'always'],
+  'quotes': ['error', 'backtick']
+};
+
+// Import plugin rules
+const importRules = {
+  'import/no-unresolved': 'error',
+  'import/named': 'error',
+  'import/default': 'error',
+  'import/namespace': 'error'
+};
+
 export default [
   // Global ignores
   {
@@ -52,23 +77,8 @@ export default [
       import: importPlugin
     },
     rules: {
-      ...js.configs.recommended.rules,
-      'semi': 'error',
-      'indent': ['error', 2],
-      'no-multi-spaces': 'error',
-      'space-in-parens': 'error',
-      'no-multiple-empty-lines': 'error',
-      'prefer-const': 'error',
-      'no-use-before-define': 'error',
-      'no-console': 'error',
-      'curly': 'error',
-      'no-undef-init': 'error',
-      'init-declarations': ['error', 'always'],
-      'quotes': ['error', 'backtick'],
-      'import/no-unresolved': 'error',
-      'import/named': 'error',
-      'import/default': 'error',
-      'import/namespace': 'error'
+      ...commonRules,
+      ...importRules
     }
   },
   
@@ -106,23 +116,8 @@ export default [
       import: importPlugin
     },
     rules: {
-      ...js.configs.recommended.rules,
-      'semi': 'error',
-      'indent': ['error', 2],
-      'no-multi-spaces': 'error',
-      'space-in-parens': 'error',
-      'no-multiple-empty-lines': 'error',
-      'prefer-const': 'error',
-      'no-use-before-define': 'error',
-      'no-console': 'error',
-      'curly': 'error',
-      'no-undef-init': 'error',
-      'init-declarations': ['error', 'always'],
-      'quotes': ['error', 'backtick'],
-      'import/no-unresolved': 'error',
-      'import/named': 'error',
-      'import/default': 'error',
-      'import/namespace': 'error'
+      ...commonRules,
+      ...importRules
     }
   },
   
@@ -150,11 +145,10 @@ export default [
       }
     },
     rules: {
-      ...js.configs.recommended.rules,
-      'semi': 'error',
-      'indent': ['error', 2],
-      'quotes': ['error', 'backtick'],
-      'prefer-const': 'error'
+      ...commonRules,
+      // Simplified rules for test files
+      'no-console': 'warn', // Allow console in tests
+      'init-declarations': 'off' // Relaxed for tests
     }
   }
 ];
