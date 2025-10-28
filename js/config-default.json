@@ -1,5 +1,7 @@
 {
     "NIGHTSCOUT": {
+        "URL": "https://your-nightscout-site.com",
+        "TOKEN": "your-access-token-here",
         "INTERVAL": 60
     },
     "BG": {

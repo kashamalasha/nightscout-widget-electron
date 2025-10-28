@@ -1,5 +1,5 @@
 const { autoUpdater } = require(`electron-updater`);
-const Store = require(`electron-store`);
+const Store = require(`electron-store`).default;
 const log = require(`./logger`);
 
 const config = new Store();

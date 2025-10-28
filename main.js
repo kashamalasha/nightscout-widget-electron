@@ -2,7 +2,7 @@ const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell, dialog } 
 const path = require(`path`);
 const { readFileSync } = require(`fs`);
 const { exec } = require(`child_process`);
-const Store = require(`electron-store`);
+const Store = require(`electron-store`).default;
 const Ajv = require(`ajv`);
 const log = require(`./js/logger`);
 const requestToUpdate = require(`./js/auto-update`);

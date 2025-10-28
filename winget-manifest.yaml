@@ -1,0 +1,42 @@
+PackageIdentifier: kashamalasha.Owlet
+PackageVersion: 0.8.2-beta
+DefaultLocale: en-US
+Publisher: kashamalasha
+PackageName: Owlet
+PublisherUrl: https://github.com/kashamalasha
+PackageUrl: https://github.com/kashamalasha/nightscout-widget-electron
+License: AGPL-3.0
+LicenseUrl: https://github.com/kashamalasha/nightscout-widget-electron/blob/main/LICENSE.md
+Copyright: Copyright © 2024 Dmitry Burnyshev
+CopyrightUrl: https://github.com/kashamalasha/nightscout-widget-electron
+Author: Dmitry Burnyshev
+AppMoniker: owlet
+Tags:
+  - diabetes
+  - glucose
+  - cgm
+  - nightscout
+  - health
+  - medical
+ShortDescription: A lightweight desktop widget for monitoring glucose levels through Nightscout.
+Description: Owlet is a cross-platform Electron widget application that displays sensor glucose values (SGV) from Nightscout API in real-time. Perfect for Type 1 Diabetes management with features like trend arrows, customizable alert levels, and always-on-top display.
+
+Installers:
+  - Type: zip
+    Architecture: x64
+    InstallerUrl: https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.2-beta/Owlet-0.8.2-beta-win-x64.zip
+    InstallerSha256: 315ECC4EE6E61A2042BDE41FB896BDD5F1DAD3C55A2AB1E7CC6C66A1E0999CE9
+    InstallModes:
+      - silent
+    Commands:
+      - owlet
+
+InstallerSwitches:
+  Silent: /S
+
+Repository: https://github.com/kashamalasha/nightscout-widget-electron
+InstallerSuccessCodes:
+  - 0
+  - 1641
+  - 3010
+
