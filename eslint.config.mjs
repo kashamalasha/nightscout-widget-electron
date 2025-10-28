@@ -21,7 +21,6 @@ export default [
       'js/settings.js',
       'js/backend.js',
       'js/translator.js',
-      'test/util.test.js',
     ],
     languageOptions: {
       ecmaVersion: 2022,
@@ -45,16 +44,6 @@ export default [
         Promise: 'readonly',
         Error: 'readonly',
         RegExp: 'readonly',
-        // Jest globals
-        describe: 'readonly',
-        it: 'readonly',
-        test: 'readonly',
-        expect: 'readonly',
-        beforeEach: 'readonly',
-        afterEach: 'readonly',
-        beforeAll: 'readonly',
-        afterAll: 'readonly',
-        jest: 'readonly',
         // Browser globals
         FormData: 'readonly'
       }
@@ -134,6 +123,38 @@ export default [
       'import/named': 'error',
       'import/default': 'error',
       'import/namespace': 'error'
+    }
+  },
+  
+  // Configuration for test files (Jest)
+  {
+    files: ['test/**/*.js', 'test/**/*.test.js'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: {
+        // Jest test globals
+        describe: 'readonly',
+        it: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        jest: 'readonly',
+        // Browser globals for tests
+        FormData: 'readonly',
+        window: 'readonly',
+        document: 'readonly'
+      }
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      'semi': 'error',
+      'indent': ['error', 2],
+      'quotes': ['error', 'backtick'],
+      'prefer-const': 'error'
     }
   }
 ];
