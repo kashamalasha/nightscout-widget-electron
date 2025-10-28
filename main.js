@@ -370,21 +370,51 @@ app.whenReady().then(() => {
 
   ipcMain.handle(`get-translate`, async (evt, language) => {
     try {
-      const data = await readFileAsync(path.join(__dirname, `localization/locales/${language}.json`));
+      // Validate language parameter
+      if (!language || typeof language !== `string`) {
+        log.error(`Invalid language parameter provided`);
+        language = `en`; // Fallback to English
+      }
+      
+      const filePath = path.join(__dirname, `localization/locales/${language}.json`);
+      const data = await readFileAsync(filePath);
+      
+      // Validate data before parsing
+      if (!data || typeof data !== `string`) {
+        throw new Error(`Translation file is empty or invalid`);
+      }
+      
       const translation = JSON.parse(data);
+      
+      // Validate parsed translation is an object
+      if (!translation || typeof translation !== `object`) {
+        throw new Error(`Translation file does not contain valid JSON object`);
+      }
+      
       return translation;
     } catch (err) {
-      log.error(`Failed to load translation for language ${language}:`, err);
+      log.error(`Failed to load translation for language ${language}:`, err.message || err);
       
-      // Fallback to English if translation file not found
-      if (err.code === `ENOENT` && language !== `en`) {
+      // Fallback to English if translation file not found or parsing fails
+      if ((err.code === `ENOENT` || err.name === `SyntaxError`) && language !== `en`) {
         try {
-          const fallbackData = await readFileAsync(path.join(__dirname, `localization/locales/en.json`));
+          const fallbackPath = path.join(__dirname, `localization/locales/en.json`);
+          const fallbackData = await readFileAsync(fallbackPath);
+          
+          if (!fallbackData || typeof fallbackData !== `string`) {
+            throw new Error(`Fallback translation file is empty`);
+          }
+          
           const fallbackTranslation = JSON.parse(fallbackData);
+          
+          if (!fallbackTranslation || typeof fallbackTranslation !== `object`) {
+            throw new Error(`Fallback translation is invalid`);
+          }
+          
           log.info(`Fallback to English translation for language ${language}`);
           return fallbackTranslation;
         } catch (fallbackErr) {
-          log.error(`Failed to load fallback English translation:`, fallbackErr);
+          log.error(`Failed to load fallback English translation:`, fallbackErr.message || fallbackErr);
           // Return empty object to prevent app crash
           return {};
         }
