@@ -1,6 +1,9 @@
 const { app, BrowserWindow, powerMonitor, ipcMain, nativeTheme, shell, dialog } = require(`electron`);
 const path = require(`path`);
-const { readFileSync } = require(`fs`);
+const { readFileSync, readFile } = require(`fs`);
+const { promisify } = require(`util`);
+
+const readFileAsync = promisify(readFile);
 const { exec } = require(`child_process`);
 const Store = require(`electron-store`).default;
 const Ajv = require(`ajv`);
@@ -359,9 +362,14 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle(`get-translate`, async (evt, language) => {
-
-    const translation = JSON.parse(readFileSync(path.join(__dirname, `localization/locales/${language}.json`)));
-    return translation;
+    try {
+      const data = await readFileAsync(path.join(__dirname, `localization/locales/${language}.json`));
+      const translation = JSON.parse(data);
+      return translation;
+    } catch (err) {
+      log.error(`Failed to load translation for language ${language}:`, err);
+      throw err;
+    }
   });
 
   ipcMain.on(`set-settings`, (evt, data) => {
