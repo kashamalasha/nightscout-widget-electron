@@ -4,7 +4,6 @@ const { readFileSync, readFile } = require(`fs`);
 const { promisify } = require(`util`);
 
 const readFileAsync = promisify(readFile);
-const { spawn } = require(`child_process`);
 const Store = require(`electron-store`).default;
 const Ajv = require(`ajv`);
 const log = require(`./js/logger`);
@@ -169,7 +168,8 @@ const createWindow = () => {
       const missingDependencies = [];
 
       Object.entries(linuxDependencies).forEach(([package, command]) => {
-        // Use spawn with proper argument handling instead of exec for security
+        // Lazy load child_process only when needed
+        const { spawn } = require(`child_process`);
         const whichProcess = spawn(`which`, [command]);
         
         whichProcess.on(`close`, (code) => {
@@ -194,7 +194,8 @@ const createWindow = () => {
 
     mainWindow.webContents.on(`ready-to-show`, () => {
       checkDependencies();
-      // Use spawn with proper argument handling instead of exec for security
+      // Lazy load child_process only when needed
+      const { spawn } = require(`child_process`);
       const title = mainWindow.getTitle();
       const wmctrlProcess = spawn(`wmctrl`, [`-r`, title, `-b`, `add,skip_taskbar`]);
       
