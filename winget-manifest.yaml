@@ -24,8 +24,8 @@ Description: Owlet is a cross-platform Electron widget application that displays
 Installers:
   - Type: zip
     Architecture: x64
-    InstallerUrl: https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.2-beta/Owlet-0.8.2-beta-win-x64.zip
-    InstallerSha256: 315ECC4EE6E61A2042BDE41FB896BDD5F1DAD3C55A2AB1E7CC6C66A1E0999CE9
+    InstallerUrl: https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.2-beta/Owlet-v0.8.2-beta-win-x64.zip
+    InstallerSha256: 676316AFA755F84BAFD9EAFBA1267264E7C863A6180875DEB45E42A143719B6C
     InstallModes:
       - silent
     Commands:

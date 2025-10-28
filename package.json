@@ -15,7 +15,6 @@
     "lint": "eslint .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "dist:signed": "electron-builder --publish=never",
     "ship": "electron-builder -p always",
     "test": "jest",
     "test-coverage": "jest --coverage",
