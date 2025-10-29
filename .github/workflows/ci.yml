@@ -26,7 +26,7 @@ env:
 
 jobs:
   build-test:
-    name: ${{ matrix.os }} / Node ${{ env.NODE_VERSION }}
+    name: ${{ matrix.os }} / Node 21.1.0
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     strategy:
@@ -94,14 +94,14 @@ jobs:
 
       - name: Build (macOS)
         if: startsWith(matrix.os, 'macos')
-        env:
-          # Note: Notarization is disabled in package.json (notarize: false)
-          # If you later add Apple notarization/secrets, uncomment these:
-          # APPLE_ID: ${{ secrets.APPLE_ID }}
-          # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-          # APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          # CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
-          # CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PWD }}
+        # Note: Notarization is disabled in package.json (notarize: false)
+        # If you later add Apple notarization/secrets, uncomment the env block:
+        # env:
+        #   APPLE_ID: ${{ secrets.APPLE_ID }}
+        #   APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        #   APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        #   CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+        #   CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PWD }}
         run: |
           # Build for both Apple Silicon and Intel (universal) per package.json config
           # Since notarize is false, this builds unsigned DMG
