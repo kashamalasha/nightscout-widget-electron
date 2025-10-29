@@ -32,6 +32,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '21.1.0'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -40,8 +41,11 @@ jobs:
         run: |
           echo ${{ env.CERTIFICATE }} | base64 --decode > certificate.p12
           ls -la certificate*
-          diff <( printf '%s\n' "${{ env.CERTIFICATE_CHECKSUM }}" ) <( printf '%s\n' "$(md5 -q certificate.p12)")
-          [ $? -eq 0 ] && (echo "File is identical" && exit 0) || (echo "File is different" && exit 1)
+          if ! diff <( printf '%s\n' "${{ env.CERTIFICATE_CHECKSUM }}" ) <( printf '%s\n' "$(md5 -q certificate.p12)"); then
+            echo "ERROR: Certificate checksum mismatch. Certificate may be corrupted or incorrect."
+            exit 1
+          fi
+          echo "Certificate checksum validated successfully"
 
       - name: Create keychain storage
         run: |
@@ -120,6 +124,7 @@ jobs:
 
   clean-release:
     needs: [build-macos, build-windows, build-linux]
+    if: always()  # Run even if some builds fail to clean up partial releases
     runs-on: ubuntu-latest
 
     steps:
