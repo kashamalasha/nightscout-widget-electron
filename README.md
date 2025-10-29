@@ -238,8 +238,9 @@ Compatible with:
 ## Contacts
 
 Feel free to contact me any of these ways:
-- dmitry.burnyshev@gmail.com
-- https://linkedin.com/in/diburn
-- https://t.me/diburn
+
+- Email: dmitry.burnyshev@gmail.com
+- LinkedIn: [linkedin.com/in/diburn](https://linkedin.com/in/diburn)
+- Telegram: [t.me/diburn](https://t.me/diburn)
 
 🙏 I'll appreciate any feedback!
