@@ -1,216 +1,125 @@
-name: Build release
+﻿name: CI (build & test on Linux, macOS, Windows)
 
 on:
   pull_request:
-    branches:
-      - main
-    types:
-      - closed
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Adjust Node version to match project requirements
+env:
+  NODE_VERSION: '21.1.0'           # Matches check.yml and project requirements
+  CI: true
+  ELECTRON_SKIP_BINARY_DOWNLOAD: 0  # Allow electron to fetch prebuilt binaries
+  # Disable code signing in CI (we're not distributing signed builds here)
+  CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+  # Optional performance tweak for electron-builder
+  ELECTRON_BUILDER_COMPRESSION: 'maximum'
 
 jobs:
-
-  build-macos:
-    runs-on: macos-latest
-    if: github.event.pull_request.merged == true
-    env:
-      CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }}
-      CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}
-      CERTIFICATE_CHECKSUM: ${{ secrets.PROD_MACOS_CERTIFICATE_CHECKSUM }}
-      KEYCHAIN_NAME: "build.keychain"
-      KEYCHAIN_PATH: "/Users/runner/Library/Keychains/"
-      KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}
-      APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}
-      APPLE_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}
-      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
-      NOTARYTOOL_PROFILE: "notarytool-profile"
+  build-test:
+    name: ${{ matrix.os }} / Node ${{ env.NODE_VERSION }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18.14.0'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
+      # ---- OS-specific prerequisites (only what we need for building) ----
+      - name: Linux build prerequisites
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt-get update
+          # rpm: for rpm target if ever enabled; libarchive-tools provides bsdtar used by electron-builder
+          # wmctrl and xdg-utils: dependencies needed for the app to work properly
+          sudo apt-get install -y libarchive-tools rpm wmctrl xdg-utils
+
+      - name: Windows build prerequisites
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          echo Windows prerequisites handled by GitHub Actions runner
+
+      - name: macOS build prerequisites
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          # macOS runner already has necessary tools
+          echo macOS prerequisites available
+
+      # ---- Install deps ----
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Decode Apple Developer certificate
+      # ---- Lint (runs eslint) ----
+      - name: Lint
+        run: npm run lint
+
+      # ---- Unit tests (Jest config exists in repo) ----
+      - name: Test
+        run: npm test
+
+      # ---- Version check ----
+      - name: Version Check
+        run: npm run version-check
+
+      # ---- Build platform-specific artifacts with electron-builder ----
+      # Building without publishing, matching your package.json build config
+      - name: Build (Linux)
+        if: startsWith(matrix.os, 'ubuntu')
         run: |
-          echo ${{ env.CERTIFICATE }} | base64 --decode > certificate.p12
-          ls -la certificate*
-          diff <( printf '%s\n' "${{ env.CERTIFICATE_CHECKSUM }}" ) <( printf '%s\n' "$(md5 -q certificate.p12)")
-          [ $? -eq 0 ] && (echo "File is identical" && exit 0) || (echo "File is different" && exit 1)
+          npx electron-builder --linux AppImage --publish never
 
-      - name: Create keychain storage
+      - name: Build (Windows)
+        if: startsWith(matrix.os, 'windows')
         run: |
-          security create-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{env.KEYCHAIN_NAME}}
-          security default-keychain -s ${{ env.KEYCHAIN_NAME }}
-          security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
-          security import certificate.p12 -k ${{ env.KEYCHAIN_NAME }} -P "${{ env.CERTIFICATE_PWD }}" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
+          npx electron-builder --win nsis zip --publish never
 
-      - name: Create keychain profile for notarytool
-        run: |
-          security unlock-keychain -p "${{ env.KEYCHAIN_PWD }}" ${{ env.KEYCHAIN_NAME }}
-          xcrun notarytool store-credentials ${{ env.NOTARYTOOL_PROFILE }} \
-          --apple-id ${{ env.APPLE_ID }} \
-          --team-id ${{ env.APPLE_TEAM_ID }} \
-          --password "${{ env.APPLE_APP_SPECIFIC_PASSWORD }}" \
-          --keychain "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db"
-
-      - name: Build the artifacts and upload them on Github
+      - name: Build (macOS)
+        if: startsWith(matrix.os, 'macos')
         env:
-          KEYCHAIN: "${{ env.KEYCHAIN_PATH }}${{ env.KEYCHAIN_NAME }}-db"
-          KEYCHAIN_PROFILE: ${{ env.NOTARYTOOL_PROFILE }}
-          GH_TOKEN: ${{ github.token }}
-          PUBLISH_FOR_PULL_REQUEST: true
-          CSC_FOR_PULL_REQUEST: true
+          # Note: Notarization is disabled in package.json (notarize: false)
+          # If you later add Apple notarization/secrets, uncomment these:
+          # APPLE_ID: ${{ secrets.APPLE_ID }}
+          # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          # APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          # CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+          # CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PWD }}
         run: |
-          npm run ship -- --mac --universal
+          # Build for both Apple Silicon and Intel (universal) per package.json config
+          # Since notarize is false, this builds unsigned DMG
+          npx electron-builder --mac dmg zip --publish never
 
-  build-windows:
-    runs-on: windows-latest
-    if: github.event.pull_request.merged == true
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      # ---- Upload artifacts from dist/ for download and testing ----
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
-          node-version: '18.14.0'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build the artifacts and upload them on Github
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PUBLISH_FOR_PULL_REQUEST: true
-        run: |
-          npm run ship -- --windows
-
-  build-linux:
-    runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18.14.0'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build the artifacts and upload them on Github
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PUBLISH_FOR_PULL_REQUEST: true
-        run: |
-          npm run ship -- --linux
-
-  clean-release:
-    needs: [build-macos, build-windows, build-linux]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Get the release data
-        id: releases_data_first
-        env:
-          HOST: "https://api.github.com"
-          ENDPOINT: "/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases"
-        run: |
-          data=$(
-            curl -X GET -s \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "${HOST}${ENDPOINT}"
-          )
-          data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))} | tostring')
-          echo "release_data=${data}" >> $GITHUB_OUTPUT
-
-      - name: Read the output
-        run: |
-          echo ${{ steps.releases_data_first.outputs.release_data }} | jq '.'
-
-      - name: Filter requested data for blockmaps
-        id: jq_filter_blockmap
-        run: |
-          blockmaps=$(
-            echo '${{ steps.releases_data_first.outputs.release_data }}' | jq -r \
-            'fromjson | .assets | map(select(.name | endswith(".blockmap"))) | map(.id | tostring) | join(" ")'
-          )
-          echo "( ${blockmaps} )"
-          echo "blockmap_list=( ${blockmaps} )" >> $GITHUB_OUTPUT
-
-      - name: Remove the blockmap files
-        env:
-          HOST: "https://api.github.com"
-          ENDPOINT: "/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases/assets/"
-        run: |
-          assets_array="${{ steps.jq_filter_blockmap.outputs.blockmap_list }}"
-          assets_array="${assets_array#(}"
-          assets_array="${assets_array%)}"
-
-          # Convert the array string to an actual array
-          IFS=', ' read -ra assets <<< "$assets_array"
-
-          # Iterate over the array elements
-          echo "Iterating over the assets:"
-          for asset_id in "${assets[@]}"; do
-            echo "Deleting asset with ID: $asset_id"
-            curl -X DELETE -s \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "${HOST}${ENDPOINT}$asset_id"
-          done
-
-      - name: Get the release data
-        id: releases_data_second
-        env:
-          HOST: "https://api.github.com"
-          ENDPOINT: "/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases"
-        run: |
-          data=$(
-            curl -X GET -s \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "${HOST}${ENDPOINT}"
-          )
-          data=$(echo "${data}" | jq '.[0] | {name, id, assets: (.assets | map({name, id}))} | tostring')
-          echo "release_data=${data}" >> $GITHUB_OUTPUT
-
-      - name: Filter requested data for mac universal distros
-        id: jq_filter_macuni
-        run: |
-          macuni=$(
-            echo '${{ steps.releases_data_second.outputs.release_data }}' | jq -r \
-            'fromjson | .assets | map(select(.name | contains("universal"))) | map(.id | tostring) | join(" ")'
-          )
-          echo "( ${macuni} )"
-          echo "macuni_list=( ${macuni} )" >> $GITHUB_OUTPUT
-
-      - name: Remove the mac universal files
-        env:
-          HOST: "https://api.github.com"
-          ENDPOINT: "/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases/assets/"
-        run: |
-          assets_array="${{ steps.jq_filter_macuni.outputs.macuni_list }}"
-          assets_array="${assets_array#(}"
-          assets_array="${assets_array%)}"
-
-          # Convert the array string to an actual array
-          IFS=', ' read -ra assets <<< "$assets_array"
-
-          # Iterate over the array elements
-          echo "Iterating over the assets:"
-          for asset_id in "${assets[@]}"; do
-            echo "Deleting asset with ID: $asset_id"
-            curl -X DELETE -s \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "${HOST}${ENDPOINT}$asset_id"
-          done
+          name: ${{ runner.os }}-artifacts
+          path: |
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.dmg
+            dist/*.zip
+            dist/*.exe
+            dist/*.msi
+            dist/*.yml
+            dist/*.blockmap
+          if-no-files-found: warn

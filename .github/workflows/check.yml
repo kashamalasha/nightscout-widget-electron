@@ -1,15 +1,20 @@
-name: Check the source code
+name: Quick checks (Lint & Version)
 
 on:
   push:
     branches:
       - develop
+      - main
   pull_request:
     branches:
       - main
+      - develop
     types:
       - opened
       - synchronize
+
+# Lightweight checks that run quickly without building
+# Full build tests run in ci.yml workflow
 
 jobs:
 
@@ -24,9 +29,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '21.1.0'
+        cache: 'npm'
 
     - name: Install dependencies
-      run: npm install
+      run: npm ci
 
     - name: Run linter
       run: npm run lint
@@ -42,9 +48,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '21.1.0'
+        cache: 'npm'
 
     - name: Install dependencies
-      run: npm install
+      run: npm ci
 
     - name: Check version-related files
       run: npm run version-check
