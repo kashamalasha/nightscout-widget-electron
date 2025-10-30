@@ -48,20 +48,19 @@ jobs:
           $version = "${{ steps.manifest_version.outputs.version }}"
           $hash    = "${{ steps.hash.outputs.sha256 }}"
           $url     = "${{ steps.hash.outputs.url }}"
-          wingetcreate.exe update `
-            --manifest "build/winget/manifest.yml" `
-            --url "$url" `
+          wingetcreate update "kashamalasha.Owlet" `
+            --urls "$url" `
             --sha256 "$hash"
 
       - name: Validate manifest
         shell: pwsh
         run: |
-          wingetcreate.exe validate --path "build/winget/manifest.yml"
+          wingetcreate validate --path "build/winget/manifest.yml"
 
       - name: Submit manifest
         shell: pwsh
         run: |
-          wingetcreate.exe submit `
+          wingetcreate submit `
             --path "build/winget/manifest.yml" `
             --token "${{ secrets.GITHUB_TOKEN }}" `
             --silent
