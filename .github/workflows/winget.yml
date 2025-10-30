@@ -23,7 +23,7 @@ jobs:
         id: manifest_version
         shell: pwsh
         run: |
-          $content = Get-Content "build/winget/manifest.yaml"
+          $content = Get-Content "build/winget/manifest.yml"
           $line = $content | Where-Object { $_ -match '^PackageVersion:\s*(.+)$' }
           if (-not $line) { throw "PackageVersion not found in manifest" }
           $version = $line -replace '^PackageVersion:\s*', ''
@@ -49,19 +49,19 @@ jobs:
           $hash    = "${{ steps.hash.outputs.sha256 }}"
           $url     = "${{ steps.hash.outputs.url }}"
           wingetcreate.exe update `
-            --manifest "build/winget/manifest.yaml" `
+            --manifest "build/winget/manifest.yml" `
             --url "$url" `
             --sha256 "$hash"
 
       - name: Validate manifest
         shell: pwsh
         run: |
-          wingetcreate.exe validate --path "build/winget/manifest.yaml"
+          wingetcreate.exe validate --path "build/winget/manifest.yml"
 
       - name: Submit manifest
         shell: pwsh
         run: |
           wingetcreate.exe submit `
-            --path "build/winget/manifest.yaml" `
+            --path "build/winget/manifest.yml" `
             --token "${{ secrets.GITHUB_TOKEN }}" `
             --silent
