@@ -46,13 +46,14 @@ jobs:
         shell: pwsh
         run: |
           $url = "${{ steps.hash.outputs.url }}"
-          wingetcreate update "build/winget/manifest.yml" `
-            --urls "$url" `
+          wingetcreate update `
+            --path "build/winget/manifest.yml" `
+            --urls "$url"
 
       - name: Validate manifest
         shell: pwsh
         run: |
-          wingetcreate validate "build/winget/manifest.yml" `
+          wingetcreate validate `
             --path "build/winget/manifest.yml"
 
       - name: Submit manifest
