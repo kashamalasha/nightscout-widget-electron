@@ -24,6 +24,8 @@ Description: Owlet is a cross-platform Electron widget application that displays
 Installers:
   - Type: exe
     Architecture: x64
+    InstallerUrl: <installer placeholder>
+    InstallerSha256: <hash placeholder>
     InstallModes:
       - silent
     Commands:

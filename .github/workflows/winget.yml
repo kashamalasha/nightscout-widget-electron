@@ -45,10 +45,14 @@ jobs:
       - name: Update winget manifest
         shell: pwsh
         run: |
+          $path = "build/winget/manifest.yml"
           $url = "${{ steps.hash.outputs.url }}"
-          wingetcreate update `
-            --path "build/winget/manifest.yml" `
-            --urls "$url"
+          $hash = "${{ steps.hash.outputs.sha256 }}"
+
+          $content = Get-Content $path
+          $content = $content -replace '(?m)^(\s*InstallerUrl:\s*).+$', "`$1$url"
+          $content = $content -replace '(?m)^(\s*InstallerSha256:\s*).+$', "`$1$hash"
+          Set-Content -Path $path -Value $content
 
       - name: Validate manifest
         shell: pwsh
