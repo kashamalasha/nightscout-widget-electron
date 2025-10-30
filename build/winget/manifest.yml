@@ -1,16 +1,24 @@
-PackageIdentifier: kashamalasha.Owlet
-PackageVersion: 0.8.2-beta
-DefaultLocale: en-US
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.singleton.1.6.0.schema.json
+ManifestType: singleton
+ManifestVersion: 1.6.0
+
+Id: kashamalasha.Owlet
+Version: 0.8.2-beta
+Name: Owlet
 Publisher: kashamalasha
-PackageName: Owlet
-PublisherUrl: https://github.com/kashamalasha
-PackageUrl: https://github.com/kashamalasha/nightscout-widget-electron
+Author: Dmitry Burnyshev
+AppMoniker: owlet
 License: AGPL-3.0
 LicenseUrl: https://github.com/kashamalasha/nightscout-widget-electron/blob/main/LICENSE.md
 Copyright: Copyright © 2022 Dmitry Burnyshev
 CopyrightUrl: https://github.com/kashamalasha/nightscout-widget-electron
-Author: Dmitry Burnyshev
-AppMoniker: owlet
+PublisherUrl: https://github.com/kashamalasha
+PackageUrl: https://github.com/kashamalasha/nightscout-widget-electron
+ShortDescription: A lightweight desktop widget for monitoring glucose levels through Nightscout.
+Description: >
+  Owlet is a cross-platform Electron widget application that displays sensor glucose
+  values (SGV) from Nightscout API in real-time. Perfect for Type 1 Diabetes management
+  with features like trend arrows, customizable alert levels, and always-on-top display.
 Tags:
   - diabetes
   - glucose
@@ -18,24 +26,17 @@ Tags:
   - nightscout
   - health
   - medical
-ShortDescription: A lightweight desktop widget for monitoring glucose levels through Nightscout.
-Description: Owlet is a cross-platform Electron widget application that displays sensor glucose values (SGV) from Nightscout API in real-time. Perfect for Type 1 Diabetes management with features like trend arrows, customizable alert levels, and always-on-top display.
 
 Installers:
-  - Type: exe
+  - InstallerLocale: en-US
     Architecture: x64
-    InstallerUrl: <installer placeholder>
-    InstallerSha256: <hash placeholder>
+    InstallerType: exe
+    InstallerUrl: <placeholder>
+    InstallerSha256: <placeholder>
     InstallModes:
       - silent
-    Commands:
-      - owlet
+    InstallerSwitches:
+      Silent: /S
 
-InstallerSwitches:
-  Silent: /S
-
-Repository: https://github.com/kashamalasha/nightscout-widget-electron
-InstallerSuccessCodes:
-  - 0
-  - 1641
-  - 3010
+# Optional, but you had it
+ReleaseNotesUrl: https://github.com/kashamalasha/nightscout-widget-electron/releases
