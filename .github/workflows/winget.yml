@@ -70,6 +70,5 @@ jobs:
         shell: pwsh
         run: |
           wingetcreate submit `
-            --path "build/winget/manifest.yml" `
             --token "${{ secrets.GITHUB_TOKEN }}" `
-            --silent
+            build/winget/manifest.yml
