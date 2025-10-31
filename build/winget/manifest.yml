@@ -37,6 +37,7 @@ Installers:
       - silent
     InstallerSwitches:
       Silent: /S
+      SilentWithProgress: /S
 
 # Optional, but you had it
 ReleaseNotesUrl: https://github.com/kashamalasha/nightscout-widget-electron/releases

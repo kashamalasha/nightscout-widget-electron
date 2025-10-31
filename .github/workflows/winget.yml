@@ -11,10 +11,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18.14.0'
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '18.14.0'
 
       - name: Install wingetcreate
         run: winget install --id Microsoft.WingetCreate --source winget --accept-package-agreements --accept-source-agreements
