@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.10.0.schema.json
+PackageIdentifier: kashamalasha.Owlet
+PackageVersion: 0.8.2-beta
+InstallerLocale: en-US
+Installers:
+  - Architecture: x64
+    InstallerType: exe
+    InstallerUrl: https://github.com/kashamalasha/nightscout-widget-electron/releases/download/v0.8.2-beta/Owlet-Setup-0.8.2-beta.exe
+    InstallerSha256: <PUT_SHA256_HERE>
+    InstallModes:
+      - silent
+    InstallerSwitches:
+      Silent: /S
+      SilentWithProgress: /S
+ManifestType: installer
+ManifestVersion: 1.10.0

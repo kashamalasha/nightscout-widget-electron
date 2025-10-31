@@ -11,11 +11,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: '18.14.0'
-
       - name: Install wingetcreate
         run: |
           winget install `
@@ -23,40 +18,50 @@ jobs:
           --source winget `
           --accept-package-agreements `
           --accept-source-agreements `
-          --silent
+          --quiet *> $null
 
-      - name: Read version from winget manifest
+      - name: Read version from WinGet version manifest
         id: manifest_version
         shell: pwsh
         run: |
-          $content = Get-Content "build/winget/manifest.yml"
+          $path = "build/winget/kashamalasha.Owlet.yaml"
+          $content = Get-Content $path
           $line = $content | Where-Object { $_ -match '^PackageVersion:\s*(.+)$' }
           if (-not $line) { throw "PackageVersion not found in manifest" }
           $version = $line -replace '^PackageVersion:\s*', ''
           $version = $version.Trim()
           "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
+      - name: Read the install path from the installer manifest
+        id: install_path
+        shell: pwsh
+        run: |
+          $path = "build/winget/kashamalasha.Owlet.installer.yaml"
+          $content = Get-Content $path
+          $line = $content | Where-Object { $_ -match '^\s*InstallerUrl:\s*(.+)$' }
+          if (-not $line) { throw "InstallerUrl not found in manifest" }
+          $url = $line -replace '^\s*InstallerUrl:\s*', ''
+          $url = $url.Trim()
+          "installUrl=$url" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
       - name: Compute SHA256 for the latest release
         id: hash
         shell: pwsh
         run: |
           $version = "${{ steps.manifest_version.outputs.version }}"
-          $url = "https://github.com/${{ github.repository }}/releases/download/v$version/Owlet-$version-win-x64.exe"
+          $url = "${{ steps.install_path.outputs.installUrl }}"
           Write-Host "Downloading: $url"
           Invoke-WebRequest -Uri $url -OutFile installer.exe
           $hash = (Get-FileHash -Path installer.exe -Algorithm SHA256).Hash
           "sha256=$hash" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-          "url=$url" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
-      - name: Update winget manifest
+      - name: Patch WinGet installer manifest
         shell: pwsh
         run: |
-          $path = "build/winget/manifest.yml"
-          $url = "${{ steps.hash.outputs.url }}"
+          $path = "build/winget/kashamalasha.Owlet.installer.yaml"
           $hash = "${{ steps.hash.outputs.sha256 }}"
 
           $content = Get-Content $path
-          $content = $content -replace '(?m)^(\s*InstallerUrl:\s*).+$', "`$1$url"
           $content = $content -replace '(?m)^(\s*InstallerSha256:\s*).+$', "`$1$hash"
           Set-Content -Path $path -Value $content
 
@@ -64,11 +69,11 @@ jobs:
         shell: pwsh
         run: |
           winget validate `
-            --manifest "build/winget/manifest.yml"
+            --manifest "build/winget"
 
       - name: Submit manifest
         shell: pwsh
+        env:
+          WINGET_TOKEN: ${{ secrets.WINGET_TOKEN }}
         run: |
-          wingetcreate submit `
-            --token "${{ secrets.WINGET_TOKEN }}" `
-            build/winget/manifest.yml
+          wingetcreate submit build/winget
