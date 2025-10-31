@@ -5,10 +5,9 @@ ManifestVersion: 1.6.0
 PackageIdentifier: kashamalasha.Owlet
 PackageVersion: 0.8.2-beta
 PackageLocale: en-US
-Name: Owlet
+PackageName: Owlet
 Publisher: kashamalasha
 Author: Dmitry Burnyshev
-AppMoniker: owlet
 License: AGPL-3.0
 LicenseUrl: https://github.com/kashamalasha/nightscout-widget-electron/blob/main/LICENSE.md
 Copyright: Copyright © 2022 Dmitry Burnyshev
