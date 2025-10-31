@@ -2,8 +2,9 @@
 ManifestType: singleton
 ManifestVersion: 1.6.0
 
-Id: kashamalasha.Owlet
+PackageIdentifier: kashamalasha.Owlet
 PackageVersion: 0.8.2-beta
+PackageLocale: en-US
 Name: Owlet
 Publisher: kashamalasha
 Author: Dmitry Burnyshev
