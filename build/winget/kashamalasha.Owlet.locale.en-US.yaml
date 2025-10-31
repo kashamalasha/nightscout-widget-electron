@@ -2,6 +2,7 @@
 PackageIdentifier: kashamalasha.Owlet
 PackageVersion: 0.8.2-beta
 PackageName: Owlet
+PackageLocale: en-US
 Publisher: kashamalasha
 PublisherUrl: https://github.com/kashamalasha
 PackageUrl: https://github.com/kashamalasha/nightscout-widget-electron

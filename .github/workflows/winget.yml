@@ -20,18 +20,6 @@ jobs:
           --accept-source-agreements `
           --silent | Out-Null
 
-      - name: Read version from WinGet version manifest
-        id: manifest_version
-        shell: pwsh
-        run: |
-          $path = "build/winget/kashamalasha.Owlet.yaml"
-          $content = Get-Content $path
-          $line = $content | Where-Object { $_ -match '^PackageVersion:\s*(.+)$' }
-          if (-not $line) { throw "PackageVersion not found in manifest" }
-          $version = $line -replace '^PackageVersion:\s*', ''
-          $version = $version.Trim()
-          "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-
       - name: Read the install path from the installer manifest
         id: install_path
         shell: pwsh
@@ -48,7 +36,6 @@ jobs:
         id: hash
         shell: pwsh
         run: |
-          $version = "${{ steps.manifest_version.outputs.version }}"
           $url = "${{ steps.install_path.outputs.installUrl }}"
           Write-Host "Downloading: $url"
           Invoke-WebRequest -Uri $url -OutFile installer.exe
