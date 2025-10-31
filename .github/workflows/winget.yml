@@ -18,7 +18,7 @@ jobs:
           --source winget `
           --accept-package-agreements `
           --accept-source-agreements `
-          --quiet *> $null
+          --quiet | Out-Null
 
       - name: Read version from WinGet version manifest
         id: manifest_version
