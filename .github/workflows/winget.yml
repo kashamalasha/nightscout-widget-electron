@@ -17,7 +17,7 @@ jobs:
       #     node-version: '18.14.0'
 
       - name: Install wingetcreate
-        run: winget install --id Microsoft.WingetCreate --source winget --accept-package-agreements --accept-source-agreements
+        run: winget install --id Microsoft.WingetCreate --source winget --accept-package-agreements --accept-source-agreements --silent
 
       - name: Read version from winget manifest
         id: manifest_version
