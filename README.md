@@ -1,7 +1,6 @@
-<a href="#"><img width="256" height="256" src="asset/owlet_main_icon.png" align="left" /></a>
-
-
 # Owlet
+
+<a href="#"><img width="256" height="256" src="asset/owlet_main_icon.png" align="left" /></a>
 
 The cross-platform application, that uses the [Nightscout API](https://nightscout.github.io/). The aim is to provide a lightweight interface for your `T1D` measurement visualization (blood sugar levels).
 
@@ -17,8 +16,8 @@ The app's name is "Owlet", which means baby owl and is chosen because of the Nig
   <a style="margin: 5px;" href="https://www.paypal.com/donate/?business=46K7J6S3UB3CS&no_recurring=0&item_name=Support+Owlet%3A+Improve+T1D+care+with+a+donation%21+Your+contribution+empowers+health+monitoring.+Join+me+in+making+a+difference%21&currency_code=USD"><img src="./docs/support_me_paypal.png" width="130" alt="Donate me on PayPal"/></a>
 </div>
 
-
-## README Translation
+---
+**README Translation**
 
 [![IT](https://img.shields.io/badge/Language-IT-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/docs/README.it.md)
 [![PL](https://img.shields.io/badge/Language-PL-red.svg)](https://github.com/kashamalasha/nightscout-widget-electron/blob/main/docs/README.pl.md)
